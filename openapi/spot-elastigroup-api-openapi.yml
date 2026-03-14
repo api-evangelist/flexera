@@ -1,0 +1,879 @@
+openapi: 3.1.0
+info:
+  title: Spot Elastigroup API
+  description: >-
+    The Spot Elastigroup API enables programmatic management of Elastigroup
+    compute groups across AWS, Azure, and GCP. Elastigroup simplifies and
+    automates cloud infrastructure for scale-out applications, continuously
+    analyzing resource usage and optimizing compute resources to ensure
+    availability while leveraging the lowest-cost compute options including
+    spot instances, reserved instances, and on-demand capacity.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+  - url: https://api.spotinst.io
+    description: Spot Production API
+security:
+  - bearerAuth: []
+tags:
+  - name: Elastigroup AWS
+    description: Manage Elastigroup compute groups in AWS.
+  - name: Elastigroup Azure
+    description: Manage Elastigroup compute groups in Azure.
+  - name: Elastigroup GCP
+    description: Manage Elastigroup compute groups in GCP.
+  - name: Stateful Instances
+    description: Manage stateful instances within Elastigroups.
+  - name: Deployments
+    description: Manage rolling deployments for Elastigroups.
+  - name: EMR
+    description: Manage Amazon EMR clusters with Elastigroup.
+paths:
+  /aws/ec2/group:
+    post:
+      operationId: createElastigroupAWS
+      summary: Create Elastigroup (AWS)
+      description: Create a new Elastigroup in AWS.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: accountId
+          in: query
+          description: The Spot account ID.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAWSRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElastigroupResponse'
+    get:
+      operationId: listElastigroupsAWS
+      summary: List Elastigroups (AWS)
+      description: List all Elastigroups in the specified account.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: accountId
+          in: query
+          description: The Spot account ID.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElastigroupListResponse'
+  /aws/ec2/group/{groupId}:
+    get:
+      operationId: getElastigroupAWS
+      summary: Get Elastigroup (AWS)
+      description: Get the configuration of an existing Elastigroup.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElastigroupResponse'
+    put:
+      operationId: updateElastigroupAWS
+      summary: Update Elastigroup (AWS)
+      description: Update an existing Elastigroup configuration.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAWSRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteElastigroupAWS
+      summary: Delete Elastigroup (AWS)
+      description: Delete an existing Elastigroup.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/status:
+    get:
+      operationId: getElastigroupStatusAWS
+      summary: Get Elastigroup status (AWS)
+      description: Get the status of instances in an Elastigroup.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/scale/up:
+    put:
+      operationId: scaleUpElastigroupAWS
+      summary: Scale up Elastigroup (AWS)
+      description: Scale up the number of instances in an Elastigroup.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: adjustment
+          in: query
+          description: Number of instances to add.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/scale/down:
+    put:
+      operationId: scaleDownElastigroupAWS
+      summary: Scale down Elastigroup (AWS)
+      description: Scale down the number of instances in an Elastigroup.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: adjustment
+          in: query
+          description: Number of instances to remove.
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/roll:
+    post:
+      operationId: rollElastigroupAWS
+      summary: Roll Elastigroup (AWS)
+      description: >-
+        Trigger a roll (rolling update) for an Elastigroup. Replaces existing
+        instances with new ones according to the configured deployment strategy.
+      tags:
+        - Deployments
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RollRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listRollsAWS
+      summary: List rolls (AWS)
+      description: List all rolls for an Elastigroup.
+      tags:
+        - Deployments
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/roll/{rollId}:
+    get:
+      operationId: getRollStatusAWS
+      summary: Get roll status (AWS)
+      description: Get the status of a specific roll.
+      tags:
+        - Deployments
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rollId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: stopRollAWS
+      summary: Stop roll (AWS)
+      description: Stop an in-progress roll.
+      tags:
+        - Deployments
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rollId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roll:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      enum:
+                        - STOPPED
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/statefulInstance:
+    get:
+      operationId: listStatefulInstances
+      summary: List stateful instances
+      description: List all stateful instances in an Elastigroup.
+      tags:
+        - Stateful Instances
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/statefulInstance/{statefulInstanceId}:
+    put:
+      operationId: recycleStatefulInstance
+      summary: Recycle stateful instance
+      description: Recycle a stateful instance, replacing it with a new one.
+      tags:
+        - Stateful Instances
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: statefulInstanceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deallocateStatefulInstance
+      summary: Deallocate stateful instance
+      description: Deallocate a stateful instance and its resources.
+      tags:
+        - Stateful Instances
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: statefulInstanceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/logs:
+    get:
+      operationId: getElastigroupLogs
+      summary: Get Elastigroup logs
+      description: Retrieve activity logs for an Elastigroup.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successful response
+  /aws/ec2/group/{groupId}/costs:
+    get:
+      operationId: getElastigroupCosts
+      summary: Get Elastigroup costs
+      description: Retrieve cost information for an Elastigroup.
+      tags:
+        - Elastigroup AWS
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+  /aws/emr/mrScaler:
+    post:
+      operationId: createEMRCluster
+      summary: Create EMR cluster
+      description: Create a new Amazon EMR cluster managed by Elastigroup.
+      tags:
+        - EMR
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EMRClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listEMRClusters
+      summary: List EMR clusters
+      description: List all EMR clusters managed by Elastigroup.
+      tags:
+        - EMR
+      responses:
+        '200':
+          description: Successful response
+  /aws/emr/mrScaler/{mrScalerId}:
+    get:
+      operationId: getEMRCluster
+      summary: Get EMR cluster
+      description: Get details of an EMR cluster.
+      tags:
+        - EMR
+      parameters:
+        - name: mrScalerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateEMRCluster
+      summary: Update EMR cluster
+      description: Update an existing EMR cluster.
+      tags:
+        - EMR
+      parameters:
+        - name: mrScalerId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EMRClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteEMRCluster
+      summary: Delete EMR cluster
+      description: Delete an EMR cluster.
+      tags:
+        - EMR
+      parameters:
+        - name: mrScalerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /azure/compute/group:
+    post:
+      operationId: createElastigroupAzure
+      summary: Create Elastigroup (Azure)
+      description: Create a new Elastigroup in Azure.
+      tags:
+        - Elastigroup Azure
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAzureRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listElastigroupsAzure
+      summary: List Elastigroups (Azure)
+      description: List all Elastigroups in Azure.
+      tags:
+        - Elastigroup Azure
+      responses:
+        '200':
+          description: Successful response
+  /azure/compute/group/{groupId}:
+    get:
+      operationId: getElastigroupAzure
+      summary: Get Elastigroup (Azure)
+      description: Get an existing Elastigroup in Azure.
+      tags:
+        - Elastigroup Azure
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateElastigroupAzure
+      summary: Update Elastigroup (Azure)
+      description: Update an existing Elastigroup in Azure.
+      tags:
+        - Elastigroup Azure
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAzureRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteElastigroupAzure
+      summary: Delete Elastigroup (Azure)
+      description: Delete an existing Elastigroup in Azure.
+      tags:
+        - Elastigroup Azure
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /gcp/gce/group:
+    post:
+      operationId: createElastigroupGCP
+      summary: Create Elastigroup (GCP)
+      description: Create a new Elastigroup in GCP.
+      tags:
+        - Elastigroup GCP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupGCPRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listElastigroupsGCP
+      summary: List Elastigroups (GCP)
+      description: List all Elastigroups in GCP.
+      tags:
+        - Elastigroup GCP
+      responses:
+        '200':
+          description: Successful response
+  /gcp/gce/group/{groupId}:
+    get:
+      operationId: getElastigroupGCP
+      summary: Get Elastigroup (GCP)
+      description: Get an existing Elastigroup in GCP.
+      tags:
+        - Elastigroup GCP
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateElastigroupGCP
+      summary: Update Elastigroup (GCP)
+      description: Update an existing Elastigroup in GCP.
+      tags:
+        - Elastigroup GCP
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupGCPRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteElastigroupGCP
+      summary: Delete Elastigroup (GCP)
+      description: Delete an existing Elastigroup in GCP.
+      tags:
+        - Elastigroup GCP
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Spot API uses Bearer Token Authentication. Include your API token
+        in the Authorization header.
+  schemas:
+    ElastigroupAWSRequest:
+      type: object
+      properties:
+        group:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            region:
+              type: string
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+                unit:
+                  type: string
+                  enum:
+                    - instance
+                    - weight
+            strategy:
+              type: object
+              properties:
+                risk:
+                  type: integer
+                  description: Percentage of spot instances (0-100).
+                onDemandCount:
+                  type: integer
+                availabilityVsCost:
+                  type: string
+                  enum:
+                    - balanced
+                    - costOriented
+                    - availabilityOriented
+                    - cheapest
+                fallbackToOd:
+                  type: boolean
+                utilizeReservedInstances:
+                  type: boolean
+            compute:
+              type: object
+              properties:
+                instanceTypes:
+                  type: object
+                  properties:
+                    ondemand:
+                      type: string
+                    spot:
+                      type: array
+                      items:
+                        type: string
+                availabilityZones:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      subnetId:
+                        type: string
+                launchSpecification:
+                  type: object
+                  properties:
+                    imageId:
+                      type: string
+                    securityGroupIds:
+                      type: array
+                      items:
+                        type: string
+                    keyPair:
+                      type: string
+            scheduling:
+              type: object
+              properties:
+                tasks:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      isEnabled:
+                        type: boolean
+                      taskType:
+                        type: string
+                      cronExpression:
+                        type: string
+    ElastigroupAzureRequest:
+      type: object
+      properties:
+        group:
+          type: object
+          properties:
+            name:
+              type: string
+            region:
+              type: string
+            resourceGroupName:
+              type: string
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+            strategy:
+              type: object
+              properties:
+                spotPercentage:
+                  type: integer
+                fallbackToOd:
+                  type: boolean
+    ElastigroupGCPRequest:
+      type: object
+      properties:
+        group:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+            strategy:
+              type: object
+              properties:
+                preemptiblePercentage:
+                  type: integer
+                fallbackToOd:
+                  type: boolean
+    ElastigroupResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Elastigroup'
+    ElastigroupListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Elastigroup'
+    Elastigroup:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        region:
+          type: string
+        capacity:
+          type: object
+          properties:
+            target:
+              type: integer
+            minimum:
+              type: integer
+            maximum:
+              type: integer
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    RollRequest:
+      type: object
+      properties:
+        batchSizePercentage:
+          type: integer
+          description: Percentage of instances to replace in each batch.
+        gracePeriod:
+          type: integer
+          description: Grace period in seconds before checking health.
+        healthCheckType:
+          type: string
+          enum:
+            - EC2
+            - ELB
+            - TARGET_GROUP
+            - NONE
+    EMRClusterRequest:
+      type: object
+      properties:
+        mrScaler:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            region:
+              type: string
+            strategy:
+              type: object
+            compute:
+              type: object

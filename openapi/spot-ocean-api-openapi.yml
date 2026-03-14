@@ -1,0 +1,1034 @@
+openapi: 3.1.0
+info:
+  title: Spot Ocean API
+  description: >-
+    The Spot Ocean API provides programmatic management of Ocean Kubernetes
+    clusters across AWS EKS, Azure AKS, GCP GKE, and Amazon ECS. Ocean is
+    a serverless Kubernetes infrastructure engine that automatically manages
+    and optimizes cloud infrastructure for containers, handling node
+    provisioning, scaling, and cost optimization with intelligent use of
+    spot instances, reserved capacity, and on-demand resources.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+  - url: https://api.spotinst.io
+    description: Spot Production API
+security:
+  - bearerAuth: []
+tags:
+  - name: Ocean AWS
+    description: Manage Ocean clusters for AWS EKS.
+  - name: Ocean ECS
+    description: Manage Ocean clusters for Amazon ECS.
+  - name: Ocean GKE
+    description: Manage Ocean clusters for Google Kubernetes Engine.
+  - name: Ocean AKS
+    description: Manage Ocean clusters for Azure Kubernetes Service.
+  - name: Virtual Node Groups
+    description: Manage virtual node groups (launch specifications) within Ocean clusters.
+  - name: Rolls
+    description: Manage rolling updates for Ocean clusters.
+  - name: Right Sizing
+    description: Get right-sizing recommendations for Ocean workloads.
+  - name: Ocean CD
+    description: Manage continuous delivery for Ocean clusters.
+  - name: Ocean Spark
+    description: Manage Apache Spark clusters on Ocean.
+paths:
+  /ocean/aws/k8s/cluster:
+    post:
+      operationId: createOceanClusterAWS
+      summary: Create Ocean cluster (AWS)
+      description: Create a new Ocean cluster for AWS EKS.
+      tags:
+        - Ocean AWS
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAWSClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OceanClusterResponse'
+    get:
+      operationId: listOceanClustersAWS
+      summary: List Ocean clusters (AWS)
+      description: List all Ocean clusters for AWS in the account.
+      tags:
+        - Ocean AWS
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OceanClusterListResponse'
+  /ocean/aws/k8s/cluster/{oceanClusterId}:
+    get:
+      operationId: getOceanClusterAWS
+      summary: Get Ocean cluster (AWS)
+      description: Get the configuration of an Ocean cluster.
+      tags:
+        - Ocean AWS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OceanClusterResponse'
+    put:
+      operationId: updateOceanClusterAWS
+      summary: Update Ocean cluster (AWS)
+      description: Update an existing Ocean cluster configuration.
+      tags:
+        - Ocean AWS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAWSClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteOceanClusterAWS
+      summary: Delete Ocean cluster (AWS)
+      description: Delete an Ocean cluster.
+      tags:
+        - Ocean AWS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/aws/k8s/cluster/{oceanClusterId}/roll:
+    post:
+      operationId: initiateRollAWS
+      summary: Initiate cluster roll (AWS)
+      description: >-
+        Initiate a roll (rolling replacement) of nodes in an Ocean cluster.
+      tags:
+        - Rolls
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanRollRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listRollsAWS
+      summary: List cluster rolls (AWS)
+      description: List all rolls for an Ocean cluster.
+      tags:
+        - Rolls
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/aws/k8s/cluster/{oceanClusterId}/roll/{rollId}:
+    get:
+      operationId: getRollAWS
+      summary: Get roll details (AWS)
+      description: Get the details and status of a specific roll.
+      tags:
+        - Rolls
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rollId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateRollAWS
+      summary: Update roll (AWS)
+      description: Stop or modify a running roll.
+      tags:
+        - Rolls
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: rollId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roll:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      enum:
+                        - STOPPED
+      responses:
+        '200':
+          description: Successful response
+  /ocean/aws/k8s/launchSpec:
+    post:
+      operationId: createVirtualNodeGroupAWS
+      summary: Create virtual node group (AWS)
+      description: Create a virtual node group (launch specification) for an Ocean cluster.
+      tags:
+        - Virtual Node Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualNodeGroupAWSRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listVirtualNodeGroupsAWS
+      summary: List virtual node groups (AWS)
+      description: List all virtual node groups for an Ocean cluster.
+      tags:
+        - Virtual Node Groups
+      parameters:
+        - name: oceanId
+          in: query
+          description: Ocean cluster ID to filter by.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/aws/k8s/launchSpec/{launchSpecId}:
+    get:
+      operationId: getVirtualNodeGroupAWS
+      summary: Get virtual node group (AWS)
+      description: Get the configuration of a virtual node group.
+      tags:
+        - Virtual Node Groups
+      parameters:
+        - name: launchSpecId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateVirtualNodeGroupAWS
+      summary: Update virtual node group (AWS)
+      description: Update a virtual node group.
+      tags:
+        - Virtual Node Groups
+      parameters:
+        - name: launchSpecId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualNodeGroupAWSRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteVirtualNodeGroupAWS
+      summary: Delete virtual node group (AWS)
+      description: Delete a virtual node group.
+      tags:
+        - Virtual Node Groups
+      parameters:
+        - name: launchSpecId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/aws/ecs/cluster:
+    post:
+      operationId: createOceanClusterECS
+      summary: Create Ocean cluster (ECS)
+      description: Create a new Ocean cluster for Amazon ECS.
+      tags:
+        - Ocean ECS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanECSClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listOceanClustersECS
+      summary: List Ocean clusters (ECS)
+      description: List all Ocean ECS clusters.
+      tags:
+        - Ocean ECS
+      responses:
+        '200':
+          description: Successful response
+  /ocean/aws/ecs/cluster/{oceanClusterId}:
+    get:
+      operationId: getOceanClusterECS
+      summary: Get Ocean cluster (ECS)
+      description: Get an Ocean ECS cluster.
+      tags:
+        - Ocean ECS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateOceanClusterECS
+      summary: Update Ocean cluster (ECS)
+      description: Update an Ocean ECS cluster.
+      tags:
+        - Ocean ECS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanECSClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteOceanClusterECS
+      summary: Delete Ocean cluster (ECS)
+      description: Delete an Ocean ECS cluster.
+      tags:
+        - Ocean ECS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/gke/cluster:
+    post:
+      operationId: createOceanClusterGKE
+      summary: Create Ocean cluster (GKE)
+      description: Create a new Ocean cluster for Google Kubernetes Engine.
+      tags:
+        - Ocean GKE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanGKEClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listOceanClustersGKE
+      summary: List Ocean clusters (GKE)
+      description: List all Ocean GKE clusters.
+      tags:
+        - Ocean GKE
+      responses:
+        '200':
+          description: Successful response
+  /ocean/gke/cluster/{oceanClusterId}:
+    get:
+      operationId: getOceanClusterGKE
+      summary: Get Ocean cluster (GKE)
+      description: Get an Ocean GKE cluster.
+      tags:
+        - Ocean GKE
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateOceanClusterGKE
+      summary: Update Ocean cluster (GKE)
+      description: Update an Ocean GKE cluster.
+      tags:
+        - Ocean GKE
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanGKEClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteOceanClusterGKE
+      summary: Delete Ocean cluster (GKE)
+      description: Delete an Ocean GKE cluster.
+      tags:
+        - Ocean GKE
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/azure/k8s/cluster:
+    post:
+      operationId: createOceanClusterAKS
+      summary: Create Ocean cluster (AKS)
+      description: Create a new Ocean cluster for Azure Kubernetes Service.
+      tags:
+        - Ocean AKS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAKSClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listOceanClustersAKS
+      summary: List Ocean clusters (AKS)
+      description: List all Ocean AKS clusters.
+      tags:
+        - Ocean AKS
+      responses:
+        '200':
+          description: Successful response
+  /ocean/azure/k8s/cluster/{oceanClusterId}:
+    get:
+      operationId: getOceanClusterAKS
+      summary: Get Ocean cluster (AKS)
+      description: Get an Ocean AKS cluster.
+      tags:
+        - Ocean AKS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateOceanClusterAKS
+      summary: Update Ocean cluster (AKS)
+      description: Update an Ocean AKS cluster.
+      tags:
+        - Ocean AKS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAKSClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteOceanClusterAKS
+      summary: Delete Ocean cluster (AKS)
+      description: Delete an Ocean AKS cluster.
+      tags:
+        - Ocean AKS
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/aws/k8s/cluster/{oceanClusterId}/rightSizing/suggestion:
+    get:
+      operationId: getRightSizingSuggestions
+      summary: Get right-sizing suggestions
+      description: >-
+        Get right-sizing recommendations for workloads running in an Ocean
+        cluster. Returns CPU and memory recommendations based on actual usage.
+      tags:
+        - Right Sizing
+      parameters:
+        - name: oceanClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/cd/cluster:
+    post:
+      operationId: createOceanCDCluster
+      summary: Create Ocean CD cluster
+      description: Register a cluster with Ocean CD for continuous delivery.
+      tags:
+        - Ocean CD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanCDClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listOceanCDClusters
+      summary: List Ocean CD clusters
+      description: List all clusters registered with Ocean CD.
+      tags:
+        - Ocean CD
+      responses:
+        '200':
+          description: Successful response
+  /ocean/cd/cluster/{clusterId}:
+    get:
+      operationId: getOceanCDCluster
+      summary: Get Ocean CD cluster
+      description: Get a cluster registered with Ocean CD.
+      tags:
+        - Ocean CD
+      parameters:
+        - name: clusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateOceanCDCluster
+      summary: Update Ocean CD cluster
+      description: Update an Ocean CD cluster configuration.
+      tags:
+        - Ocean CD
+      parameters:
+        - name: clusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanCDClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteOceanCDCluster
+      summary: Delete Ocean CD cluster
+      description: Unregister a cluster from Ocean CD.
+      tags:
+        - Ocean CD
+      parameters:
+        - name: clusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /ocean/spark/cluster:
+    post:
+      operationId: createOceanSparkCluster
+      summary: Create Ocean Spark cluster
+      description: Create a new Ocean for Apache Spark cluster.
+      tags:
+        - Ocean Spark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanSparkClusterRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listOceanSparkClusters
+      summary: List Ocean Spark clusters
+      description: List all Ocean Spark clusters.
+      tags:
+        - Ocean Spark
+      responses:
+        '200':
+          description: Successful response
+  /ocean/spark/cluster/{oceanSparkClusterId}:
+    get:
+      operationId: getOceanSparkCluster
+      summary: Get Ocean Spark cluster
+      description: Get an Ocean Spark cluster.
+      tags:
+        - Ocean Spark
+      parameters:
+        - name: oceanSparkClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteOceanSparkCluster
+      summary: Delete Ocean Spark cluster
+      description: Delete an Ocean Spark cluster.
+      tags:
+        - Ocean Spark
+      parameters:
+        - name: oceanSparkClusterId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Spot API uses Bearer Token Authentication. Include your API token
+        in the Authorization header.
+  schemas:
+    OceanAWSClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            controllerClusterId:
+              type: string
+              description: The Ocean controller cluster identifier.
+            region:
+              type: string
+            autoScaler:
+              type: object
+              properties:
+                isEnabled:
+                  type: boolean
+                isAutoConfig:
+                  type: boolean
+                cooldown:
+                  type: integer
+                resourceLimits:
+                  type: object
+                  properties:
+                    maxMemoryGib:
+                      type: integer
+                    maxVCpu:
+                      type: integer
+                down:
+                  type: object
+                  properties:
+                    maxScaleDownPercentage:
+                      type: integer
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+            strategy:
+              type: object
+              properties:
+                spotPercentage:
+                  type: integer
+                fallbackToOd:
+                  type: boolean
+                utilizeReservedInstances:
+                  type: boolean
+                utilizeCommitments:
+                  type: boolean
+            compute:
+              type: object
+              properties:
+                instanceTypes:
+                  type: object
+                  properties:
+                    whitelist:
+                      type: array
+                      items:
+                        type: string
+                    blacklist:
+                      type: array
+                      items:
+                        type: string
+                subnetIds:
+                  type: array
+                  items:
+                    type: string
+                launchSpecification:
+                  type: object
+                  properties:
+                    imageId:
+                      type: string
+                    securityGroupIds:
+                      type: array
+                      items:
+                        type: string
+                    keyPair:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          tagKey:
+                            type: string
+                          tagValue:
+                            type: string
+    OceanECSClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            clusterName:
+              type: string
+              description: The ECS cluster name.
+            region:
+              type: string
+            autoScaler:
+              type: object
+              properties:
+                isEnabled:
+                  type: boolean
+                isAutoConfig:
+                  type: boolean
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+            compute:
+              type: object
+              properties:
+                instanceTypes:
+                  type: object
+                  properties:
+                    whitelist:
+                      type: array
+                      items:
+                        type: string
+                subnetIds:
+                  type: array
+                  items:
+                    type: string
+    OceanGKEClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            controllerClusterId:
+              type: string
+            gke:
+              type: object
+              properties:
+                clusterName:
+                  type: string
+                masterLocation:
+                  type: string
+            autoScaler:
+              type: object
+              properties:
+                isEnabled:
+                  type: boolean
+                isAutoConfig:
+                  type: boolean
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+    OceanAKSClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            controllerClusterId:
+              type: string
+            aks:
+              type: object
+              properties:
+                clusterName:
+                  type: string
+                resourceGroupName:
+                  type: string
+                region:
+                  type: string
+            autoScaler:
+              type: object
+              properties:
+                isEnabled:
+                  type: boolean
+                isAutoConfig:
+                  type: boolean
+    VirtualNodeGroupAWSRequest:
+      type: object
+      properties:
+        launchSpec:
+          type: object
+          properties:
+            name:
+              type: string
+            oceanId:
+              type: string
+            imageId:
+              type: string
+            instanceTypes:
+              type: array
+              items:
+                type: string
+            labels:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+            taints:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+                  effect:
+                    type: string
+    OceanRollRequest:
+      type: object
+      properties:
+        roll:
+          type: object
+          properties:
+            batchSizePercentage:
+              type: integer
+              description: Percentage of nodes to replace in each batch.
+            comment:
+              type: string
+            batchMinHealthyPercentage:
+              type: integer
+            respectPdb:
+              type: boolean
+              description: Respect pod disruption budgets during the roll.
+    OceanCDClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            kubernetesClusterId:
+              type: string
+    OceanSparkClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            oceanClusterId:
+              type: string
+              description: The ID of the Ocean cluster to use.
+            config:
+              type: object
+    OceanClusterResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/OceanCluster'
+    OceanClusterListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/OceanCluster'
+    OceanCluster:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        controllerClusterId:
+          type: string
+        region:
+          type: string
+        autoScaler:
+          type: object
+        capacity:
+          type: object
+        strategy:
+          type: object
+        compute:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time

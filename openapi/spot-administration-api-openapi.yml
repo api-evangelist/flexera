@@ -1,0 +1,719 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration API
+  description: >-
+    The Spot Administration API provides endpoints for managing organizations,
+    accounts, users, access policies, cloud credentials, subscriptions,
+    and event notifications within the Spot by Flexera platform. It enables
+    programmatic control over user permissions, account setup, and cloud
+    provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+  - url: https://api.spotinst.io
+    description: Spot Production API
+security:
+  - bearerAuth: []
+tags:
+  - name: Organizations
+    description: Create and manage Spot organizations.
+  - name: Accounts
+    description: Create, update, list, and delete Spot accounts within an organization.
+  - name: Users
+    description: >-
+      Create, get, update, and delete users. Manage user permissions
+      and account assignments.
+  - name: User Groups
+    description: Create and manage user groups for bulk permission management.
+  - name: Access Policies
+    description: Create, update, and manage access control policies for users and groups.
+  - name: Cloud Credentials
+    description: >-
+      Link and validate cloud provider credentials for AWS, Azure, and GCP
+      accounts.
+  - name: Subscriptions
+    description: Manage event notification subscriptions for Spot resources.
+  - name: Audit
+    description: Retrieve audit logs for actions performed within the organization.
+  - name: Health Check
+    description: Check the health status of the Spot API.
+paths:
+  /setup/organization:
+    post:
+      operationId: createOrganization
+      summary: Create organization
+      description: Create a new organization in Spot.
+      tags:
+        - Organizations
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+    delete:
+      operationId: deleteOrganization
+      summary: Delete organization
+      description: Delete an existing organization.
+      tags:
+        - Organizations
+      responses:
+        '200':
+          description: Successful response
+  /setup/account:
+    post:
+      operationId: createAccount
+      summary: Create account
+      description: Create a new account within an organization.
+      tags:
+        - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+    get:
+      operationId: listAccounts
+      summary: List accounts
+      description: >-
+        Get a list of Spot accounts in your organization. When used without
+        parameters, the provided token must have Organization Admin permissions
+        and the output will contain all the organization accounts.
+      tags:
+        - Accounts
+      parameters:
+        - name: cloudAccountId
+          in: query
+          description: Filter by cloud account ID.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountListResponse'
+  /setup/account/{accountId}:
+    put:
+      operationId: updateAccount
+      summary: Update account
+      description: Update an existing account.
+      tags:
+        - Accounts
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccountRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteAccount
+      summary: Delete account
+      description: Delete an existing account.
+      tags:
+        - Accounts
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /setup/user:
+    post:
+      operationId: createUser
+      summary: Create user
+      description: >-
+        Create a new user and link it to the creator's organization. If the role
+        is a viewer, the user is also linked to the default account for the
+        organization.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+  /setup/organization/{organizationId}/user:
+    get:
+      operationId: listOrganizationUsers
+      summary: List organization users
+      description: >-
+        Get all users in the organization, their details, and mapped accounts.
+        Providing the optional account ID parameter will filter out all users
+        not mapped to that account.
+      tags:
+        - Users
+      parameters:
+        - name: organizationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+  /setup/user/{userId}:
+    get:
+      operationId: getUser
+      summary: Get user details
+      description: Get details of a specific user.
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+    put:
+      operationId: updateUserPermissions
+      summary: Update user permissions
+      description: Update user permissions and role assignments.
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPermissionsRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteUser
+      summary: Delete user
+      description: Delete a user from the organization.
+      tags:
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /setup/user/programmatic:
+    post:
+      operationId: createProgrammaticUser
+      summary: Create programmatic user
+      description: Create a programmatic user for API access.
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProgrammaticUserRequest'
+      responses:
+        '200':
+          description: Successful response
+  /setup/access/policy:
+    post:
+      operationId: createAccessPolicy
+      summary: Create access policy
+      description: Create a new access policy for the organization.
+      tags:
+        - Access Policies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessPolicyRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listAccessPolicies
+      summary: List access policies
+      description: Get all access policies of the organization.
+      tags:
+        - Access Policies
+      responses:
+        '200':
+          description: Successful response
+  /setup/access/policy/{policyId}:
+    put:
+      operationId: updateAccessPolicy
+      summary: Update access policy
+      description: Update an existing access policy.
+      tags:
+        - Access Policies
+      parameters:
+        - name: policyId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessPolicyRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteAccessPolicy
+      summary: Delete access policy
+      description: Delete an access policy.
+      tags:
+        - Access Policies
+      parameters:
+        - name: policyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /setup/credentials/aws:
+    post:
+      operationId: setAWSCloudCredentials
+      summary: Set AWS cloud credentials
+      description: Link a Spot account to an AWS cloud account.
+      tags:
+        - Cloud Credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AWSCredentialsRequest'
+      responses:
+        '200':
+          description: Successful response
+  /setup/credentials/azure:
+    post:
+      operationId: setAzureCloudCredentials
+      summary: Set Azure cloud credentials
+      description: Link a Spot account to an Azure subscription.
+      tags:
+        - Cloud Credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureCredentialsRequest'
+      responses:
+        '200':
+          description: Successful response
+  /setup/credentials/gcp:
+    post:
+      operationId: setGCPCloudCredentials
+      summary: Set GCP cloud credentials
+      description: Link a Spot account to a GCP project.
+      tags:
+        - Cloud Credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GCPCredentialsRequest'
+      responses:
+        '200':
+          description: Successful response
+  /events/subscription:
+    post:
+      operationId: createSubscription
+      summary: Create event subscription
+      description: Subscribe to event notifications for Spot resources.
+      tags:
+        - Subscriptions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listSubscriptions
+      summary: List event subscriptions
+      description: Get all event subscriptions.
+      tags:
+        - Subscriptions
+      responses:
+        '200':
+          description: Successful response
+  /events/subscription/{subscriptionId}:
+    get:
+      operationId: getSubscription
+      summary: Get event subscription
+      description: Get details of a specific event subscription.
+      tags:
+        - Subscriptions
+      parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateSubscription
+      summary: Update event subscription
+      description: Update an existing event subscription.
+      tags:
+        - Subscriptions
+      parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteSubscription
+      summary: Delete event subscription
+      description: Delete an event subscription.
+      tags:
+        - Subscriptions
+      parameters:
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /audit/events:
+    get:
+      operationId: listAuditEvents
+      summary: List audit events
+      description: Retrieve audit log events for the organization.
+      tags:
+        - Audit
+      parameters:
+        - name: fromDate
+          in: query
+          description: Start date for audit events.
+          schema:
+            type: string
+            format: date-time
+        - name: toDate
+          in: query
+          description: End date for audit events.
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Successful response
+  /healthCheck:
+    get:
+      operationId: healthCheck
+      summary: Health check
+      description: Check the health status of the Spot API.
+      tags:
+        - Health Check
+      responses:
+        '200':
+          description: API is healthy
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Spot API uses Bearer Token Authentication. Include your API token
+        in the Authorization header.
+  schemas:
+    OrganizationResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Organization'
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    CreateAccountRequest:
+      type: object
+      properties:
+        account:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the account.
+    UpdateAccountRequest:
+      type: object
+      properties:
+        account:
+          type: object
+          properties:
+            name:
+              type: string
+    AccountResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Account'
+    AccountListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Account'
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+    CreateUserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum:
+            - admin
+            - viewer
+            - editor
+    CreateProgrammaticUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the programmatic user.
+        description:
+          type: string
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              role:
+                type: string
+    UpdateUserPermissionsRequest:
+      type: object
+      properties:
+        role:
+          type: string
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              role:
+                type: string
+    UserResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+    UserListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        type:
+          type: string
+        organizationId:
+          type: string
+    AccessPolicyRequest:
+      type: object
+      properties:
+        policy:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            permissions:
+              type: array
+              items:
+                type: object
+                properties:
+                  serviceId:
+                    type: string
+                  actions:
+                    type: array
+                    items:
+                      type: string
+    AWSCredentialsRequest:
+      type: object
+      properties:
+        credentials:
+          type: object
+          properties:
+            iamRole:
+              type: string
+              description: The ARN of the IAM role to use.
+    AzureCredentialsRequest:
+      type: object
+      properties:
+        credentials:
+          type: object
+          properties:
+            clientId:
+              type: string
+            clientSecret:
+              type: string
+            tenantId:
+              type: string
+            subscriptionId:
+              type: string
+    GCPCredentialsRequest:
+      type: object
+      properties:
+        credentials:
+          type: object
+          properties:
+            serviceAccount:
+              type: object
+              description: GCP service account JSON key.
+    SubscriptionRequest:
+      type: object
+      properties:
+        subscription:
+          type: object
+          properties:
+            resourceId:
+              type: string
+            protocol:
+              type: string
+              enum:
+                - http
+                - https
+                - email
+                - email-json
+                - aws-sns
+                - web
+            endpoint:
+              type: string
+            eventType:
+              type: string
