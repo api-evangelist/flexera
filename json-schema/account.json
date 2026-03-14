@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/spot/blob/main/json-schema/account.json",
+  "title": "Spot Account",
+  "description": "A Spot account represents a logical unit within an organization, typically mapped to a cloud provider account or subscription for managing infrastructure resources.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the account."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the account."
+    },
+    "organizationId": {
+      "type": "string",
+      "description": "The identifier of the parent organization."
+    },
+    "cloudAccountId": {
+      "type": "string",
+      "description": "The linked cloud provider account identifier."
+    },
+    "providerExternalId": {
+      "type": "string",
+      "description": "The external ID used for cloud provider trust relationships."
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "spot": "https://docs.spot.io/api/",
+    "Organization": {
+      "@id": "spot:organization",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "name": "https://schema.org/name"
+      }
+    },
+    "Account": {
+      "@id": "spot:account",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "name": "https://schema.org/name",
+        "organizationId": {
+          "@id": "spot:organization",
+          "@type": "@id"
+        },
+        "cloudAccountId": "https://schema.org/identifier"
+      }
+    },
+    "User": {
+      "@id": "spot:user",
+      "@context": {
+        "userId": "https://schema.org/identifier",
+        "username": "https://schema.org/alternateName",
+        "email": "https://schema.org/email",
+        "firstName": "https://schema.org/givenName",
+        "lastName": "https://schema.org/familyName",
+        "type": "https://schema.org/category",
+        "role": "https://schema.org/roleName",
+        "organizationId": {
+          "@id": "spot:organization",
+          "@type": "@id"
+        }
+      }
+    },
+    "AccessPolicy": {
+      "@id": "spot:access-policy",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "name": "https://schema.org/name",
+        "description": "https://schema.org/description",
+        "permissions": "https://schema.org/hasDigitalDocumentPermission"
+      }
+    },
+    "Elastigroup": {
+      "@id": "spot:elastigroup",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "name": "https://schema.org/name",
+        "description": "https://schema.org/description",
+        "region": "https://schema.org/locationCreated",
+        "capacity": "https://schema.org/value",
+        "strategy": "https://schema.org/actionOption",
+        "compute": "https://schema.org/hasPart",
+        "createdAt": "https://schema.org/dateCreated",
+        "updatedAt": "https://schema.org/dateModified"
+      }
+    },
+    "OceanCluster": {
+      "@id": "spot:ocean-cluster",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "name": "https://schema.org/name",
+        "controllerClusterId": "https://schema.org/identifier",
+        "region": "https://schema.org/locationCreated",
+        "autoScaler": "https://schema.org/actionOption",
+        "capacity": "https://schema.org/value",
+        "strategy": "https://schema.org/actionOption",
+        "createdAt": "https://schema.org/dateCreated",
+        "updatedAt": "https://schema.org/dateModified"
+      }
+    },
+    "VirtualNodeGroup": {
+      "@id": "spot:virtual-node-group",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "name": "https://schema.org/name",
+        "oceanId": {
+          "@id": "spot:ocean-cluster",
+          "@type": "@id"
+        },
+        "labels": "https://schema.org/keywords",
+        "taints": "https://schema.org/actionOption"
+      }
+    },
+    "Subscription": {
+      "@id": "spot:subscription",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "resourceId": "https://schema.org/identifier",
+        "protocol": "https://schema.org/encodingFormat",
+        "endpoint": "https://schema.org/url",
+        "eventType": "https://schema.org/category"
+      }
+    },
+    "CommitmentPlan": {
+      "@id": "spot:commitment-plan",
+      "@context": {
+        "id": "https://schema.org/identifier",
+        "type": "https://schema.org/category",
+        "provider": "https://schema.org/provider",
+        "status": "https://schema.org/status",
+        "startDate": "https://schema.org/startDate",
+        "endDate": "https://schema.org/endDate",
+        "monthlySavings": "https://schema.org/price",
+        "utilizationPercentage": "https://schema.org/value"
+      }
+    }
+  }
+}

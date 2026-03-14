@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/spot/blob/main/json-schema/virtual-node-group.json",
+  "title": "Spot Virtual Node Group",
+  "description": "A virtual node group (launch specification) defines a set of node configurations within an Ocean cluster, allowing different workloads to run on nodes with specific instance types, labels, and taints.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the virtual node group."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the virtual node group."
+    },
+    "oceanId": {
+      "type": "string",
+      "description": "The identifier of the parent Ocean cluster."
+    },
+    "imageId": {
+      "type": "string",
+      "description": "The AMI or image ID for instances in this virtual node group."
+    },
+    "instanceTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of allowed instance types for this virtual node group."
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Kubernetes labels to apply to nodes in this virtual node group."
+    },
+    "taints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "effect": {
+            "type": "string",
+            "enum": ["NoSchedule", "PreferNoSchedule", "NoExecute"]
+          }
+        }
+      },
+      "description": "Kubernetes taints to apply to nodes in this virtual node group."
+    }
+  }
+}

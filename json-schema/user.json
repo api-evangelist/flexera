@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/spot/blob/main/json-schema/user.json",
+  "title": "Spot User",
+  "description": "A Spot user represents an individual or programmatic identity with permissions to access and manage resources within a Spot organization.",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "The unique identifier of the user."
+    },
+    "username": {
+      "type": "string",
+      "description": "The username of the user."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email address of the user."
+    },
+    "firstName": {
+      "type": "string",
+      "description": "The first name of the user."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "The last name of the user."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["user", "programmatic"],
+      "description": "The type of user, either a human user or programmatic API user."
+    },
+    "role": {
+      "type": "string",
+      "enum": ["admin", "viewer", "editor"],
+      "description": "The role assigned to the user within an account."
+    },
+    "organizationId": {
+      "type": "string",
+      "description": "The identifier of the organization the user belongs to."
+    }
+  }
+}

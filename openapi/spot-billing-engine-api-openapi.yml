@@ -1,0 +1,353 @@
+openapi: 3.1.0
+info:
+  title: Spot Billing Engine API
+  description: >-
+    The Spot Billing Engine API provides programmatic access to cloud billing
+    management, cost allocation, and invoicing capabilities. Billing Engine
+    streamlines multi-cloud invoicing with intelligent cost allocation,
+    chargeback and showback reporting, and comprehensive billing analytics
+    across AWS, Azure, and GCP accounts.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+  - url: https://api.spotinst.io
+    description: Spot Production API
+security:
+  - bearerAuth: []
+tags:
+  - name: Billing Engine Setup
+    description: Set up and configure Billing Engine for cloud accounts.
+  - name: Billing Accounts
+    description: Manage registered billing accounts and their configurations.
+  - name: Cost Analysis
+    description: Retrieve cost analysis and spending data across cloud accounts.
+  - name: Cost Intelligence
+    description: >-
+      Access Cost Intelligence analytics for actionable cost insights
+      and recommendations.
+  - name: Families
+    description: Manage account families for grouping and cost allocation.
+paths:
+  /billingEngine/account:
+    get:
+      operationId: listBillingEngineAccounts
+      summary: List Billing Engine accounts
+      description: >-
+        Get all accounts registered with Billing Engine, including their
+        cloud provider type and configuration status.
+      tags:
+        - Billing Accounts
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingAccountListResponse'
+  /billingEngine/setup:
+    post:
+      operationId: setupBillingEngine
+      summary: Set up Billing Engine
+      description: >-
+        Set up Billing Engine on a Spot account by linking it to a cloud
+        provider billing account for cost data ingestion.
+      tags:
+        - Billing Engine Setup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingEngineSetupRequest'
+      responses:
+        '200':
+          description: Successful response
+  /billingEngine/setup/validation:
+    post:
+      operationId: validateBillingEngineSetup
+      summary: Validate Billing Engine setup
+      description: >-
+        Perform validation checks on a Billing Engine setup to ensure
+        correct cloud provider credentials and billing access.
+      tags:
+        - Billing Engine Setup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingEngineValidationRequest'
+      responses:
+        '200':
+          description: Successful response
+  /billingEngine/family:
+    post:
+      operationId: createAccountFamily
+      summary: Create account family
+      description: >-
+        Create an account family for grouping related cloud accounts
+        and enabling consolidated cost allocation.
+      tags:
+        - Families
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountFamilyRequest'
+      responses:
+        '200':
+          description: Successful response
+    get:
+      operationId: listAccountFamilies
+      summary: List account families
+      description: List all account families configured in Billing Engine.
+      tags:
+        - Families
+      responses:
+        '200':
+          description: Successful response
+  /billingEngine/family/{familyId}:
+    get:
+      operationId: getAccountFamily
+      summary: Get account family
+      description: Get details of a specific account family.
+      tags:
+        - Families
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+    put:
+      operationId: updateAccountFamily
+      summary: Update account family
+      description: Update an existing account family.
+      tags:
+        - Families
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountFamilyRequest'
+      responses:
+        '200':
+          description: Successful response
+    delete:
+      operationId: deleteAccountFamily
+      summary: Delete account family
+      description: Delete an account family.
+      tags:
+        - Families
+      parameters:
+        - name: familyId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /billingEngine/cost:
+    get:
+      operationId: getCostAnalysis
+      summary: Get cost analysis
+      description: >-
+        Retrieve cost analysis data across registered cloud accounts,
+        including breakdowns by service, account, and time period.
+      tags:
+        - Cost Analysis
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          description: Start date for the cost analysis period.
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          description: End date for the cost analysis period.
+          schema:
+            type: string
+            format: date
+        - name: groupBy
+          in: query
+          description: Dimension to group costs by.
+          schema:
+            type: string
+            enum:
+              - account
+              - service
+              - region
+              - family
+      responses:
+        '200':
+          description: Successful response
+  /costIntelligence/setup:
+    post:
+      operationId: setupCostIntelligence
+      summary: Set up Cost Intelligence
+      description: >-
+        Set up Cost Intelligence on a Spot account to enable granular
+        cost analytics and actionable optimization recommendations.
+      tags:
+        - Cost Intelligence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostIntelligenceSetupRequest'
+      responses:
+        '200':
+          description: Successful response
+  /costIntelligence/setup/validation:
+    post:
+      operationId: validateCostIntelligenceSetup
+      summary: Validate Cost Intelligence setup
+      description: >-
+        Perform validation checks on a Cost Intelligence setup to ensure
+        correct access and configuration.
+      tags:
+        - Cost Intelligence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostIntelligenceValidationRequest'
+      responses:
+        '200':
+          description: Successful response
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Spot API uses Bearer Token Authentication. Include your API token
+        in the Authorization header.
+  schemas:
+    BillingAccountListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BillingAccount'
+    BillingAccount:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The Spot account identifier.
+        cloudProvider:
+          type: string
+          enum:
+            - aws
+            - azure
+            - gcp
+          description: The cloud provider type.
+        status:
+          type: string
+          description: The setup status of the billing account.
+        billingAccountId:
+          type: string
+          description: The cloud provider billing account identifier.
+    BillingEngineSetupRequest:
+      type: object
+      properties:
+        billingEngine:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+              enum:
+                - aws
+                - azure
+                - gcp
+            billingAccountId:
+              type: string
+              description: The cloud provider billing or payer account ID.
+            bucketName:
+              type: string
+              description: The S3 bucket or storage container for cost and usage reports.
+    BillingEngineValidationRequest:
+      type: object
+      properties:
+        billingEngine:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+            billingAccountId:
+              type: string
+    AccountFamilyRequest:
+      type: object
+      properties:
+        family:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the account family.
+            description:
+              type: string
+              description: A description of the account family.
+            accountIds:
+              type: array
+              items:
+                type: string
+              description: List of account IDs to include in the family.
+    CostIntelligenceSetupRequest:
+      type: object
+      properties:
+        costIntelligence:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+              enum:
+                - aws
+                - azure
+                - gcp
+            billingAccountId:
+              type: string
+    CostIntelligenceValidationRequest:
+      type: object
+      properties:
+        costIntelligence:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+            billingAccountId:
+              type: string

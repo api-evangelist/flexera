@@ -1,0 +1,340 @@
+openapi: 3.1.0
+info:
+  title: Spot Eco API
+  description: >-
+    The Spot Eco API provides programmatic access to cloud commitment management
+    and optimization across AWS, Azure, and GCP. Eco automates the purchase,
+    management, and optimization of reserved instances, savings plans, and
+    committed use discounts to maximize cloud cost savings while maintaining
+    flexibility.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+  - url: https://api.spotinst.io
+    description: Spot Production API
+security:
+  - bearerAuth: []
+tags:
+  - name: Eco AWS
+    description: >-
+      Manage Eco commitment optimization for AWS reserved instances and
+      savings plans.
+  - name: Eco Azure
+    description: >-
+      Manage Eco commitment optimization for Azure reserved instances.
+  - name: Eco GCP
+    description: >-
+      Manage Eco commitment optimization for GCP committed use discounts.
+  - name: Commitment Plans
+    description: >-
+      View and manage commitment plans including reserved instances,
+      savings plans, and CUDs.
+  - name: Savings Analysis
+    description: >-
+      Analyze potential and realized savings from cloud commitments.
+paths:
+  /eco/aws/commitmentPlan:
+    get:
+      operationId: listCommitmentPlansAWS
+      summary: List commitment plans (AWS)
+      description: >-
+        List all AWS commitment plans including reserved instances and
+        savings plans managed by Eco.
+      tags:
+        - Eco AWS
+      parameters:
+        - name: accountId
+          in: query
+          description: The Spot account ID.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentPlanListResponse'
+  /eco/aws/commitmentPlan/{commitmentPlanId}:
+    get:
+      operationId: getCommitmentPlanAWS
+      summary: Get commitment plan (AWS)
+      description: Get details of a specific AWS commitment plan.
+      tags:
+        - Eco AWS
+      parameters:
+        - name: commitmentPlanId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentPlanResponse'
+  /eco/aws/ri/unusedReservedInstances:
+    get:
+      operationId: getUnusedReservedInstancesAWS
+      summary: Get unused reserved instances (AWS)
+      description: >-
+        Retrieve a list of unused or underutilized AWS reserved instances
+        to identify optimization opportunities.
+      tags:
+        - Eco AWS
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /eco/aws/ri/savingsPlans:
+    get:
+      operationId: listSavingsPlansAWS
+      summary: List savings plans (AWS)
+      description: List all AWS savings plans managed by Eco.
+      tags:
+        - Eco AWS
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /eco/aws/ri/reservedInstances:
+    get:
+      operationId: listReservedInstancesAWS
+      summary: List reserved instances (AWS)
+      description: List all AWS reserved instances managed by Eco.
+      tags:
+        - Eco AWS
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /eco/aws/analysis/savings:
+    get:
+      operationId: getSavingsAnalysisAWS
+      summary: Get savings analysis (AWS)
+      description: >-
+        Retrieve a savings analysis report showing realized and potential
+        savings from AWS commitment optimization.
+      tags:
+        - Savings Analysis
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          description: Start date for the analysis period.
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          description: End date for the analysis period.
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+  /eco/aws/analysis/commitment:
+    get:
+      operationId: getCommitmentAnalysisAWS
+      summary: Get commitment analysis (AWS)
+      description: >-
+        Retrieve a commitment utilization analysis showing how effectively
+        reserved instances and savings plans are being used.
+      tags:
+        - Savings Analysis
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+  /eco/azure/commitmentPlan:
+    get:
+      operationId: listCommitmentPlansAzure
+      summary: List commitment plans (Azure)
+      description: List all Azure reserved instance commitment plans managed by Eco.
+      tags:
+        - Eco Azure
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /eco/azure/analysis/savings:
+    get:
+      operationId: getSavingsAnalysisAzure
+      summary: Get savings analysis (Azure)
+      description: >-
+        Retrieve a savings analysis report for Azure commitment optimization.
+      tags:
+        - Savings Analysis
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+  /eco/gcp/commitmentPlan:
+    get:
+      operationId: listCommitmentPlansGCP
+      summary: List commitment plans (GCP)
+      description: >-
+        List all GCP committed use discount plans managed by Eco.
+      tags:
+        - Eco GCP
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+  /eco/gcp/analysis/savings:
+    get:
+      operationId: getSavingsAnalysisGCP
+      summary: Get savings analysis (GCP)
+      description: >-
+        Retrieve a savings analysis report for GCP commitment optimization.
+      tags:
+        - Savings Analysis
+      parameters:
+        - name: accountId
+          in: query
+          schema:
+            type: string
+        - name: fromDate
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: toDate
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Successful response
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Spot API uses Bearer Token Authentication. Include your API token
+        in the Authorization header.
+  schemas:
+    CommitmentPlanResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/CommitmentPlan'
+    CommitmentPlanListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/CommitmentPlan'
+    CommitmentPlan:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the commitment plan.
+        type:
+          type: string
+          enum:
+            - reservedInstance
+            - savingsPlan
+            - committedUseDiscount
+          description: The type of commitment.
+        provider:
+          type: string
+          enum:
+            - aws
+            - azure
+            - gcp
+          description: The cloud provider.
+        status:
+          type: string
+          description: The current status of the commitment plan.
+        startDate:
+          type: string
+          format: date-time
+          description: The start date of the commitment.
+        endDate:
+          type: string
+          format: date-time
+          description: The end date of the commitment.
+        monthlySavings:
+          type: number
+          description: Estimated monthly savings from this commitment.
+        utilizationPercentage:
+          type: number
+          description: Current utilization percentage of the commitment.

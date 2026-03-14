@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/spot/blob/main/json-schema/organization.json",
+  "title": "Spot Organization",
+  "description": "A Spot organization is the top-level entity that contains accounts, users, and policies for managing cloud infrastructure through the Spot platform.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the organization."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the organization."
+    }
+  }
+}

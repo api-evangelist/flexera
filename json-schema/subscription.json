@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/api-evangelist/spot/blob/main/json-schema/subscription.json",
+  "title": "Spot Subscription",
+  "description": "A Spot subscription defines an event notification configuration, delivering alerts about Spot resource events to a specified endpoint via a chosen protocol.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the subscription."
+    },
+    "resourceId": {
+      "type": "string",
+      "description": "The identifier of the resource to monitor."
+    },
+    "protocol": {
+      "type": "string",
+      "enum": ["http", "https", "email", "email-json", "aws-sns", "web"],
+      "description": "The protocol used to deliver event notifications."
+    },
+    "endpoint": {
+      "type": "string",
+      "description": "The endpoint URL or address where notifications are sent."
+    },
+    "eventType": {
+      "type": "string",
+      "description": "The type of event to subscribe to."
+    },
+    "eventFormat": {
+      "type": "object",
+      "description": "Custom formatting options for the event notification payload."
+    }
+  }
+}
