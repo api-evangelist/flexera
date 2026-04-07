@@ -34,7 +34,7 @@ paths:
   /billingEngine/account:
     get:
       operationId: listBillingEngineAccounts
-      summary: List Billing Engine accounts
+      summary: Spot List Billing Engine accounts
       description: >-
         Get all accounts registered with Billing Engine, including their
         cloud provider type and configuration status.
@@ -55,7 +55,7 @@ paths:
   /billingEngine/setup:
     post:
       operationId: setupBillingEngine
-      summary: Set up Billing Engine
+      summary: Spot Set up Billing Engine
       description: >-
         Set up Billing Engine on a Spot account by linking it to a cloud
         provider billing account for cost data ingestion.
@@ -73,7 +73,7 @@ paths:
   /billingEngine/setup/validation:
     post:
       operationId: validateBillingEngineSetup
-      summary: Validate Billing Engine setup
+      summary: Spot Validate Billing Engine setup
       description: >-
         Perform validation checks on a Billing Engine setup to ensure
         correct cloud provider credentials and billing access.
@@ -91,7 +91,7 @@ paths:
   /billingEngine/family:
     post:
       operationId: createAccountFamily
-      summary: Create account family
+      summary: Spot Create account family
       description: >-
         Create an account family for grouping related cloud accounts
         and enabling consolidated cost allocation.
@@ -108,7 +108,7 @@ paths:
           description: Successful response
     get:
       operationId: listAccountFamilies
-      summary: List account families
+      summary: Spot List account families
       description: List all account families configured in Billing Engine.
       tags:
         - Families
@@ -118,7 +118,7 @@ paths:
   /billingEngine/family/{familyId}:
     get:
       operationId: getAccountFamily
-      summary: Get account family
+      summary: Spot Get account family
       description: Get details of a specific account family.
       tags:
         - Families
@@ -133,7 +133,7 @@ paths:
           description: Successful response
     put:
       operationId: updateAccountFamily
-      summary: Update account family
+      summary: Spot Update account family
       description: Update an existing account family.
       tags:
         - Families
@@ -154,7 +154,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteAccountFamily
-      summary: Delete account family
+      summary: Spot Delete account family
       description: Delete an account family.
       tags:
         - Families
@@ -170,7 +170,7 @@ paths:
   /billingEngine/cost:
     get:
       operationId: getCostAnalysis
-      summary: Get cost analysis
+      summary: Spot Get cost analysis
       description: >-
         Retrieve cost analysis data across registered cloud accounts,
         including breakdowns by service, account, and time period.
@@ -209,7 +209,7 @@ paths:
   /costIntelligence/setup:
     post:
       operationId: setupCostIntelligence
-      summary: Set up Cost Intelligence
+      summary: Spot Set up Cost Intelligence
       description: >-
         Set up Cost Intelligence on a Spot account to enable granular
         cost analytics and actionable optimization recommendations.
@@ -227,7 +227,7 @@ paths:
   /costIntelligence/setup/validation:
     post:
       operationId: validateCostIntelligenceSetup
-      summary: Validate Cost Intelligence setup
+      summary: Spot Validate Cost Intelligence setup
       description: >-
         Perform validation checks on a Cost Intelligence setup to ensure
         correct access and configuration.

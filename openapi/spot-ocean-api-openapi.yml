@@ -41,7 +41,7 @@ paths:
   /ocean/aws/k8s/cluster:
     post:
       operationId: createOceanClusterAWS
-      summary: Create Ocean cluster (AWS)
+      summary: Spot Create Ocean cluster (AWS)
       description: Create a new Ocean cluster for AWS EKS.
       tags:
         - Ocean AWS
@@ -65,7 +65,7 @@ paths:
                 $ref: '#/components/schemas/OceanClusterResponse'
     get:
       operationId: listOceanClustersAWS
-      summary: List Ocean clusters (AWS)
+      summary: Spot List Ocean clusters (AWS)
       description: List all Ocean clusters for AWS in the account.
       tags:
         - Ocean AWS
@@ -84,7 +84,7 @@ paths:
   /ocean/aws/k8s/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterAWS
-      summary: Get Ocean cluster (AWS)
+      summary: Spot Get Ocean cluster (AWS)
       description: Get the configuration of an Ocean cluster.
       tags:
         - Ocean AWS
@@ -107,7 +107,7 @@ paths:
                 $ref: '#/components/schemas/OceanClusterResponse'
     put:
       operationId: updateOceanClusterAWS
-      summary: Update Ocean cluster (AWS)
+      summary: Spot Update Ocean cluster (AWS)
       description: Update an existing Ocean cluster configuration.
       tags:
         - Ocean AWS
@@ -132,7 +132,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteOceanClusterAWS
-      summary: Delete Ocean cluster (AWS)
+      summary: Spot Delete Ocean cluster (AWS)
       description: Delete an Ocean cluster.
       tags:
         - Ocean AWS
@@ -152,7 +152,7 @@ paths:
   /ocean/aws/k8s/cluster/{oceanClusterId}/roll:
     post:
       operationId: initiateRollAWS
-      summary: Initiate cluster roll (AWS)
+      summary: Spot Initiate cluster roll (AWS)
       description: >-
         Initiate a roll (rolling replacement) of nodes in an Ocean cluster.
       tags:
@@ -174,7 +174,7 @@ paths:
           description: Successful response
     get:
       operationId: listRollsAWS
-      summary: List cluster rolls (AWS)
+      summary: Spot List cluster rolls (AWS)
       description: List all rolls for an Ocean cluster.
       tags:
         - Rolls
@@ -190,7 +190,7 @@ paths:
   /ocean/aws/k8s/cluster/{oceanClusterId}/roll/{rollId}:
     get:
       operationId: getRollAWS
-      summary: Get roll details (AWS)
+      summary: Spot Get roll details (AWS)
       description: Get the details and status of a specific roll.
       tags:
         - Rolls
@@ -210,7 +210,7 @@ paths:
           description: Successful response
     put:
       operationId: updateRollAWS
-      summary: Update roll (AWS)
+      summary: Spot Update roll (AWS)
       description: Stop or modify a running roll.
       tags:
         - Rolls
@@ -245,7 +245,7 @@ paths:
   /ocean/aws/k8s/launchSpec:
     post:
       operationId: createVirtualNodeGroupAWS
-      summary: Create virtual node group (AWS)
+      summary: Spot Create virtual node group (AWS)
       description: Create a virtual node group (launch specification) for an Ocean cluster.
       tags:
         - Virtual Node Groups
@@ -260,7 +260,7 @@ paths:
           description: Successful response
     get:
       operationId: listVirtualNodeGroupsAWS
-      summary: List virtual node groups (AWS)
+      summary: Spot List virtual node groups (AWS)
       description: List all virtual node groups for an Ocean cluster.
       tags:
         - Virtual Node Groups
@@ -276,7 +276,7 @@ paths:
   /ocean/aws/k8s/launchSpec/{launchSpecId}:
     get:
       operationId: getVirtualNodeGroupAWS
-      summary: Get virtual node group (AWS)
+      summary: Spot Get virtual node group (AWS)
       description: Get the configuration of a virtual node group.
       tags:
         - Virtual Node Groups
@@ -291,7 +291,7 @@ paths:
           description: Successful response
     put:
       operationId: updateVirtualNodeGroupAWS
-      summary: Update virtual node group (AWS)
+      summary: Spot Update virtual node group (AWS)
       description: Update a virtual node group.
       tags:
         - Virtual Node Groups
@@ -312,7 +312,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteVirtualNodeGroupAWS
-      summary: Delete virtual node group (AWS)
+      summary: Spot Delete virtual node group (AWS)
       description: Delete a virtual node group.
       tags:
         - Virtual Node Groups
@@ -328,7 +328,7 @@ paths:
   /ocean/aws/ecs/cluster:
     post:
       operationId: createOceanClusterECS
-      summary: Create Ocean cluster (ECS)
+      summary: Spot Create Ocean cluster (ECS)
       description: Create a new Ocean cluster for Amazon ECS.
       tags:
         - Ocean ECS
@@ -343,7 +343,7 @@ paths:
           description: Successful response
     get:
       operationId: listOceanClustersECS
-      summary: List Ocean clusters (ECS)
+      summary: Spot List Ocean clusters (ECS)
       description: List all Ocean ECS clusters.
       tags:
         - Ocean ECS
@@ -353,7 +353,7 @@ paths:
   /ocean/aws/ecs/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterECS
-      summary: Get Ocean cluster (ECS)
+      summary: Spot Get Ocean cluster (ECS)
       description: Get an Ocean ECS cluster.
       tags:
         - Ocean ECS
@@ -368,7 +368,7 @@ paths:
           description: Successful response
     put:
       operationId: updateOceanClusterECS
-      summary: Update Ocean cluster (ECS)
+      summary: Spot Update Ocean cluster (ECS)
       description: Update an Ocean ECS cluster.
       tags:
         - Ocean ECS
@@ -389,7 +389,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteOceanClusterECS
-      summary: Delete Ocean cluster (ECS)
+      summary: Spot Delete Ocean cluster (ECS)
       description: Delete an Ocean ECS cluster.
       tags:
         - Ocean ECS
@@ -405,7 +405,7 @@ paths:
   /ocean/gke/cluster:
     post:
       operationId: createOceanClusterGKE
-      summary: Create Ocean cluster (GKE)
+      summary: Spot Create Ocean cluster (GKE)
       description: Create a new Ocean cluster for Google Kubernetes Engine.
       tags:
         - Ocean GKE
@@ -420,7 +420,7 @@ paths:
           description: Successful response
     get:
       operationId: listOceanClustersGKE
-      summary: List Ocean clusters (GKE)
+      summary: Spot List Ocean clusters (GKE)
       description: List all Ocean GKE clusters.
       tags:
         - Ocean GKE
@@ -430,7 +430,7 @@ paths:
   /ocean/gke/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterGKE
-      summary: Get Ocean cluster (GKE)
+      summary: Spot Get Ocean cluster (GKE)
       description: Get an Ocean GKE cluster.
       tags:
         - Ocean GKE
@@ -445,7 +445,7 @@ paths:
           description: Successful response
     put:
       operationId: updateOceanClusterGKE
-      summary: Update Ocean cluster (GKE)
+      summary: Spot Update Ocean cluster (GKE)
       description: Update an Ocean GKE cluster.
       tags:
         - Ocean GKE
@@ -466,7 +466,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteOceanClusterGKE
-      summary: Delete Ocean cluster (GKE)
+      summary: Spot Delete Ocean cluster (GKE)
       description: Delete an Ocean GKE cluster.
       tags:
         - Ocean GKE
@@ -482,7 +482,7 @@ paths:
   /ocean/azure/k8s/cluster:
     post:
       operationId: createOceanClusterAKS
-      summary: Create Ocean cluster (AKS)
+      summary: Spot Create Ocean cluster (AKS)
       description: Create a new Ocean cluster for Azure Kubernetes Service.
       tags:
         - Ocean AKS
@@ -497,7 +497,7 @@ paths:
           description: Successful response
     get:
       operationId: listOceanClustersAKS
-      summary: List Ocean clusters (AKS)
+      summary: Spot List Ocean clusters (AKS)
       description: List all Ocean AKS clusters.
       tags:
         - Ocean AKS
@@ -507,7 +507,7 @@ paths:
   /ocean/azure/k8s/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterAKS
-      summary: Get Ocean cluster (AKS)
+      summary: Spot Get Ocean cluster (AKS)
       description: Get an Ocean AKS cluster.
       tags:
         - Ocean AKS
@@ -522,7 +522,7 @@ paths:
           description: Successful response
     put:
       operationId: updateOceanClusterAKS
-      summary: Update Ocean cluster (AKS)
+      summary: Spot Update Ocean cluster (AKS)
       description: Update an Ocean AKS cluster.
       tags:
         - Ocean AKS
@@ -543,7 +543,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteOceanClusterAKS
-      summary: Delete Ocean cluster (AKS)
+      summary: Spot Delete Ocean cluster (AKS)
       description: Delete an Ocean AKS cluster.
       tags:
         - Ocean AKS
@@ -559,7 +559,7 @@ paths:
   /ocean/aws/k8s/cluster/{oceanClusterId}/rightSizing/suggestion:
     get:
       operationId: getRightSizingSuggestions
-      summary: Get right-sizing suggestions
+      summary: Spot Get right-sizing suggestions
       description: >-
         Get right-sizing recommendations for workloads running in an Ocean
         cluster. Returns CPU and memory recommendations based on actual usage.
@@ -577,7 +577,7 @@ paths:
   /ocean/cd/cluster:
     post:
       operationId: createOceanCDCluster
-      summary: Create Ocean CD cluster
+      summary: Spot Create Ocean CD cluster
       description: Register a cluster with Ocean CD for continuous delivery.
       tags:
         - Ocean CD
@@ -592,7 +592,7 @@ paths:
           description: Successful response
     get:
       operationId: listOceanCDClusters
-      summary: List Ocean CD clusters
+      summary: Spot List Ocean CD clusters
       description: List all clusters registered with Ocean CD.
       tags:
         - Ocean CD
@@ -602,7 +602,7 @@ paths:
   /ocean/cd/cluster/{clusterId}:
     get:
       operationId: getOceanCDCluster
-      summary: Get Ocean CD cluster
+      summary: Spot Get Ocean CD cluster
       description: Get a cluster registered with Ocean CD.
       tags:
         - Ocean CD
@@ -617,7 +617,7 @@ paths:
           description: Successful response
     put:
       operationId: updateOceanCDCluster
-      summary: Update Ocean CD cluster
+      summary: Spot Update Ocean CD cluster
       description: Update an Ocean CD cluster configuration.
       tags:
         - Ocean CD
@@ -638,7 +638,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteOceanCDCluster
-      summary: Delete Ocean CD cluster
+      summary: Spot Delete Ocean CD cluster
       description: Unregister a cluster from Ocean CD.
       tags:
         - Ocean CD
@@ -654,7 +654,7 @@ paths:
   /ocean/spark/cluster:
     post:
       operationId: createOceanSparkCluster
-      summary: Create Ocean Spark cluster
+      summary: Spot Create Ocean Spark cluster
       description: Create a new Ocean for Apache Spark cluster.
       tags:
         - Ocean Spark
@@ -669,7 +669,7 @@ paths:
           description: Successful response
     get:
       operationId: listOceanSparkClusters
-      summary: List Ocean Spark clusters
+      summary: Spot List Ocean Spark clusters
       description: List all Ocean Spark clusters.
       tags:
         - Ocean Spark
@@ -679,7 +679,7 @@ paths:
   /ocean/spark/cluster/{oceanSparkClusterId}:
     get:
       operationId: getOceanSparkCluster
-      summary: Get Ocean Spark cluster
+      summary: Spot Get Ocean Spark cluster
       description: Get an Ocean Spark cluster.
       tags:
         - Ocean Spark
@@ -694,7 +694,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteOceanSparkCluster
-      summary: Delete Ocean Spark cluster
+      summary: Spot Delete Ocean Spark cluster
       description: Delete an Ocean Spark cluster.
       tags:
         - Ocean Spark

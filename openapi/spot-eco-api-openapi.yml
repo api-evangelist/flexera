@@ -39,7 +39,7 @@ paths:
   /eco/aws/commitmentPlan:
     get:
       operationId: listCommitmentPlansAWS
-      summary: List commitment plans (AWS)
+      summary: Spot List commitment plans (AWS)
       description: >-
         List all AWS commitment plans including reserved instances and
         savings plans managed by Eco.
@@ -61,7 +61,7 @@ paths:
   /eco/aws/commitmentPlan/{commitmentPlanId}:
     get:
       operationId: getCommitmentPlanAWS
-      summary: Get commitment plan (AWS)
+      summary: Spot Get commitment plan (AWS)
       description: Get details of a specific AWS commitment plan.
       tags:
         - Eco AWS
@@ -85,7 +85,7 @@ paths:
   /eco/aws/ri/unusedReservedInstances:
     get:
       operationId: getUnusedReservedInstancesAWS
-      summary: Get unused reserved instances (AWS)
+      summary: Spot Get unused reserved instances (AWS)
       description: >-
         Retrieve a list of unused or underutilized AWS reserved instances
         to identify optimization opportunities.
@@ -102,7 +102,7 @@ paths:
   /eco/aws/ri/savingsPlans:
     get:
       operationId: listSavingsPlansAWS
-      summary: List savings plans (AWS)
+      summary: Spot List savings plans (AWS)
       description: List all AWS savings plans managed by Eco.
       tags:
         - Eco AWS
@@ -117,7 +117,7 @@ paths:
   /eco/aws/ri/reservedInstances:
     get:
       operationId: listReservedInstancesAWS
-      summary: List reserved instances (AWS)
+      summary: Spot List reserved instances (AWS)
       description: List all AWS reserved instances managed by Eco.
       tags:
         - Eco AWS
@@ -132,7 +132,7 @@ paths:
   /eco/aws/analysis/savings:
     get:
       operationId: getSavingsAnalysisAWS
-      summary: Get savings analysis (AWS)
+      summary: Spot Get savings analysis (AWS)
       description: >-
         Retrieve a savings analysis report showing realized and potential
         savings from AWS commitment optimization.
@@ -161,7 +161,7 @@ paths:
   /eco/aws/analysis/commitment:
     get:
       operationId: getCommitmentAnalysisAWS
-      summary: Get commitment analysis (AWS)
+      summary: Spot Get commitment analysis (AWS)
       description: >-
         Retrieve a commitment utilization analysis showing how effectively
         reserved instances and savings plans are being used.
@@ -188,7 +188,7 @@ paths:
   /eco/azure/commitmentPlan:
     get:
       operationId: listCommitmentPlansAzure
-      summary: List commitment plans (Azure)
+      summary: Spot List commitment plans (Azure)
       description: List all Azure reserved instance commitment plans managed by Eco.
       tags:
         - Eco Azure
@@ -203,7 +203,7 @@ paths:
   /eco/azure/analysis/savings:
     get:
       operationId: getSavingsAnalysisAzure
-      summary: Get savings analysis (Azure)
+      summary: Spot Get savings analysis (Azure)
       description: >-
         Retrieve a savings analysis report for Azure commitment optimization.
       tags:
@@ -229,7 +229,7 @@ paths:
   /eco/gcp/commitmentPlan:
     get:
       operationId: listCommitmentPlansGCP
-      summary: List commitment plans (GCP)
+      summary: Spot List commitment plans (GCP)
       description: >-
         List all GCP committed use discount plans managed by Eco.
       tags:
@@ -245,7 +245,7 @@ paths:
   /eco/gcp/analysis/savings:
     get:
       operationId: getSavingsAnalysisGCP
-      summary: Get savings analysis (GCP)
+      summary: Spot Get savings analysis (GCP)
       description: >-
         Retrieve a savings analysis report for GCP commitment optimization.
       tags:

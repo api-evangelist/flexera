@@ -44,7 +44,7 @@ paths:
   /setup/organization:
     post:
       operationId: createOrganization
-      summary: Create organization
+      summary: Spot Create organization
       description: Create a new organization in Spot.
       tags:
         - Organizations
@@ -57,7 +57,7 @@ paths:
                 $ref: '#/components/schemas/OrganizationResponse'
     delete:
       operationId: deleteOrganization
-      summary: Delete organization
+      summary: Spot Delete organization
       description: Delete an existing organization.
       tags:
         - Organizations
@@ -67,7 +67,7 @@ paths:
   /setup/account:
     post:
       operationId: createAccount
-      summary: Create account
+      summary: Spot Create account
       description: Create a new account within an organization.
       tags:
         - Accounts
@@ -86,7 +86,7 @@ paths:
                 $ref: '#/components/schemas/AccountResponse'
     get:
       operationId: listAccounts
-      summary: List accounts
+      summary: Spot List accounts
       description: >-
         Get a list of Spot accounts in your organization. When used without
         parameters, the provided token must have Organization Admin permissions
@@ -109,7 +109,7 @@ paths:
   /setup/account/{accountId}:
     put:
       operationId: updateAccount
-      summary: Update account
+      summary: Spot Update account
       description: Update an existing account.
       tags:
         - Accounts
@@ -130,7 +130,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteAccount
-      summary: Delete account
+      summary: Spot Delete account
       description: Delete an existing account.
       tags:
         - Accounts
@@ -146,7 +146,7 @@ paths:
   /setup/user:
     post:
       operationId: createUser
-      summary: Create user
+      summary: Spot Create user
       description: >-
         Create a new user and link it to the creator's organization. If the role
         is a viewer, the user is also linked to the default account for the
@@ -169,7 +169,7 @@ paths:
   /setup/organization/{organizationId}/user:
     get:
       operationId: listOrganizationUsers
-      summary: List organization users
+      summary: Spot List organization users
       description: >-
         Get all users in the organization, their details, and mapped accounts.
         Providing the optional account ID parameter will filter out all users
@@ -192,7 +192,7 @@ paths:
   /setup/user/{userId}:
     get:
       operationId: getUser
-      summary: Get user details
+      summary: Spot Get user details
       description: Get details of a specific user.
       tags:
         - Users
@@ -211,7 +211,7 @@ paths:
                 $ref: '#/components/schemas/UserResponse'
     put:
       operationId: updateUserPermissions
-      summary: Update user permissions
+      summary: Spot Update user permissions
       description: Update user permissions and role assignments.
       tags:
         - Users
@@ -232,7 +232,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteUser
-      summary: Delete user
+      summary: Spot Delete user
       description: Delete a user from the organization.
       tags:
         - Users
@@ -248,7 +248,7 @@ paths:
   /setup/user/programmatic:
     post:
       operationId: createProgrammaticUser
-      summary: Create programmatic user
+      summary: Spot Create programmatic user
       description: Create a programmatic user for API access.
       tags:
         - Users
@@ -264,7 +264,7 @@ paths:
   /setup/access/policy:
     post:
       operationId: createAccessPolicy
-      summary: Create access policy
+      summary: Spot Create access policy
       description: Create a new access policy for the organization.
       tags:
         - Access Policies
@@ -279,7 +279,7 @@ paths:
           description: Successful response
     get:
       operationId: listAccessPolicies
-      summary: List access policies
+      summary: Spot List access policies
       description: Get all access policies of the organization.
       tags:
         - Access Policies
@@ -289,7 +289,7 @@ paths:
   /setup/access/policy/{policyId}:
     put:
       operationId: updateAccessPolicy
-      summary: Update access policy
+      summary: Spot Update access policy
       description: Update an existing access policy.
       tags:
         - Access Policies
@@ -310,7 +310,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteAccessPolicy
-      summary: Delete access policy
+      summary: Spot Delete access policy
       description: Delete an access policy.
       tags:
         - Access Policies
@@ -326,7 +326,7 @@ paths:
   /setup/credentials/aws:
     post:
       operationId: setAWSCloudCredentials
-      summary: Set AWS cloud credentials
+      summary: Spot Set AWS cloud credentials
       description: Link a Spot account to an AWS cloud account.
       tags:
         - Cloud Credentials
@@ -342,7 +342,7 @@ paths:
   /setup/credentials/azure:
     post:
       operationId: setAzureCloudCredentials
-      summary: Set Azure cloud credentials
+      summary: Spot Set Azure cloud credentials
       description: Link a Spot account to an Azure subscription.
       tags:
         - Cloud Credentials
@@ -358,7 +358,7 @@ paths:
   /setup/credentials/gcp:
     post:
       operationId: setGCPCloudCredentials
-      summary: Set GCP cloud credentials
+      summary: Spot Set GCP cloud credentials
       description: Link a Spot account to a GCP project.
       tags:
         - Cloud Credentials
@@ -374,7 +374,7 @@ paths:
   /events/subscription:
     post:
       operationId: createSubscription
-      summary: Create event subscription
+      summary: Spot Create event subscription
       description: Subscribe to event notifications for Spot resources.
       tags:
         - Subscriptions
@@ -389,7 +389,7 @@ paths:
           description: Successful response
     get:
       operationId: listSubscriptions
-      summary: List event subscriptions
+      summary: Spot List event subscriptions
       description: Get all event subscriptions.
       tags:
         - Subscriptions
@@ -399,7 +399,7 @@ paths:
   /events/subscription/{subscriptionId}:
     get:
       operationId: getSubscription
-      summary: Get event subscription
+      summary: Spot Get event subscription
       description: Get details of a specific event subscription.
       tags:
         - Subscriptions
@@ -414,7 +414,7 @@ paths:
           description: Successful response
     put:
       operationId: updateSubscription
-      summary: Update event subscription
+      summary: Spot Update event subscription
       description: Update an existing event subscription.
       tags:
         - Subscriptions
@@ -435,7 +435,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteSubscription
-      summary: Delete event subscription
+      summary: Spot Delete event subscription
       description: Delete an event subscription.
       tags:
         - Subscriptions
@@ -451,7 +451,7 @@ paths:
   /audit/events:
     get:
       operationId: listAuditEvents
-      summary: List audit events
+      summary: Spot List audit events
       description: Retrieve audit log events for the organization.
       tags:
         - Audit
@@ -474,7 +474,7 @@ paths:
   /healthCheck:
     get:
       operationId: healthCheck
-      summary: Health check
+      summary: Spot Health check
       description: Check the health status of the Spot API.
       tags:
         - Health Check

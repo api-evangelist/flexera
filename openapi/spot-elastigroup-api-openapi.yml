@@ -35,7 +35,7 @@ paths:
   /aws/ec2/group:
     post:
       operationId: createElastigroupAWS
-      summary: Create Elastigroup (AWS)
+      summary: Spot Create Elastigroup (AWS)
       description: Create a new Elastigroup in AWS.
       tags:
         - Elastigroup AWS
@@ -60,7 +60,7 @@ paths:
                 $ref: '#/components/schemas/ElastigroupResponse'
     get:
       operationId: listElastigroupsAWS
-      summary: List Elastigroups (AWS)
+      summary: Spot List Elastigroups (AWS)
       description: List all Elastigroups in the specified account.
       tags:
         - Elastigroup AWS
@@ -80,7 +80,7 @@ paths:
   /aws/ec2/group/{groupId}:
     get:
       operationId: getElastigroupAWS
-      summary: Get Elastigroup (AWS)
+      summary: Spot Get Elastigroup (AWS)
       description: Get the configuration of an existing Elastigroup.
       tags:
         - Elastigroup AWS
@@ -103,7 +103,7 @@ paths:
                 $ref: '#/components/schemas/ElastigroupResponse'
     put:
       operationId: updateElastigroupAWS
-      summary: Update Elastigroup (AWS)
+      summary: Spot Update Elastigroup (AWS)
       description: Update an existing Elastigroup configuration.
       tags:
         - Elastigroup AWS
@@ -128,7 +128,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteElastigroupAWS
-      summary: Delete Elastigroup (AWS)
+      summary: Spot Delete Elastigroup (AWS)
       description: Delete an existing Elastigroup.
       tags:
         - Elastigroup AWS
@@ -148,7 +148,7 @@ paths:
   /aws/ec2/group/{groupId}/status:
     get:
       operationId: getElastigroupStatusAWS
-      summary: Get Elastigroup status (AWS)
+      summary: Spot Get Elastigroup status (AWS)
       description: Get the status of instances in an Elastigroup.
       tags:
         - Elastigroup AWS
@@ -168,7 +168,7 @@ paths:
   /aws/ec2/group/{groupId}/scale/up:
     put:
       operationId: scaleUpElastigroupAWS
-      summary: Scale up Elastigroup (AWS)
+      summary: Spot Scale up Elastigroup (AWS)
       description: Scale up the number of instances in an Elastigroup.
       tags:
         - Elastigroup AWS
@@ -189,7 +189,7 @@ paths:
   /aws/ec2/group/{groupId}/scale/down:
     put:
       operationId: scaleDownElastigroupAWS
-      summary: Scale down Elastigroup (AWS)
+      summary: Spot Scale down Elastigroup (AWS)
       description: Scale down the number of instances in an Elastigroup.
       tags:
         - Elastigroup AWS
@@ -210,7 +210,7 @@ paths:
   /aws/ec2/group/{groupId}/roll:
     post:
       operationId: rollElastigroupAWS
-      summary: Roll Elastigroup (AWS)
+      summary: Spot Roll Elastigroup (AWS)
       description: >-
         Trigger a roll (rolling update) for an Elastigroup. Replaces existing
         instances with new ones according to the configured deployment strategy.
@@ -233,7 +233,7 @@ paths:
           description: Successful response
     get:
       operationId: listRollsAWS
-      summary: List rolls (AWS)
+      summary: Spot List rolls (AWS)
       description: List all rolls for an Elastigroup.
       tags:
         - Deployments
@@ -249,7 +249,7 @@ paths:
   /aws/ec2/group/{groupId}/roll/{rollId}:
     get:
       operationId: getRollStatusAWS
-      summary: Get roll status (AWS)
+      summary: Spot Get roll status (AWS)
       description: Get the status of a specific roll.
       tags:
         - Deployments
@@ -269,7 +269,7 @@ paths:
           description: Successful response
     put:
       operationId: stopRollAWS
-      summary: Stop roll (AWS)
+      summary: Spot Stop roll (AWS)
       description: Stop an in-progress roll.
       tags:
         - Deployments
@@ -304,7 +304,7 @@ paths:
   /aws/ec2/group/{groupId}/statefulInstance:
     get:
       operationId: listStatefulInstances
-      summary: List stateful instances
+      summary: Spot List stateful instances
       description: List all stateful instances in an Elastigroup.
       tags:
         - Stateful Instances
@@ -320,7 +320,7 @@ paths:
   /aws/ec2/group/{groupId}/statefulInstance/{statefulInstanceId}:
     put:
       operationId: recycleStatefulInstance
-      summary: Recycle stateful instance
+      summary: Spot Recycle stateful instance
       description: Recycle a stateful instance, replacing it with a new one.
       tags:
         - Stateful Instances
@@ -340,7 +340,7 @@ paths:
           description: Successful response
     delete:
       operationId: deallocateStatefulInstance
-      summary: Deallocate stateful instance
+      summary: Spot Deallocate stateful instance
       description: Deallocate a stateful instance and its resources.
       tags:
         - Stateful Instances
@@ -361,7 +361,7 @@ paths:
   /aws/ec2/group/{groupId}/logs:
     get:
       operationId: getElastigroupLogs
-      summary: Get Elastigroup logs
+      summary: Spot Get Elastigroup logs
       description: Retrieve activity logs for an Elastigroup.
       tags:
         - Elastigroup AWS
@@ -387,7 +387,7 @@ paths:
   /aws/ec2/group/{groupId}/costs:
     get:
       operationId: getElastigroupCosts
-      summary: Get Elastigroup costs
+      summary: Spot Get Elastigroup costs
       description: Retrieve cost information for an Elastigroup.
       tags:
         - Elastigroup AWS
@@ -413,7 +413,7 @@ paths:
   /aws/emr/mrScaler:
     post:
       operationId: createEMRCluster
-      summary: Create EMR cluster
+      summary: Spot Create EMR cluster
       description: Create a new Amazon EMR cluster managed by Elastigroup.
       tags:
         - EMR
@@ -428,7 +428,7 @@ paths:
           description: Successful response
     get:
       operationId: listEMRClusters
-      summary: List EMR clusters
+      summary: Spot List EMR clusters
       description: List all EMR clusters managed by Elastigroup.
       tags:
         - EMR
@@ -438,7 +438,7 @@ paths:
   /aws/emr/mrScaler/{mrScalerId}:
     get:
       operationId: getEMRCluster
-      summary: Get EMR cluster
+      summary: Spot Get EMR cluster
       description: Get details of an EMR cluster.
       tags:
         - EMR
@@ -453,7 +453,7 @@ paths:
           description: Successful response
     put:
       operationId: updateEMRCluster
-      summary: Update EMR cluster
+      summary: Spot Update EMR cluster
       description: Update an existing EMR cluster.
       tags:
         - EMR
@@ -474,7 +474,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteEMRCluster
-      summary: Delete EMR cluster
+      summary: Spot Delete EMR cluster
       description: Delete an EMR cluster.
       tags:
         - EMR
@@ -490,7 +490,7 @@ paths:
   /azure/compute/group:
     post:
       operationId: createElastigroupAzure
-      summary: Create Elastigroup (Azure)
+      summary: Spot Create Elastigroup (Azure)
       description: Create a new Elastigroup in Azure.
       tags:
         - Elastigroup Azure
@@ -505,7 +505,7 @@ paths:
           description: Successful response
     get:
       operationId: listElastigroupsAzure
-      summary: List Elastigroups (Azure)
+      summary: Spot List Elastigroups (Azure)
       description: List all Elastigroups in Azure.
       tags:
         - Elastigroup Azure
@@ -515,7 +515,7 @@ paths:
   /azure/compute/group/{groupId}:
     get:
       operationId: getElastigroupAzure
-      summary: Get Elastigroup (Azure)
+      summary: Spot Get Elastigroup (Azure)
       description: Get an existing Elastigroup in Azure.
       tags:
         - Elastigroup Azure
@@ -530,7 +530,7 @@ paths:
           description: Successful response
     put:
       operationId: updateElastigroupAzure
-      summary: Update Elastigroup (Azure)
+      summary: Spot Update Elastigroup (Azure)
       description: Update an existing Elastigroup in Azure.
       tags:
         - Elastigroup Azure
@@ -551,7 +551,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteElastigroupAzure
-      summary: Delete Elastigroup (Azure)
+      summary: Spot Delete Elastigroup (Azure)
       description: Delete an existing Elastigroup in Azure.
       tags:
         - Elastigroup Azure
@@ -567,7 +567,7 @@ paths:
   /gcp/gce/group:
     post:
       operationId: createElastigroupGCP
-      summary: Create Elastigroup (GCP)
+      summary: Spot Create Elastigroup (GCP)
       description: Create a new Elastigroup in GCP.
       tags:
         - Elastigroup GCP
@@ -582,7 +582,7 @@ paths:
           description: Successful response
     get:
       operationId: listElastigroupsGCP
-      summary: List Elastigroups (GCP)
+      summary: Spot List Elastigroups (GCP)
       description: List all Elastigroups in GCP.
       tags:
         - Elastigroup GCP
@@ -592,7 +592,7 @@ paths:
   /gcp/gce/group/{groupId}:
     get:
       operationId: getElastigroupGCP
-      summary: Get Elastigroup (GCP)
+      summary: Spot Get Elastigroup (GCP)
       description: Get an existing Elastigroup in GCP.
       tags:
         - Elastigroup GCP
@@ -607,7 +607,7 @@ paths:
           description: Successful response
     put:
       operationId: updateElastigroupGCP
-      summary: Update Elastigroup (GCP)
+      summary: Spot Update Elastigroup (GCP)
       description: Update an existing Elastigroup in GCP.
       tags:
         - Elastigroup GCP
@@ -628,7 +628,7 @@ paths:
           description: Successful response
     delete:
       operationId: deleteElastigroupGCP
-      summary: Delete Elastigroup (GCP)
+      summary: Spot Delete Elastigroup (GCP)
       description: Delete an existing Elastigroup in GCP.
       tags:
         - Elastigroup GCP
