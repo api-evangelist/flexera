@@ -19,24 +19,24 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Ocean AKS
+    description: Manage Ocean clusters for Azure Kubernetes Service.
   - name: Ocean AWS
     description: Manage Ocean clusters for AWS EKS.
+  - name: Ocean CD
+    description: Manage continuous delivery for Ocean clusters.
   - name: Ocean ECS
     description: Manage Ocean clusters for Amazon ECS.
   - name: Ocean GKE
     description: Manage Ocean clusters for Google Kubernetes Engine.
-  - name: Ocean AKS
-    description: Manage Ocean clusters for Azure Kubernetes Service.
-  - name: Virtual Node Groups
-    description: Manage virtual node groups (launch specifications) within Ocean clusters.
-  - name: Rolls
-    description: Manage rolling updates for Ocean clusters.
-  - name: Right Sizing
-    description: Get right-sizing recommendations for Ocean workloads.
-  - name: Ocean CD
-    description: Manage continuous delivery for Ocean clusters.
   - name: Ocean Spark
     description: Manage Apache Spark clusters on Ocean.
+  - name: Right Sizing
+    description: Get right-sizing recommendations for Ocean workloads.
+  - name: Rolls
+    description: Manage rolling updates for Ocean clusters.
+  - name: Virtual Node Groups
+    description: Manage virtual node groups (launch specifications) within Ocean clusters.
 paths:
   /ocean/aws/k8s/cluster:
     post:

@@ -5,12 +5,12 @@ apis:
   - aid: spot:administration-api
     name: Spot Administration API
     tags:
-      - Administration
-      - Accounts
-      - Users
-      - Organizations
       - Access Control
+      - Accounts
+      - Administration
       - Cloud Credentials
+      - Organizations
+      - Users
     humanURL: https://docs.spot.io/api/
     baseURL: https://api.spotinst.io
     properties:
@@ -39,14 +39,14 @@ apis:
   - aid: spot:elastigroup-api
     name: Spot Elastigroup API
     tags:
-      - Elastigroup
-      - Compute
       - Autoscaling
-      - Spot Instances
       - AWS
       - Azure
-      - GCP
+      - Compute
+      - Elastigroup
       - EMR
+      - GCP
+      - Spot Instances
     humanURL: https://docs.spot.io/api/
     baseURL: https://api.spotinst.io
     properties:
@@ -68,15 +68,15 @@ apis:
   - aid: spot:ocean-api
     name: Spot Ocean API
     tags:
-      - Kubernetes
-      - Containers
-      - Ocean
-      - EKS
       - AKS
-      - GKE
-      - ECS
-      - Autoscaling
       - Apache Spark
+      - Autoscaling
+      - Containers
+      - ECS
+      - EKS
+      - GKE
+      - Kubernetes
+      - Ocean
     humanURL: https://docs.spot.io/api/
     baseURL: https://api.spotinst.io
     properties:
@@ -100,14 +100,14 @@ apis:
   - aid: spot:eco-api
     name: Spot Eco API
     tags:
-      - FinOps
-      - Cost Optimization
-      - Reserved Instances
-      - Savings Plans
-      - Commitments
       - AWS
       - Azure
+      - Commitments
+      - Cost Optimization
+      - FinOps
       - GCP
+      - Reserved Instances
+      - Savings Plans
     humanURL: https://docs.spot.io/api/
     baseURL: https://api.spotinst.io
     properties:
@@ -126,12 +126,12 @@ apis:
   - aid: spot:billing-engine-api
     name: Spot Billing Engine API
     tags:
-      - FinOps
       - Billing
-      - Cost Allocation
-      - Invoicing
-      - Cost Intelligence
       - Chargeback
+      - Cost Allocation
+      - Cost Intelligence
+      - FinOps
+      - Invoicing
     humanURL: https://docs.spot.io/api/
     baseURL: https://api.spotinst.io
     properties:
@@ -149,13 +149,13 @@ apis:
       across AWS, Azure, and GCP accounts.
 name: Spot
 tags:
+  - Autoscaling
   - Cloud Infrastructure
-  - Kubernetes
-  - Spot Instances
+  - Containers
   - Cost Optimization
   - FinOps
-  - Autoscaling
-  - Containers
+  - Kubernetes
+  - Spot Instances
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party

@@ -28,10 +28,6 @@ tags:
   - name: Eco GCP
     description: >-
       Manage Eco commitment optimization for GCP committed use discounts.
-  - name: Commitment Plans
-    description: >-
-      View and manage commitment plans including reserved instances,
-      savings plans, and CUDs.
   - name: Savings Analysis
     description: >-
       Analyze potential and realized savings from cloud commitments.

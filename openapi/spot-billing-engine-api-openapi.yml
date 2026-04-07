@@ -18,10 +18,10 @@ servers:
 security:
   - bearerAuth: []
 tags:
-  - name: Billing Engine Setup
-    description: Set up and configure Billing Engine for cloud accounts.
   - name: Billing Accounts
     description: Manage registered billing accounts and their configurations.
+  - name: Billing Engine Setup
+    description: Set up and configure Billing Engine for cloud accounts.
   - name: Cost Analysis
     description: Retrieve cost analysis and spending data across cloud accounts.
   - name: Cost Intelligence

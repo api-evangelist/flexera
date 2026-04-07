@@ -18,28 +18,26 @@ servers:
 security:
   - bearerAuth: []
 tags:
-  - name: Organizations
-    description: Create and manage Spot organizations.
-  - name: Accounts
-    description: Create, update, list, and delete Spot accounts within an organization.
-  - name: Users
-    description: >-
-      Create, get, update, and delete users. Manage user permissions
-      and account assignments.
-  - name: User Groups
-    description: Create and manage user groups for bulk permission management.
   - name: Access Policies
     description: Create, update, and manage access control policies for users and groups.
+  - name: Accounts
+    description: Create, update, list, and delete Spot accounts within an organization.
+  - name: Audit
+    description: Retrieve audit logs for actions performed within the organization.
   - name: Cloud Credentials
     description: >-
       Link and validate cloud provider credentials for AWS, Azure, and GCP
       accounts.
-  - name: Subscriptions
-    description: Manage event notification subscriptions for Spot resources.
-  - name: Audit
-    description: Retrieve audit logs for actions performed within the organization.
   - name: Health Check
     description: Check the health status of the Spot API.
+  - name: Organizations
+    description: Create and manage Spot organizations.
+  - name: Subscriptions
+    description: Manage event notification subscriptions for Spot resources.
+  - name: Users
+    description: >-
+      Create, get, update, and delete users. Manage user permissions
+      and account assignments.
 paths:
   /setup/organization:
     post:

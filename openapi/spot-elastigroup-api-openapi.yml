@@ -19,18 +19,18 @@ servers:
 security:
   - bearerAuth: []
 tags:
+  - name: Deployments
+    description: Manage rolling deployments for Elastigroups.
   - name: Elastigroup AWS
     description: Manage Elastigroup compute groups in AWS.
   - name: Elastigroup Azure
     description: Manage Elastigroup compute groups in Azure.
   - name: Elastigroup GCP
     description: Manage Elastigroup compute groups in GCP.
-  - name: Stateful Instances
-    description: Manage stateful instances within Elastigroups.
-  - name: Deployments
-    description: Manage rolling deployments for Elastigroups.
   - name: EMR
     description: Manage Amazon EMR clusters with Elastigroup.
+  - name: Stateful Instances
+    description: Manage stateful instances within Elastigroups.
 paths:
   /aws/ec2/group:
     post:
