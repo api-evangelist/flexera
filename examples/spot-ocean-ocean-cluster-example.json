@@ -1,0 +1,12 @@
+{
+  "id": "abc123",
+  "name": "Example Title",
+  "controllerClusterId": "500123",
+  "region": "example_value",
+  "autoScaler": "example_value",
+  "capacity": "example_value",
+  "strategy": "example_value",
+  "compute": "example_value",
+  "createdAt": "example_value",
+  "updatedAt": "example_value"
+}

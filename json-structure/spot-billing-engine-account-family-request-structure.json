@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "AccountFamilyRequest",
+  "type": "object",
+  "properties": {
+    "family": {
+      "type": "object"
+    }
+  }
+}

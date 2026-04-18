@@ -13,39 +13,39 @@ info:
     url: https://docs.spot.io/
   termsOfService: https://spot.io/terms-of-use/
 servers:
-  - url: https://api.spotinst.io
-    description: Spot Production API
+- url: https://api.spotinst.io
+  description: Spot Production API
 security:
-  - bearerAuth: []
+- bearerAuth: []
 tags:
-  - name: Access Policies
-    description: Create, update, and manage access control policies for users and groups.
-  - name: Accounts
-    description: Create, update, list, and delete Spot accounts within an organization.
-  - name: Audit
-    description: Retrieve audit logs for actions performed within the organization.
-  - name: Cloud Credentials
-    description: >-
-      Link and validate cloud provider credentials for AWS, Azure, and GCP
-      accounts.
-  - name: Health Check
-    description: Check the health status of the Spot API.
-  - name: Organizations
-    description: Create and manage Spot organizations.
-  - name: Subscriptions
-    description: Manage event notification subscriptions for Spot resources.
-  - name: Users
-    description: >-
-      Create, get, update, and delete users. Manage user permissions
-      and account assignments.
+- name: Access Policies
+  description: Create, update, and manage access control policies for users and groups.
+- name: Accounts
+  description: Create, update, list, and delete Spot accounts within an organization.
+- name: Audit
+  description: Retrieve audit logs for actions performed within the organization.
+- name: Cloud Credentials
+  description: >-
+    Link and validate cloud provider credentials for AWS, Azure, and GCP
+    accounts.
+- name: Health Check
+  description: Check the health status of the Spot API.
+- name: Organizations
+  description: Create and manage Spot organizations.
+- name: Subscriptions
+  description: Manage event notification subscriptions for Spot resources.
+- name: Users
+  description: >-
+    Create, get, update, and delete users. Manage user permissions
+    and account assignments.
 paths:
   /setup/organization:
     post:
       operationId: createOrganization
-      summary: Spot Create organization
+      summary: Spot Create Organization
       description: Create a new organization in Spot.
       tags:
-        - Organizations
+      - Organizations
       responses:
         '200':
           description: Successful response
@@ -53,28 +53,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationResponse'
+              examples:
+                Createorganization200Example:
+                  summary: Default createOrganization 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteOrganization
-      summary: Spot Delete organization
+      summary: Spot Delete Organization
       description: Delete an existing organization.
       tags:
-        - Organizations
+      - Organizations
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/account:
     post:
       operationId: createAccount
-      summary: Spot Create account
+      summary: Spot Create Account
       description: Create a new account within an organization.
       tags:
-        - Accounts
+      - Accounts
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateAccountRequest'
+            examples:
+              CreateaccountRequestExample:
+                summary: Default createAccount request
+                x-microcks-default: true
+                value:
+                  account:
+                    name: Example Title
       responses:
         '200':
           description: Successful response
@@ -82,21 +104,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountResponse'
+              examples:
+                Createaccount200Example:
+                  summary: Default createAccount 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listAccounts
-      summary: Spot List accounts
+      summary: Spot List Accounts
       description: >-
         Get a list of Spot accounts in your organization. When used without
         parameters, the provided token must have Organization Admin permissions
         and the output will contain all the organization accounts.
       tags:
-        - Accounts
+      - Accounts
       parameters:
-        - name: cloudAccountId
-          in: query
-          description: Filter by cloud account ID.
-          schema:
-            type: string
+      - name: cloudAccountId
+        in: query
+        description: Filter by cloud account ID.
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -104,59 +139,95 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountListResponse'
+              examples:
+                Listaccounts200Example:
+                  summary: Default listAccounts 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/account/{accountId}:
     put:
       operationId: updateAccount
-      summary: Spot Update account
+      summary: Spot Update Account
       description: Update an existing account.
       tags:
-        - Accounts
+      - Accounts
       parameters:
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateAccountRequest'
+            examples:
+              UpdateaccountRequestExample:
+                summary: Default updateAccount request
+                x-microcks-default: true
+                value:
+                  account:
+                    name: Example Title
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteAccount
-      summary: Spot Delete account
+      summary: Spot Delete Account
       description: Delete an existing account.
       tags:
-        - Accounts
+      - Accounts
       parameters:
-        - name: accountId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/user:
     post:
       operationId: createUser
-      summary: Spot Create user
+      summary: Spot Create User
       description: >-
         Create a new user and link it to the creator's organization. If the role
         is a viewer, the user is also linked to the default account for the
         organization.
       tags:
-        - Users
+      - Users
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateUserRequest'
+            examples:
+              CreateuserRequestExample:
+                summary: Default createUser request
+                x-microcks-default: true
+                value:
+                  firstName: example_value
+                  lastName: example_value
+                  email: user@example.com
+                  role: admin
       responses:
         '200':
           description: Successful response
@@ -164,22 +235,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResponse'
+              examples:
+                Createuser200Example:
+                  summary: Default createUser 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/organization/{organizationId}/user:
     get:
       operationId: listOrganizationUsers
-      summary: Spot List organization users
+      summary: Spot List Organization Users
       description: >-
         Get all users in the organization, their details, and mapped accounts.
         Providing the optional account ID parameter will filter out all users
         not mapped to that account.
       tags:
-        - Users
+      - Users
       parameters:
-        - name: organizationId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -187,19 +271,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserListResponse'
+              examples:
+                Listorganizationusers200Example:
+                  summary: Default listOrganizationUsers 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/user/{userId}:
     get:
       operationId: getUser
-      summary: Spot Get user details
+      summary: Spot Get User Details
       description: Get details of a specific user.
       tags:
-        - Users
+      - Users
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -207,278 +304,435 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResponse'
+              examples:
+                Getuser200Example:
+                  summary: Default getUser 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateUserPermissions
-      summary: Spot Update user permissions
+      summary: Spot Update User Permissions
       description: Update user permissions and role assignments.
       tags:
-        - Users
+      - Users
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/UpdateUserPermissionsRequest'
+            examples:
+              UpdateuserpermissionsRequestExample:
+                summary: Default updateUserPermissions request
+                x-microcks-default: true
+                value:
+                  role: example_value
+                  accounts:
+                  - id: abc123
+                    role: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteUser
-      summary: Spot Delete user
+      summary: Spot Delete User
       description: Delete a user from the organization.
       tags:
-        - Users
+      - Users
       parameters:
-        - name: userId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/user/programmatic:
     post:
       operationId: createProgrammaticUser
-      summary: Spot Create programmatic user
+      summary: Spot Create Programmatic User
       description: Create a programmatic user for API access.
       tags:
-        - Users
+      - Users
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateProgrammaticUserRequest'
+            examples:
+              CreateprogrammaticuserRequestExample:
+                summary: Default createProgrammaticUser request
+                x-microcks-default: true
+                value:
+                  name: Example Title
+                  description: A sample description.
+                  accounts:
+                  - id: abc123
+                    role: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/access/policy:
     post:
       operationId: createAccessPolicy
-      summary: Spot Create access policy
+      summary: Spot Create Access Policy
       description: Create a new access policy for the organization.
       tags:
-        - Access Policies
+      - Access Policies
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AccessPolicyRequest'
+            examples:
+              CreateaccesspolicyRequestExample:
+                summary: Default createAccessPolicy request
+                x-microcks-default: true
+                value:
+                  policy:
+                    name: Example Title
+                    description: A sample description.
+                    permissions:
+                    - serviceId: '500123'
+                      actions: {}
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listAccessPolicies
-      summary: Spot List access policies
+      summary: Spot List Access Policies
       description: Get all access policies of the organization.
       tags:
-        - Access Policies
+      - Access Policies
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/access/policy/{policyId}:
     put:
       operationId: updateAccessPolicy
-      summary: Spot Update access policy
+      summary: Spot Update Access Policy
       description: Update an existing access policy.
       tags:
-        - Access Policies
+      - Access Policies
       parameters:
-        - name: policyId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AccessPolicyRequest'
+            examples:
+              UpdateaccesspolicyRequestExample:
+                summary: Default updateAccessPolicy request
+                x-microcks-default: true
+                value:
+                  policy:
+                    name: Example Title
+                    description: A sample description.
+                    permissions:
+                    - serviceId: '500123'
+                      actions: {}
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteAccessPolicy
-      summary: Spot Delete access policy
+      summary: Spot Delete Access Policy
       description: Delete an access policy.
       tags:
-        - Access Policies
+      - Access Policies
       parameters:
-        - name: policyId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/credentials/aws:
     post:
       operationId: setAWSCloudCredentials
-      summary: Spot Set AWS cloud credentials
+      summary: Spot Set Aws Cloud Credentials
       description: Link a Spot account to an AWS cloud account.
       tags:
-        - Cloud Credentials
+      - Cloud Credentials
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AWSCredentialsRequest'
+            examples:
+              SetawscloudcredentialsRequestExample:
+                summary: Default setAWSCloudCredentials request
+                x-microcks-default: true
+                value:
+                  credentials:
+                    iamRole: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/credentials/azure:
     post:
       operationId: setAzureCloudCredentials
-      summary: Spot Set Azure cloud credentials
+      summary: Spot Set Azure Cloud Credentials
       description: Link a Spot account to an Azure subscription.
       tags:
-        - Cloud Credentials
+      - Cloud Credentials
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AzureCredentialsRequest'
+            examples:
+              SetazurecloudcredentialsRequestExample:
+                summary: Default setAzureCloudCredentials request
+                x-microcks-default: true
+                value:
+                  credentials:
+                    clientId: '500123'
+                    clientSecret: example_value
+                    tenantId: '500123'
+                    subscriptionId: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /setup/credentials/gcp:
     post:
       operationId: setGCPCloudCredentials
-      summary: Spot Set GCP cloud credentials
+      summary: Spot Set Gcp Cloud Credentials
       description: Link a Spot account to a GCP project.
       tags:
-        - Cloud Credentials
+      - Cloud Credentials
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/GCPCredentialsRequest'
+            examples:
+              SetgcpcloudcredentialsRequestExample:
+                summary: Default setGCPCloudCredentials request
+                x-microcks-default: true
+                value:
+                  credentials:
+                    serviceAccount: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /events/subscription:
     post:
       operationId: createSubscription
-      summary: Spot Create event subscription
+      summary: Spot Create Event Subscription
       description: Subscribe to event notifications for Spot resources.
       tags:
-        - Subscriptions
+      - Subscriptions
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/SubscriptionRequest'
+            examples:
+              CreatesubscriptionRequestExample:
+                summary: Default createSubscription request
+                x-microcks-default: true
+                value:
+                  subscription:
+                    resourceId: '500123'
+                    protocol: http
+                    endpoint: example_value
+                    eventType: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listSubscriptions
-      summary: Spot List event subscriptions
+      summary: Spot List Event Subscriptions
       description: Get all event subscriptions.
       tags:
-        - Subscriptions
+      - Subscriptions
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /events/subscription/{subscriptionId}:
     get:
       operationId: getSubscription
-      summary: Spot Get event subscription
+      summary: Spot Get Event Subscription
       description: Get details of a specific event subscription.
       tags:
-        - Subscriptions
+      - Subscriptions
       parameters:
-        - name: subscriptionId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateSubscription
-      summary: Spot Update event subscription
+      summary: Spot Update Event Subscription
       description: Update an existing event subscription.
       tags:
-        - Subscriptions
+      - Subscriptions
       parameters:
-        - name: subscriptionId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/SubscriptionRequest'
+            examples:
+              UpdatesubscriptionRequestExample:
+                summary: Default updateSubscription request
+                x-microcks-default: true
+                value:
+                  subscription:
+                    resourceId: '500123'
+                    protocol: http
+                    endpoint: example_value
+                    eventType: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteSubscription
-      summary: Spot Delete event subscription
+      summary: Spot Delete Event Subscription
       description: Delete an event subscription.
       tags:
-        - Subscriptions
+      - Subscriptions
       parameters:
-        - name: subscriptionId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /audit/events:
     get:
       operationId: listAuditEvents
-      summary: Spot List audit events
+      summary: Spot List Audit Events
       description: Retrieve audit log events for the organization.
       tags:
-        - Audit
+      - Audit
       parameters:
-        - name: fromDate
-          in: query
-          description: Start date for audit events.
-          schema:
-            type: string
-            format: date-time
-        - name: toDate
-          in: query
-          description: End date for audit events.
-          schema:
-            type: string
-            format: date-time
+      - name: fromDate
+        in: query
+        description: Start date for audit events.
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
+      - name: toDate
+        in: query
+        description: End date for audit events.
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /healthCheck:
     get:
       operationId: healthCheck
-      summary: Spot Health check
+      summary: Spot Health Check
       description: Check the health status of the Spot API.
       tags:
-        - Health Check
+      - Health Check
       responses:
         '200':
           description: API is healthy
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     bearerAuth:
@@ -493,6 +747,7 @@ components:
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -500,13 +755,16 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Organization'
+          example: example_value
     Organization:
       type: object
       properties:
         id:
           type: string
+          example: abc123
         name:
           type: string
+          example: Example Title
     CreateAccountRequest:
       type: object
       properties:
@@ -516,6 +774,7 @@ components:
             name:
               type: string
               description: Name of the account.
+          example: example_value
     UpdateAccountRequest:
       type: object
       properties:
@@ -524,11 +783,13 @@ components:
           properties:
             name:
               type: string
+          example: example_value
     AccountResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -536,11 +797,13 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Account'
+          example: example_value
     AccountListResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -548,39 +811,49 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Account'
+          example: example_value
     Account:
       type: object
       properties:
         id:
           type: string
+          example: abc123
         name:
           type: string
+          example: Example Title
         organizationId:
           type: string
+          example: '500123'
     CreateUserRequest:
       type: object
       properties:
         firstName:
           type: string
+          example: example_value
         lastName:
           type: string
+          example: example_value
         email:
           type: string
           format: email
+          example: user@example.com
         role:
           type: string
           enum:
-            - admin
-            - viewer
-            - editor
+          - admin
+          - viewer
+          - editor
+          example: admin
     CreateProgrammaticUserRequest:
       type: object
       properties:
         name:
           type: string
           description: Name of the programmatic user.
+          example: Example Title
         description:
           type: string
+          example: A sample description.
         accounts:
           type: array
           items:
@@ -590,11 +863,13 @@ components:
                 type: string
               role:
                 type: string
+          example: []
     UpdateUserPermissionsRequest:
       type: object
       properties:
         role:
           type: string
+          example: example_value
         accounts:
           type: array
           items:
@@ -604,11 +879,13 @@ components:
                 type: string
               role:
                 type: string
+          example: []
     UserResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -616,11 +893,13 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/User'
+          example: example_value
     UserListResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -628,19 +907,25 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/User'
+          example: example_value
     User:
       type: object
       properties:
         userId:
           type: string
+          example: '500123'
         username:
           type: string
+          example: example_value
         email:
           type: string
+          example: user@example.com
         type:
           type: string
+          example: example_value
         organizationId:
           type: string
+          example: '500123'
     AccessPolicyRequest:
       type: object
       properties:
@@ -662,6 +947,7 @@ components:
                     type: array
                     items:
                       type: string
+          example: example_value
     AWSCredentialsRequest:
       type: object
       properties:
@@ -671,6 +957,7 @@ components:
             iamRole:
               type: string
               description: The ARN of the IAM role to use.
+          example: example_value
     AzureCredentialsRequest:
       type: object
       properties:
@@ -685,6 +972,7 @@ components:
               type: string
             subscriptionId:
               type: string
+          example: example_value
     GCPCredentialsRequest:
       type: object
       properties:
@@ -694,6 +982,7 @@ components:
             serviceAccount:
               type: object
               description: GCP service account JSON key.
+          example: example_value
     SubscriptionRequest:
       type: object
       properties:
@@ -705,13 +994,14 @@ components:
             protocol:
               type: string
               enum:
-                - http
-                - https
-                - email
-                - email-json
-                - aws-sns
-                - web
+              - http
+              - https
+              - email
+              - email-json
+              - aws-sns
+              - web
             endpoint:
               type: string
             eventType:
               type: string
+          example: example_value

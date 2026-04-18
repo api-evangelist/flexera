@@ -14,48 +14,87 @@ info:
     url: https://docs.spot.io/
   termsOfService: https://spot.io/terms-of-use/
 servers:
-  - url: https://api.spotinst.io
-    description: Spot Production API
+- url: https://api.spotinst.io
+  description: Spot Production API
 security:
-  - bearerAuth: []
+- bearerAuth: []
 tags:
-  - name: Ocean AKS
-    description: Manage Ocean clusters for Azure Kubernetes Service.
-  - name: Ocean AWS
-    description: Manage Ocean clusters for AWS EKS.
-  - name: Ocean CD
-    description: Manage continuous delivery for Ocean clusters.
-  - name: Ocean ECS
-    description: Manage Ocean clusters for Amazon ECS.
-  - name: Ocean GKE
-    description: Manage Ocean clusters for Google Kubernetes Engine.
-  - name: Ocean Spark
-    description: Manage Apache Spark clusters on Ocean.
-  - name: Right Sizing
-    description: Get right-sizing recommendations for Ocean workloads.
-  - name: Rolls
-    description: Manage rolling updates for Ocean clusters.
-  - name: Virtual Node Groups
-    description: Manage virtual node groups (launch specifications) within Ocean clusters.
+- name: Ocean AKS
+  description: Manage Ocean clusters for Azure Kubernetes Service.
+- name: Ocean AWS
+  description: Manage Ocean clusters for AWS EKS.
+- name: Ocean CD
+  description: Manage continuous delivery for Ocean clusters.
+- name: Ocean ECS
+  description: Manage Ocean clusters for Amazon ECS.
+- name: Ocean GKE
+  description: Manage Ocean clusters for Google Kubernetes Engine.
+- name: Ocean Spark
+  description: Manage Apache Spark clusters on Ocean.
+- name: Right Sizing
+  description: Get right-sizing recommendations for Ocean workloads.
+- name: Rolls
+  description: Manage rolling updates for Ocean clusters.
+- name: Virtual Node Groups
+  description: Manage virtual node groups (launch specifications) within Ocean clusters.
 paths:
   /ocean/aws/k8s/cluster:
     post:
       operationId: createOceanClusterAWS
-      summary: Spot Create Ocean cluster (AWS)
+      summary: Spot Create Ocean Cluster (aws)
       description: Create a new Ocean cluster for AWS EKS.
       tags:
-        - Ocean AWS
+      - Ocean AWS
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanAWSClusterRequest'
+            examples:
+              CreateoceanclusterawsRequestExample:
+                summary: Default createOceanClusterAWS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                      cooldown: 10
+                      resourceLimits:
+                        maxMemoryGib: 10
+                        maxVCpu: 10
+                      down:
+                        maxScaleDownPercentage: 10
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                      utilizeCommitments: true
+                    compute:
+                      instanceTypes:
+                        whitelist: {}
+                        blacklist: {}
+                      subnetIds:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                        tags: {}
       responses:
         '200':
           description: Successful response
@@ -63,17 +102,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OceanClusterResponse'
+              examples:
+                Createoceanclusteraws200Example:
+                  summary: Default createOceanClusterAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listOceanClustersAWS
-      summary: Spot List Ocean clusters (AWS)
+      summary: Spot List Ocean Clusters (aws)
       description: List all Ocean clusters for AWS in the account.
       tags:
-        - Ocean AWS
+      - Ocean AWS
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -81,23 +133,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OceanClusterListResponse'
+              examples:
+                Listoceanclustersaws200Example:
+                  summary: Default listOceanClustersAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/k8s/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterAWS
-      summary: Spot Get Ocean cluster (AWS)
+      summary: Spot Get Ocean Cluster (aws)
       description: Get the configuration of an Ocean cluster.
       tags:
-        - Ocean AWS
+      - Ocean AWS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -105,126 +171,211 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OceanClusterResponse'
+              examples:
+                Getoceanclusteraws200Example:
+                  summary: Default getOceanClusterAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateOceanClusterAWS
-      summary: Spot Update Ocean cluster (AWS)
+      summary: Spot Update Ocean Cluster (aws)
       description: Update an existing Ocean cluster configuration.
       tags:
-        - Ocean AWS
+      - Ocean AWS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanAWSClusterRequest'
+            examples:
+              UpdateoceanclusterawsRequestExample:
+                summary: Default updateOceanClusterAWS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                      cooldown: 10
+                      resourceLimits:
+                        maxMemoryGib: 10
+                        maxVCpu: 10
+                      down:
+                        maxScaleDownPercentage: 10
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                      utilizeCommitments: true
+                    compute:
+                      instanceTypes:
+                        whitelist: {}
+                        blacklist: {}
+                      subnetIds:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                        tags: {}
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteOceanClusterAWS
-      summary: Spot Delete Ocean cluster (AWS)
+      summary: Spot Delete Ocean Cluster (aws)
       description: Delete an Ocean cluster.
       tags:
-        - Ocean AWS
+      - Ocean AWS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/k8s/cluster/{oceanClusterId}/roll:
     post:
       operationId: initiateRollAWS
-      summary: Spot Initiate cluster roll (AWS)
+      summary: Spot Initiate Cluster Roll (aws)
       description: >-
         Initiate a roll (rolling replacement) of nodes in an Ocean cluster.
       tags:
-        - Rolls
+      - Rolls
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanRollRequest'
+            examples:
+              InitiaterollawsRequestExample:
+                summary: Default initiateRollAWS request
+                x-microcks-default: true
+                value:
+                  roll:
+                    batchSizePercentage: 10
+                    comment: example_value
+                    batchMinHealthyPercentage: 10
+                    respectPdb: true
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listRollsAWS
-      summary: Spot List cluster rolls (AWS)
+      summary: Spot List Cluster Rolls (aws)
       description: List all rolls for an Ocean cluster.
       tags:
-        - Rolls
+      - Rolls
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/k8s/cluster/{oceanClusterId}/roll/{rollId}:
     get:
       operationId: getRollAWS
-      summary: Spot Get roll details (AWS)
+      summary: Spot Get Roll Details (aws)
       description: Get the details and status of a specific roll.
       tags:
-        - Rolls
+      - Rolls
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: rollId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: rollId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateRollAWS
-      summary: Spot Update roll (AWS)
+      summary: Spot Update Roll (aws)
       description: Stop or modify a running roll.
       tags:
-        - Rolls
+      - Rolls
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: rollId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: rollId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
@@ -238,475 +389,762 @@ paths:
                     status:
                       type: string
                       enum:
-                        - STOPPED
+                      - STOPPED
+            examples:
+              UpdaterollawsRequestExample:
+                summary: Default updateRollAWS request
+                x-microcks-default: true
+                value:
+                  roll:
+                    status: STOPPED
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/k8s/launchSpec:
     post:
       operationId: createVirtualNodeGroupAWS
-      summary: Spot Create virtual node group (AWS)
+      summary: Spot Create Virtual Node Group (aws)
       description: Create a virtual node group (launch specification) for an Ocean cluster.
       tags:
-        - Virtual Node Groups
+      - Virtual Node Groups
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/VirtualNodeGroupAWSRequest'
+            examples:
+              CreatevirtualnodegroupawsRequestExample:
+                summary: Default createVirtualNodeGroupAWS request
+                x-microcks-default: true
+                value:
+                  launchSpec:
+                    name: Example Title
+                    oceanId: '500123'
+                    imageId: '500123'
+                    instanceTypes:
+                    - example_value
+                    labels:
+                    - key: example_value
+                      value: example_value
+                    taints:
+                    - key: example_value
+                      value: example_value
+                      effect: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listVirtualNodeGroupsAWS
-      summary: Spot List virtual node groups (AWS)
+      summary: Spot List Virtual Node Groups (aws)
       description: List all virtual node groups for an Ocean cluster.
       tags:
-        - Virtual Node Groups
+      - Virtual Node Groups
       parameters:
-        - name: oceanId
-          in: query
-          description: Ocean cluster ID to filter by.
-          schema:
-            type: string
+      - name: oceanId
+        in: query
+        description: Ocean cluster ID to filter by.
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/k8s/launchSpec/{launchSpecId}:
     get:
       operationId: getVirtualNodeGroupAWS
-      summary: Spot Get virtual node group (AWS)
+      summary: Spot Get Virtual Node Group (aws)
       description: Get the configuration of a virtual node group.
       tags:
-        - Virtual Node Groups
+      - Virtual Node Groups
       parameters:
-        - name: launchSpecId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: launchSpecId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateVirtualNodeGroupAWS
-      summary: Spot Update virtual node group (AWS)
+      summary: Spot Update Virtual Node Group (aws)
       description: Update a virtual node group.
       tags:
-        - Virtual Node Groups
+      - Virtual Node Groups
       parameters:
-        - name: launchSpecId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: launchSpecId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/VirtualNodeGroupAWSRequest'
+            examples:
+              UpdatevirtualnodegroupawsRequestExample:
+                summary: Default updateVirtualNodeGroupAWS request
+                x-microcks-default: true
+                value:
+                  launchSpec:
+                    name: Example Title
+                    oceanId: '500123'
+                    imageId: '500123'
+                    instanceTypes:
+                    - example_value
+                    labels:
+                    - key: example_value
+                      value: example_value
+                    taints:
+                    - key: example_value
+                      value: example_value
+                      effect: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteVirtualNodeGroupAWS
-      summary: Spot Delete virtual node group (AWS)
+      summary: Spot Delete Virtual Node Group (aws)
       description: Delete a virtual node group.
       tags:
-        - Virtual Node Groups
+      - Virtual Node Groups
       parameters:
-        - name: launchSpecId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: launchSpecId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/ecs/cluster:
     post:
       operationId: createOceanClusterECS
-      summary: Spot Create Ocean cluster (ECS)
+      summary: Spot Create Ocean Cluster (ecs)
       description: Create a new Ocean cluster for Amazon ECS.
       tags:
-        - Ocean ECS
+      - Ocean ECS
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanECSClusterRequest'
+            examples:
+              CreateoceanclusterecsRequestExample:
+                summary: Default createOceanClusterECS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    clusterName: example_value
+                    region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    compute:
+                      instanceTypes:
+                        whitelist: {}
+                      subnetIds:
+                      - {}
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listOceanClustersECS
-      summary: Spot List Ocean clusters (ECS)
+      summary: Spot List Ocean Clusters (ecs)
       description: List all Ocean ECS clusters.
       tags:
-        - Ocean ECS
+      - Ocean ECS
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/ecs/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterECS
-      summary: Spot Get Ocean cluster (ECS)
+      summary: Spot Get Ocean Cluster (ecs)
       description: Get an Ocean ECS cluster.
       tags:
-        - Ocean ECS
+      - Ocean ECS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateOceanClusterECS
-      summary: Spot Update Ocean cluster (ECS)
+      summary: Spot Update Ocean Cluster (ecs)
       description: Update an Ocean ECS cluster.
       tags:
-        - Ocean ECS
+      - Ocean ECS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanECSClusterRequest'
+            examples:
+              UpdateoceanclusterecsRequestExample:
+                summary: Default updateOceanClusterECS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    clusterName: example_value
+                    region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    compute:
+                      instanceTypes:
+                        whitelist: {}
+                      subnetIds:
+                      - {}
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteOceanClusterECS
-      summary: Spot Delete Ocean cluster (ECS)
+      summary: Spot Delete Ocean Cluster (ecs)
       description: Delete an Ocean ECS cluster.
       tags:
-        - Ocean ECS
+      - Ocean ECS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/gke/cluster:
     post:
       operationId: createOceanClusterGKE
-      summary: Spot Create Ocean cluster (GKE)
+      summary: Spot Create Ocean Cluster (gke)
       description: Create a new Ocean cluster for Google Kubernetes Engine.
       tags:
-        - Ocean GKE
+      - Ocean GKE
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanGKEClusterRequest'
+            examples:
+              CreateoceanclustergkeRequestExample:
+                summary: Default createOceanClusterGKE request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    gke:
+                      clusterName: example_value
+                      masterLocation: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listOceanClustersGKE
-      summary: Spot List Ocean clusters (GKE)
+      summary: Spot List Ocean Clusters (gke)
       description: List all Ocean GKE clusters.
       tags:
-        - Ocean GKE
+      - Ocean GKE
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/gke/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterGKE
-      summary: Spot Get Ocean cluster (GKE)
+      summary: Spot Get Ocean Cluster (gke)
       description: Get an Ocean GKE cluster.
       tags:
-        - Ocean GKE
+      - Ocean GKE
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateOceanClusterGKE
-      summary: Spot Update Ocean cluster (GKE)
+      summary: Spot Update Ocean Cluster (gke)
       description: Update an Ocean GKE cluster.
       tags:
-        - Ocean GKE
+      - Ocean GKE
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanGKEClusterRequest'
+            examples:
+              UpdateoceanclustergkeRequestExample:
+                summary: Default updateOceanClusterGKE request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    gke:
+                      clusterName: example_value
+                      masterLocation: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteOceanClusterGKE
-      summary: Spot Delete Ocean cluster (GKE)
+      summary: Spot Delete Ocean Cluster (gke)
       description: Delete an Ocean GKE cluster.
       tags:
-        - Ocean GKE
+      - Ocean GKE
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/azure/k8s/cluster:
     post:
       operationId: createOceanClusterAKS
-      summary: Spot Create Ocean cluster (AKS)
+      summary: Spot Create Ocean Cluster (aks)
       description: Create a new Ocean cluster for Azure Kubernetes Service.
       tags:
-        - Ocean AKS
+      - Ocean AKS
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanAKSClusterRequest'
+            examples:
+              CreateoceanclusteraksRequestExample:
+                summary: Default createOceanClusterAKS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    aks:
+                      clusterName: example_value
+                      resourceGroupName: example_value
+                      region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listOceanClustersAKS
-      summary: Spot List Ocean clusters (AKS)
+      summary: Spot List Ocean Clusters (aks)
       description: List all Ocean AKS clusters.
       tags:
-        - Ocean AKS
+      - Ocean AKS
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/azure/k8s/cluster/{oceanClusterId}:
     get:
       operationId: getOceanClusterAKS
-      summary: Spot Get Ocean cluster (AKS)
+      summary: Spot Get Ocean Cluster (aks)
       description: Get an Ocean AKS cluster.
       tags:
-        - Ocean AKS
+      - Ocean AKS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateOceanClusterAKS
-      summary: Spot Update Ocean cluster (AKS)
+      summary: Spot Update Ocean Cluster (aks)
       description: Update an Ocean AKS cluster.
       tags:
-        - Ocean AKS
+      - Ocean AKS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanAKSClusterRequest'
+            examples:
+              UpdateoceanclusteraksRequestExample:
+                summary: Default updateOceanClusterAKS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    aks:
+                      clusterName: example_value
+                      resourceGroupName: example_value
+                      region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteOceanClusterAKS
-      summary: Spot Delete Ocean cluster (AKS)
+      summary: Spot Delete Ocean Cluster (aks)
       description: Delete an Ocean AKS cluster.
       tags:
-        - Ocean AKS
+      - Ocean AKS
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/aws/k8s/cluster/{oceanClusterId}/rightSizing/suggestion:
     get:
       operationId: getRightSizingSuggestions
-      summary: Spot Get right-sizing suggestions
+      summary: Spot Get Right-sizing Suggestions
       description: >-
         Get right-sizing recommendations for workloads running in an Ocean
         cluster. Returns CPU and memory recommendations based on actual usage.
       tags:
-        - Right Sizing
+      - Right Sizing
       parameters:
-        - name: oceanClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/cd/cluster:
     post:
       operationId: createOceanCDCluster
-      summary: Spot Create Ocean CD cluster
+      summary: Spot Create Ocean Cd Cluster
       description: Register a cluster with Ocean CD for continuous delivery.
       tags:
-        - Ocean CD
+      - Ocean CD
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanCDClusterRequest'
+            examples:
+              CreateoceancdclusterRequestExample:
+                summary: Default createOceanCDCluster request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    kubernetesClusterId: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listOceanCDClusters
-      summary: Spot List Ocean CD clusters
+      summary: Spot List Ocean Cd Clusters
       description: List all clusters registered with Ocean CD.
       tags:
-        - Ocean CD
+      - Ocean CD
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/cd/cluster/{clusterId}:
     get:
       operationId: getOceanCDCluster
-      summary: Spot Get Ocean CD cluster
+      summary: Spot Get Ocean Cd Cluster
       description: Get a cluster registered with Ocean CD.
       tags:
-        - Ocean CD
+      - Ocean CD
       parameters:
-        - name: clusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: clusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateOceanCDCluster
-      summary: Spot Update Ocean CD cluster
+      summary: Spot Update Ocean Cd Cluster
       description: Update an Ocean CD cluster configuration.
       tags:
-        - Ocean CD
+      - Ocean CD
       parameters:
-        - name: clusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: clusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanCDClusterRequest'
+            examples:
+              UpdateoceancdclusterRequestExample:
+                summary: Default updateOceanCDCluster request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    kubernetesClusterId: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteOceanCDCluster
-      summary: Spot Delete Ocean CD cluster
+      summary: Spot Delete Ocean Cd Cluster
       description: Unregister a cluster from Ocean CD.
       tags:
-        - Ocean CD
+      - Ocean CD
       parameters:
-        - name: clusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: clusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/spark/cluster:
     post:
       operationId: createOceanSparkCluster
-      summary: Spot Create Ocean Spark cluster
+      summary: Spot Create Ocean Spark Cluster
       description: Create a new Ocean for Apache Spark cluster.
       tags:
-        - Ocean Spark
+      - Ocean Spark
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/OceanSparkClusterRequest'
+            examples:
+              CreateoceansparkclusterRequestExample:
+                summary: Default createOceanSparkCluster request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    oceanClusterId: '500123'
+                    config: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listOceanSparkClusters
-      summary: Spot List Ocean Spark clusters
+      summary: Spot List Ocean Spark Clusters
       description: List all Ocean Spark clusters.
       tags:
-        - Ocean Spark
+      - Ocean Spark
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /ocean/spark/cluster/{oceanSparkClusterId}:
     get:
       operationId: getOceanSparkCluster
-      summary: Spot Get Ocean Spark cluster
+      summary: Spot Get Ocean Spark Cluster
       description: Get an Ocean Spark cluster.
       tags:
-        - Ocean Spark
+      - Ocean Spark
       parameters:
-        - name: oceanSparkClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanSparkClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteOceanSparkCluster
-      summary: Spot Delete Ocean Spark cluster
+      summary: Spot Delete Ocean Spark Cluster
       description: Delete an Ocean Spark cluster.
       tags:
-        - Ocean Spark
+      - Ocean Spark
       parameters:
-        - name: oceanSparkClusterId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: oceanSparkClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     bearerAuth:
@@ -808,6 +1246,7 @@ components:
                             type: string
                           tagValue:
                             type: string
+          example: example_value
     OceanECSClusterRequest:
       type: object
       properties:
@@ -851,6 +1290,7 @@ components:
                   type: array
                   items:
                     type: string
+          example: example_value
     OceanGKEClusterRequest:
       type: object
       properties:
@@ -884,6 +1324,7 @@ components:
                   type: integer
                 maximum:
                   type: integer
+          example: example_value
     OceanAKSClusterRequest:
       type: object
       properties:
@@ -910,6 +1351,7 @@ components:
                   type: boolean
                 isAutoConfig:
                   type: boolean
+          example: example_value
     VirtualNodeGroupAWSRequest:
       type: object
       properties:
@@ -946,6 +1388,7 @@ components:
                     type: string
                   effect:
                     type: string
+          example: example_value
     OceanRollRequest:
       type: object
       properties:
@@ -962,6 +1405,7 @@ components:
             respectPdb:
               type: boolean
               description: Respect pod disruption budgets during the roll.
+          example: example_value
     OceanCDClusterRequest:
       type: object
       properties:
@@ -972,6 +1416,7 @@ components:
               type: string
             kubernetesClusterId:
               type: string
+          example: example_value
     OceanSparkClusterRequest:
       type: object
       properties:
@@ -983,11 +1428,13 @@ components:
               description: The ID of the Ocean cluster to use.
             config:
               type: object
+          example: example_value
     OceanClusterResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -995,11 +1442,13 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/OceanCluster'
+          example: example_value
     OceanClusterListResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -1007,28 +1456,39 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/OceanCluster'
+          example: example_value
     OceanCluster:
       type: object
       properties:
         id:
           type: string
+          example: abc123
         name:
           type: string
+          example: Example Title
         controllerClusterId:
           type: string
+          example: '500123'
         region:
           type: string
+          example: example_value
         autoScaler:
           type: object
+          example: example_value
         capacity:
           type: object
+          example: example_value
         strategy:
           type: object
+          example: example_value
         compute:
           type: object
+          example: example_value
         createdAt:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         updatedAt:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'

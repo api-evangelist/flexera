@@ -13,38 +13,39 @@ info:
     url: https://docs.spot.io/
   termsOfService: https://spot.io/terms-of-use/
 servers:
-  - url: https://api.spotinst.io
-    description: Spot Production API
+- url: https://api.spotinst.io
+  description: Spot Production API
 security:
-  - bearerAuth: []
+- bearerAuth: []
 tags:
-  - name: Billing Accounts
-    description: Manage registered billing accounts and their configurations.
-  - name: Billing Engine Setup
-    description: Set up and configure Billing Engine for cloud accounts.
-  - name: Cost Analysis
-    description: Retrieve cost analysis and spending data across cloud accounts.
-  - name: Cost Intelligence
-    description: >-
-      Access Cost Intelligence analytics for actionable cost insights
-      and recommendations.
-  - name: Families
-    description: Manage account families for grouping and cost allocation.
+- name: Billing Accounts
+  description: Manage registered billing accounts and their configurations.
+- name: Billing Engine Setup
+  description: Set up and configure Billing Engine for cloud accounts.
+- name: Cost Analysis
+  description: Retrieve cost analysis and spending data across cloud accounts.
+- name: Cost Intelligence
+  description: >-
+    Access Cost Intelligence analytics for actionable cost insights
+    and recommendations.
+- name: Families
+  description: Manage account families for grouping and cost allocation.
 paths:
   /billingEngine/account:
     get:
       operationId: listBillingEngineAccounts
-      summary: Spot List Billing Engine accounts
+      summary: Spot List Billing Engine Accounts
       description: >-
         Get all accounts registered with Billing Engine, including their
         cloud provider type and configuration status.
       tags:
-        - Billing Accounts
+      - Billing Accounts
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -52,6 +53,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BillingAccountListResponse'
+              examples:
+                Listbillingengineaccounts200Example:
+                  summary: Default listBillingEngineAccounts 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /billingEngine/setup:
     post:
       operationId: setupBillingEngine
@@ -60,152 +73,220 @@ paths:
         Set up Billing Engine on a Spot account by linking it to a cloud
         provider billing account for cost data ingestion.
       tags:
-        - Billing Engine Setup
+      - Billing Engine Setup
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/BillingEngineSetupRequest'
+            examples:
+              SetupbillingengineRequestExample:
+                summary: Default setupBillingEngine request
+                x-microcks-default: true
+                value:
+                  billingEngine:
+                    cloudProvider: aws
+                    billingAccountId: '500123'
+                    bucketName: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /billingEngine/setup/validation:
     post:
       operationId: validateBillingEngineSetup
-      summary: Spot Validate Billing Engine setup
+      summary: Spot Validate Billing Engine Setup
       description: >-
         Perform validation checks on a Billing Engine setup to ensure
         correct cloud provider credentials and billing access.
       tags:
-        - Billing Engine Setup
+      - Billing Engine Setup
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/BillingEngineValidationRequest'
+            examples:
+              ValidatebillingenginesetupRequestExample:
+                summary: Default validateBillingEngineSetup request
+                x-microcks-default: true
+                value:
+                  billingEngine:
+                    cloudProvider: example_value
+                    billingAccountId: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /billingEngine/family:
     post:
       operationId: createAccountFamily
-      summary: Spot Create account family
+      summary: Spot Create Account Family
       description: >-
         Create an account family for grouping related cloud accounts
         and enabling consolidated cost allocation.
       tags:
-        - Families
+      - Families
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountFamilyRequest'
+            examples:
+              CreateaccountfamilyRequestExample:
+                summary: Default createAccountFamily request
+                x-microcks-default: true
+                value:
+                  family:
+                    name: Example Title
+                    description: A sample description.
+                    accountIds:
+                    - example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listAccountFamilies
-      summary: Spot List account families
+      summary: Spot List Account Families
       description: List all account families configured in Billing Engine.
       tags:
-        - Families
+      - Families
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /billingEngine/family/{familyId}:
     get:
       operationId: getAccountFamily
-      summary: Spot Get account family
+      summary: Spot Get Account Family
       description: Get details of a specific account family.
       tags:
-        - Families
+      - Families
       parameters:
-        - name: familyId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: familyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateAccountFamily
-      summary: Spot Update account family
+      summary: Spot Update Account Family
       description: Update an existing account family.
       tags:
-        - Families
+      - Families
       parameters:
-        - name: familyId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: familyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AccountFamilyRequest'
+            examples:
+              UpdateaccountfamilyRequestExample:
+                summary: Default updateAccountFamily request
+                x-microcks-default: true
+                value:
+                  family:
+                    name: Example Title
+                    description: A sample description.
+                    accountIds:
+                    - example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteAccountFamily
-      summary: Spot Delete account family
+      summary: Spot Delete Account Family
       description: Delete an account family.
       tags:
-        - Families
+      - Families
       parameters:
-        - name: familyId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: familyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /billingEngine/cost:
     get:
       operationId: getCostAnalysis
-      summary: Spot Get cost analysis
+      summary: Spot Get Cost Analysis
       description: >-
         Retrieve cost analysis data across registered cloud accounts,
         including breakdowns by service, account, and time period.
       tags:
-        - Cost Analysis
+      - Cost Analysis
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
-        - name: fromDate
-          in: query
-          description: Start date for the cost analysis period.
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          description: End date for the cost analysis period.
-          schema:
-            type: string
-            format: date
-        - name: groupBy
-          in: query
-          description: Dimension to group costs by.
-          schema:
-            type: string
-            enum:
-              - account
-              - service
-              - region
-              - family
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        description: Start date for the cost analysis period.
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        description: End date for the cost analysis period.
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: groupBy
+        in: query
+        description: Dimension to group costs by.
+        schema:
+          type: string
+          enum:
+          - account
+          - service
+          - region
+          - family
+        example: account
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /costIntelligence/setup:
     post:
       operationId: setupCostIntelligence
@@ -214,34 +295,56 @@ paths:
         Set up Cost Intelligence on a Spot account to enable granular
         cost analytics and actionable optimization recommendations.
       tags:
-        - Cost Intelligence
+      - Cost Intelligence
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CostIntelligenceSetupRequest'
+            examples:
+              SetupcostintelligenceRequestExample:
+                summary: Default setupCostIntelligence request
+                x-microcks-default: true
+                value:
+                  costIntelligence:
+                    cloudProvider: aws
+                    billingAccountId: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /costIntelligence/setup/validation:
     post:
       operationId: validateCostIntelligenceSetup
-      summary: Spot Validate Cost Intelligence setup
+      summary: Spot Validate Cost Intelligence Setup
       description: >-
         Perform validation checks on a Cost Intelligence setup to ensure
         correct access and configuration.
       tags:
-        - Cost Intelligence
+      - Cost Intelligence
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CostIntelligenceValidationRequest'
+            examples:
+              ValidatecostintelligencesetupRequestExample:
+                summary: Default validateCostIntelligenceSetup request
+                x-microcks-default: true
+                value:
+                  costIntelligence:
+                    cloudProvider: example_value
+                    billingAccountId: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     bearerAuth:
@@ -256,6 +359,7 @@ components:
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -263,25 +367,30 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/BillingAccount'
+          example: example_value
     BillingAccount:
       type: object
       properties:
         accountId:
           type: string
           description: The Spot account identifier.
+          example: '500123'
         cloudProvider:
           type: string
           enum:
-            - aws
-            - azure
-            - gcp
+          - aws
+          - azure
+          - gcp
           description: The cloud provider type.
+          example: aws
         status:
           type: string
           description: The setup status of the billing account.
+          example: example_value
         billingAccountId:
           type: string
           description: The cloud provider billing account identifier.
+          example: '500123'
     BillingEngineSetupRequest:
       type: object
       properties:
@@ -291,15 +400,16 @@ components:
             cloudProvider:
               type: string
               enum:
-                - aws
-                - azure
-                - gcp
+              - aws
+              - azure
+              - gcp
             billingAccountId:
               type: string
               description: The cloud provider billing or payer account ID.
             bucketName:
               type: string
               description: The S3 bucket or storage container for cost and usage reports.
+          example: example_value
     BillingEngineValidationRequest:
       type: object
       properties:
@@ -310,6 +420,7 @@ components:
               type: string
             billingAccountId:
               type: string
+          example: example_value
     AccountFamilyRequest:
       type: object
       properties:
@@ -327,6 +438,7 @@ components:
               items:
                 type: string
               description: List of account IDs to include in the family.
+          example: example_value
     CostIntelligenceSetupRequest:
       type: object
       properties:
@@ -336,11 +448,12 @@ components:
             cloudProvider:
               type: string
               enum:
-                - aws
-                - azure
-                - gcp
+              - aws
+              - azure
+              - gcp
             billingAccountId:
               type: string
+          example: example_value
     CostIntelligenceValidationRequest:
       type: object
       properties:
@@ -351,3 +464,4 @@ components:
               type: string
             billingAccountId:
               type: string
+          example: example_value

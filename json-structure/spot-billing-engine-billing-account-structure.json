@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "BillingAccount",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string"
+    },
+    "cloudProvider": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "billingAccountId": {
+      "type": "string"
+    }
+  }
+}

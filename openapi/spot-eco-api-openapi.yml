@@ -13,40 +13,41 @@ info:
     url: https://docs.spot.io/
   termsOfService: https://spot.io/terms-of-use/
 servers:
-  - url: https://api.spotinst.io
-    description: Spot Production API
+- url: https://api.spotinst.io
+  description: Spot Production API
 security:
-  - bearerAuth: []
+- bearerAuth: []
 tags:
-  - name: Eco AWS
-    description: >-
-      Manage Eco commitment optimization for AWS reserved instances and
-      savings plans.
-  - name: Eco Azure
-    description: >-
-      Manage Eco commitment optimization for Azure reserved instances.
-  - name: Eco GCP
-    description: >-
-      Manage Eco commitment optimization for GCP committed use discounts.
-  - name: Savings Analysis
-    description: >-
-      Analyze potential and realized savings from cloud commitments.
+- name: Eco AWS
+  description: >-
+    Manage Eco commitment optimization for AWS reserved instances and
+    savings plans.
+- name: Eco Azure
+  description: >-
+    Manage Eco commitment optimization for Azure reserved instances.
+- name: Eco GCP
+  description: >-
+    Manage Eco commitment optimization for GCP committed use discounts.
+- name: Savings Analysis
+  description: >-
+    Analyze potential and realized savings from cloud commitments.
 paths:
   /eco/aws/commitmentPlan:
     get:
       operationId: listCommitmentPlansAWS
-      summary: Spot List commitment plans (AWS)
+      summary: Spot List Commitment Plans (aws)
       description: >-
         List all AWS commitment plans including reserved instances and
         savings plans managed by Eco.
       tags:
-        - Eco AWS
+      - Eco AWS
       parameters:
-        - name: accountId
-          in: query
-          description: The Spot account ID.
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        description: The Spot account ID.
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -54,23 +55,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommitmentPlanListResponse'
+              examples:
+                Listcommitmentplansaws200Example:
+                  summary: Default listCommitmentPlansAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/aws/commitmentPlan/{commitmentPlanId}:
     get:
       operationId: getCommitmentPlanAWS
-      summary: Spot Get commitment plan (AWS)
+      summary: Spot Get Commitment Plan (aws)
       description: Get details of a specific AWS commitment plan.
       tags:
-        - Eco AWS
+      - Eco AWS
       parameters:
-        - name: commitmentPlanId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: commitmentPlanId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -78,192 +93,248 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommitmentPlanResponse'
+              examples:
+                Getcommitmentplanaws200Example:
+                  summary: Default getCommitmentPlanAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/aws/ri/unusedReservedInstances:
     get:
       operationId: getUnusedReservedInstancesAWS
-      summary: Spot Get unused reserved instances (AWS)
+      summary: Spot Get Unused Reserved Instances (aws)
       description: >-
         Retrieve a list of unused or underutilized AWS reserved instances
         to identify optimization opportunities.
       tags:
-        - Eco AWS
+      - Eco AWS
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/aws/ri/savingsPlans:
     get:
       operationId: listSavingsPlansAWS
-      summary: Spot List savings plans (AWS)
+      summary: Spot List Savings Plans (aws)
       description: List all AWS savings plans managed by Eco.
       tags:
-        - Eco AWS
+      - Eco AWS
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/aws/ri/reservedInstances:
     get:
       operationId: listReservedInstancesAWS
-      summary: Spot List reserved instances (AWS)
+      summary: Spot List Reserved Instances (aws)
       description: List all AWS reserved instances managed by Eco.
       tags:
-        - Eco AWS
+      - Eco AWS
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/aws/analysis/savings:
     get:
       operationId: getSavingsAnalysisAWS
-      summary: Spot Get savings analysis (AWS)
+      summary: Spot Get Savings Analysis (aws)
       description: >-
         Retrieve a savings analysis report showing realized and potential
         savings from AWS commitment optimization.
       tags:
-        - Savings Analysis
+      - Savings Analysis
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
-        - name: fromDate
-          in: query
-          description: Start date for the analysis period.
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          description: End date for the analysis period.
-          schema:
-            type: string
-            format: date
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        description: Start date for the analysis period.
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        description: End date for the analysis period.
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/aws/analysis/commitment:
     get:
       operationId: getCommitmentAnalysisAWS
-      summary: Spot Get commitment analysis (AWS)
+      summary: Spot Get Commitment Analysis (aws)
       description: >-
         Retrieve a commitment utilization analysis showing how effectively
         reserved instances and savings plans are being used.
       tags:
-        - Savings Analysis
+      - Savings Analysis
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
-        - name: fromDate
-          in: query
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          schema:
-            type: string
-            format: date
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/azure/commitmentPlan:
     get:
       operationId: listCommitmentPlansAzure
-      summary: Spot List commitment plans (Azure)
+      summary: Spot List Commitment Plans (azure)
       description: List all Azure reserved instance commitment plans managed by Eco.
       tags:
-        - Eco Azure
+      - Eco Azure
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/azure/analysis/savings:
     get:
       operationId: getSavingsAnalysisAzure
-      summary: Spot Get savings analysis (Azure)
+      summary: Spot Get Savings Analysis (azure)
       description: >-
         Retrieve a savings analysis report for Azure commitment optimization.
       tags:
-        - Savings Analysis
+      - Savings Analysis
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
-        - name: fromDate
-          in: query
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          schema:
-            type: string
-            format: date
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/gcp/commitmentPlan:
     get:
       operationId: listCommitmentPlansGCP
-      summary: Spot List commitment plans (GCP)
+      summary: Spot List Commitment Plans (gcp)
       description: >-
         List all GCP committed use discount plans managed by Eco.
       tags:
-        - Eco GCP
+      - Eco GCP
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /eco/gcp/analysis/savings:
     get:
       operationId: getSavingsAnalysisGCP
-      summary: Spot Get savings analysis (GCP)
+      summary: Spot Get Savings Analysis (gcp)
       description: >-
         Retrieve a savings analysis report for GCP commitment optimization.
       tags:
-        - Savings Analysis
+      - Savings Analysis
       parameters:
-        - name: accountId
-          in: query
-          schema:
-            type: string
-        - name: fromDate
-          in: query
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          schema:
-            type: string
-            format: date
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     bearerAuth:
@@ -278,6 +349,7 @@ components:
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -285,11 +357,13 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/CommitmentPlan'
+          example: example_value
     CommitmentPlanListResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -297,40 +371,49 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/CommitmentPlan'
+          example: example_value
     CommitmentPlan:
       type: object
       properties:
         id:
           type: string
           description: The unique identifier of the commitment plan.
+          example: abc123
         type:
           type: string
           enum:
-            - reservedInstance
-            - savingsPlan
-            - committedUseDiscount
+          - reservedInstance
+          - savingsPlan
+          - committedUseDiscount
           description: The type of commitment.
+          example: reservedInstance
         provider:
           type: string
           enum:
-            - aws
-            - azure
-            - gcp
+          - aws
+          - azure
+          - gcp
           description: The cloud provider.
+          example: aws
         status:
           type: string
           description: The current status of the commitment plan.
+          example: example_value
         startDate:
           type: string
           format: date-time
           description: The start date of the commitment.
+          example: '2026-01-15T10:30:00Z'
         endDate:
           type: string
           format: date-time
           description: The end date of the commitment.
+          example: '2026-01-15T10:30:00Z'
         monthlySavings:
           type: number
           description: Estimated monthly savings from this commitment.
+          example: 42.5
         utilizationPercentage:
           type: number
           description: Current utilization percentage of the commitment.
+          example: 42.5

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RollRequest",
+  "type": "object",
+  "properties": {
+    "batchSizePercentage": {
+      "type": "integer",
+      "description": "Percentage of instances to replace in each batch."
+    },
+    "gracePeriod": {
+      "type": "integer",
+      "description": "Grace period in seconds before checking health."
+    },
+    "healthCheckType": {
+      "type": "string"
+    }
+  }
+}

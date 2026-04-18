@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-structure.org/draft/2020-12/schema",
+  "name": "BillingEngineSetupRequest",
+  "type": "object",
+  "properties": {
+    "billingEngine": {
+      "type": "object"
+    }
+  }
+}

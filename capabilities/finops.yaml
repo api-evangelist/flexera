@@ -1,0 +1,207 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Spot FinOps"
+  description: "Unified workflow for cloud financial operations combining commitment management (Eco), billing analytics (Billing Engine), and cost optimization. Used by FinOps teams, cloud finance analysts, and platform administrators."
+  tags:
+    - Spot
+    - FinOps
+    - Cost Optimization
+    - Billing
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      SPOT_API_TOKEN: SPOT_API_TOKEN
+
+capability:
+  consumes:
+    - import: spot-eco
+      location: ./shared/eco.yaml
+    - import: spot-billing
+      location: ./shared/billing-engine.yaml
+    - import: spot-admin
+      location: ./shared/administration.yaml
+
+  exposes:
+    - type: rest
+      port: 8081
+      namespace: spot-finops-api
+      description: "Unified REST API for Spot FinOps operations."
+      resources:
+        - path: /v1/commitment-plans
+          name: commitment-plans
+          description: "Cloud commitment plans"
+          operations:
+            - method: GET
+              name: list-commitment-plans
+              description: "List AWS commitment plans"
+              call: "spot-eco.list-commitment-plans-aws"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/savings-analysis
+          name: savings-analysis
+          description: "Savings analysis"
+          operations:
+            - method: GET
+              name: get-savings-analysis
+              description: "Get AWS savings analysis"
+              call: "spot-eco.get-savings-analysis-aws"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/billing-accounts
+          name: billing-accounts
+          description: "Billing accounts"
+          operations:
+            - method: GET
+              name: list-billing-accounts
+              description: "List billing accounts"
+              call: "spot-billing.list-billing-accounts"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/cost-analysis
+          name: cost-analysis
+          description: "Cost analysis"
+          operations:
+            - method: GET
+              name: get-cost-analysis
+              description: "Get cost analysis"
+              call: "spot-billing.get-cost-analysis"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9091
+      namespace: spot-finops-mcp
+      transport: http
+      description: "MCP server for AI-assisted Spot FinOps operations."
+      tools:
+        - name: eco-list-commitment-plans-aws
+          description: "List AWS commitment plans"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "spot-eco.list-commitment-plans-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-get-commitment-plan-aws
+          description: "Get a specific AWS commitment plan"
+          hints:
+            readOnly: true
+          call: "spot-eco.get-commitment-plan-aws"
+          with:
+            planId: "tools.planId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-get-savings-analysis-aws
+          description: "Get AWS savings analysis"
+          hints:
+            readOnly: true
+          call: "spot-eco.get-savings-analysis-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-get-commitment-analysis-aws
+          description: "Get AWS commitment analysis"
+          hints:
+            readOnly: true
+          call: "spot-eco.get-commitment-analysis-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-list-savings-plans-aws
+          description: "List AWS savings plans"
+          hints:
+            readOnly: true
+          call: "spot-eco.list-savings-plans-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-list-reserved-instances-aws
+          description: "List AWS reserved instances"
+          hints:
+            readOnly: true
+          call: "spot-eco.list-reserved-instances-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-get-unused-ris-aws
+          description: "Get unused AWS reserved instances"
+          hints:
+            readOnly: true
+          call: "spot-eco.get-unused-ris-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-list-commitment-plans-azure
+          description: "List Azure commitment plans"
+          hints:
+            readOnly: true
+          call: "spot-eco.list-commitment-plans-azure"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-get-savings-analysis-azure
+          description: "Get Azure savings analysis"
+          hints:
+            readOnly: true
+          call: "spot-eco.get-savings-analysis-azure"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-list-commitment-plans-gcp
+          description: "List GCP commitment plans"
+          hints:
+            readOnly: true
+          call: "spot-eco.list-commitment-plans-gcp"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: eco-get-savings-analysis-gcp
+          description: "Get GCP savings analysis"
+          hints:
+            readOnly: true
+          call: "spot-eco.get-savings-analysis-gcp"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: billing-list-accounts
+          description: "List billing engine accounts"
+          hints:
+            readOnly: true
+          call: "spot-billing.list-billing-accounts"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: billing-list-account-families
+          description: "List billing account families"
+          hints:
+            readOnly: true
+          call: "spot-billing.list-account-families"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: billing-get-cost-analysis
+          description: "Get billing cost analysis"
+          hints:
+            readOnly: true
+          call: "spot-billing.get-cost-analysis"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: admin-list-accounts
+          description: "List Spot accounts for context"
+          hints:
+            readOnly: true
+          call: "spot-admin.list-accounts"
+          outputParameters:
+            - type: object
+              mapping: "$."

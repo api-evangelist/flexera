@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ElastigroupGCPRequest",
+  "type": "object",
+  "properties": {
+    "group": {
+      "type": "object"
+    }
+  }
+}

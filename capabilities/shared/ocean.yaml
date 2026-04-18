@@ -1,0 +1,240 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Spot Ocean"
+  description: "Programmatic management of Ocean Kubernetes clusters across AWS EKS, Azure AKS, GCP GKE, and Amazon ECS with automated scaling and cost optimization."
+  tags:
+    - Spot
+    - Ocean
+    - Kubernetes
+    - Containers
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      SPOT_API_TOKEN: SPOT_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: spot-ocean
+      baseUri: https://api.spotinst.io
+      description: "Spot Ocean API"
+      authentication:
+        type: bearer
+        token: "{{SPOT_API_TOKEN}}"
+      resources:
+        - name: ocean-aws
+          path: /ocean/aws/k8s/cluster
+          description: "Manage AWS Ocean clusters"
+          operations:
+            - name: create-ocean-cluster-aws
+              method: POST
+              description: "Create an AWS Ocean cluster"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-ocean-clusters-aws
+              method: GET
+              description: "List AWS Ocean clusters"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-ocean-cluster-aws
+              method: GET
+              description: "Get an AWS Ocean cluster"
+              inputParameters:
+                - name: oceanId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Ocean cluster ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-ocean-cluster-aws
+              method: PUT
+              description: "Update an AWS Ocean cluster"
+              inputParameters:
+                - name: oceanId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Ocean cluster ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-ocean-cluster-aws
+              method: DELETE
+              description: "Delete an AWS Ocean cluster"
+              inputParameters:
+                - name: oceanId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Ocean cluster ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: initiate-roll-aws
+              method: POST
+              description: "Initiate a cluster roll"
+              inputParameters:
+                - name: oceanId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Ocean cluster ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-right-sizing-suggestions
+              method: GET
+              description: "Get right-sizing recommendations"
+              inputParameters:
+                - name: oceanId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Ocean cluster ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: virtual-node-groups
+          path: /ocean/aws/k8s/launchSpec
+          description: "Manage virtual node groups"
+          operations:
+            - name: create-virtual-node-group-aws
+              method: POST
+              description: "Create a virtual node group"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-virtual-node-groups-aws
+              method: GET
+              description: "List virtual node groups"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: ocean-aks
+          path: /ocean/azure/k8s/cluster
+          description: "Manage AKS Ocean clusters"
+          operations:
+            - name: list-ocean-clusters-aks
+              method: GET
+              description: "List AKS Ocean clusters"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: ocean-gke
+          path: /ocean/gcp/k8s/cluster
+          description: "Manage GKE Ocean clusters"
+          operations:
+            - name: list-ocean-clusters-gke
+              method: GET
+              description: "List GKE Ocean clusters"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: ocean-spark
+          path: /ocean/spark/cluster
+          description: "Manage Ocean Spark clusters"
+          operations:
+            - name: list-ocean-spark-clusters
+              method: GET
+              description: "List Ocean Spark clusters"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8102
+      namespace: spot-ocean-rest-api
+      resources:
+        - path: /v1/clusters
+          name: clusters
+          description: "Ocean cluster management"
+          operations:
+            - method: GET
+              name: list-ocean-clusters-aws
+              description: "List AWS Ocean clusters"
+              call: "spot-ocean.list-ocean-clusters-aws"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9102
+      namespace: spot-ocean-mcp
+      transport: http
+      tools:
+        - name: list-ocean-clusters-aws
+          description: "List AWS Ocean clusters"
+          hints:
+            readOnly: true
+          call: "spot-ocean.list-ocean-clusters-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-ocean-cluster-aws
+          description: "Get an AWS Ocean cluster"
+          hints:
+            readOnly: true
+          call: "spot-ocean.get-ocean-cluster-aws"
+          with:
+            oceanId: "tools.oceanId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-right-sizing-suggestions
+          description: "Get right-sizing recommendations for a cluster"
+          hints:
+            readOnly: true
+          call: "spot-ocean.get-right-sizing-suggestions"
+          with:
+            oceanId: "tools.oceanId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-virtual-node-groups-aws
+          description: "List virtual node groups"
+          hints:
+            readOnly: true
+          call: "spot-ocean.list-virtual-node-groups-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."

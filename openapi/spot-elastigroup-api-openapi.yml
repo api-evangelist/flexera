@@ -14,43 +14,77 @@ info:
     url: https://docs.spot.io/
   termsOfService: https://spot.io/terms-of-use/
 servers:
-  - url: https://api.spotinst.io
-    description: Spot Production API
+- url: https://api.spotinst.io
+  description: Spot Production API
 security:
-  - bearerAuth: []
+- bearerAuth: []
 tags:
-  - name: Deployments
-    description: Manage rolling deployments for Elastigroups.
-  - name: Elastigroup AWS
-    description: Manage Elastigroup compute groups in AWS.
-  - name: Elastigroup Azure
-    description: Manage Elastigroup compute groups in Azure.
-  - name: Elastigroup GCP
-    description: Manage Elastigroup compute groups in GCP.
-  - name: EMR
-    description: Manage Amazon EMR clusters with Elastigroup.
-  - name: Stateful Instances
-    description: Manage stateful instances within Elastigroups.
+- name: Deployments
+  description: Manage rolling deployments for Elastigroups.
+- name: Elastigroup AWS
+  description: Manage Elastigroup compute groups in AWS.
+- name: Elastigroup Azure
+  description: Manage Elastigroup compute groups in Azure.
+- name: Elastigroup GCP
+  description: Manage Elastigroup compute groups in GCP.
+- name: EMR
+  description: Manage Amazon EMR clusters with Elastigroup.
+- name: Stateful Instances
+  description: Manage stateful instances within Elastigroups.
 paths:
   /aws/ec2/group:
     post:
       operationId: createElastigroupAWS
-      summary: Spot Create Elastigroup (AWS)
+      summary: Spot Create Elastigroup (aws)
       description: Create a new Elastigroup in AWS.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: accountId
-          in: query
-          description: The Spot account ID.
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        description: The Spot account ID.
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ElastigroupAWSRequest'
+            examples:
+              CreateelastigroupawsRequestExample:
+                summary: Default createElastigroupAWS request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                      unit: instance
+                    strategy:
+                      risk: 10
+                      onDemandCount: 10
+                      availabilityVsCost: balanced
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                    compute:
+                      instanceTypes:
+                        ondemand: example_value
+                        spot: {}
+                      availabilityZones:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                    scheduling:
+                      tasks:
+                      - {}
       responses:
         '200':
           description: Successful response
@@ -58,18 +92,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ElastigroupResponse'
+              examples:
+                Createelastigroupaws200Example:
+                  summary: Default createElastigroupAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listElastigroupsAWS
-      summary: Spot List Elastigroups (AWS)
+      summary: Spot List Elastigroups (aws)
       description: List all Elastigroups in the specified account.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: accountId
-          in: query
-          description: The Spot account ID.
-          schema:
-            type: string
+      - name: accountId
+        in: query
+        description: The Spot account ID.
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -77,23 +124,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ElastigroupListResponse'
+              examples:
+                Listelastigroupsaws200Example:
+                  summary: Default listElastigroupsAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}:
     get:
       operationId: getElastigroupAWS
-      summary: Spot Get Elastigroup (AWS)
+      summary: Spot Get Elastigroup (aws)
       description: Get the configuration of an existing Elastigroup.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
@@ -101,189 +162,282 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ElastigroupResponse'
+              examples:
+                Getelastigroupaws200Example:
+                  summary: Default getElastigroupAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateElastigroupAWS
-      summary: Spot Update Elastigroup (AWS)
+      summary: Spot Update Elastigroup (aws)
       description: Update an existing Elastigroup configuration.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ElastigroupAWSRequest'
+            examples:
+              UpdateelastigroupawsRequestExample:
+                summary: Default updateElastigroupAWS request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                      unit: instance
+                    strategy:
+                      risk: 10
+                      onDemandCount: 10
+                      availabilityVsCost: balanced
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                    compute:
+                      instanceTypes:
+                        ondemand: example_value
+                        spot: {}
+                      availabilityZones:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                    scheduling:
+                      tasks:
+                      - {}
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteElastigroupAWS
-      summary: Spot Delete Elastigroup (AWS)
+      summary: Spot Delete Elastigroup (aws)
       description: Delete an existing Elastigroup.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/status:
     get:
       operationId: getElastigroupStatusAWS
-      summary: Spot Get Elastigroup status (AWS)
+      summary: Spot Get Elastigroup Status (aws)
       description: Get the status of instances in an Elastigroup.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: accountId
-          in: query
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/scale/up:
     put:
       operationId: scaleUpElastigroupAWS
-      summary: Spot Scale up Elastigroup (AWS)
+      summary: Spot Scale up Elastigroup (aws)
       description: Scale up the number of instances in an Elastigroup.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: adjustment
-          in: query
-          description: Number of instances to add.
-          schema:
-            type: integer
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: adjustment
+        in: query
+        description: Number of instances to add.
+        schema:
+          type: integer
+        example: 10
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/scale/down:
     put:
       operationId: scaleDownElastigroupAWS
-      summary: Spot Scale down Elastigroup (AWS)
+      summary: Spot Scale Down Elastigroup (aws)
       description: Scale down the number of instances in an Elastigroup.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: adjustment
-          in: query
-          description: Number of instances to remove.
-          schema:
-            type: integer
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: adjustment
+        in: query
+        description: Number of instances to remove.
+        schema:
+          type: integer
+        example: 10
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/roll:
     post:
       operationId: rollElastigroupAWS
-      summary: Spot Roll Elastigroup (AWS)
+      summary: Spot Roll Elastigroup (aws)
       description: >-
         Trigger a roll (rolling update) for an Elastigroup. Replaces existing
         instances with new ones according to the configured deployment strategy.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RollRequest'
+            examples:
+              RollelastigroupawsRequestExample:
+                summary: Default rollElastigroupAWS request
+                x-microcks-default: true
+                value:
+                  batchSizePercentage: 10
+                  gracePeriod: 10
+                  healthCheckType: EC2
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listRollsAWS
-      summary: Spot List rolls (AWS)
+      summary: Spot List Rolls (aws)
       description: List all rolls for an Elastigroup.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/roll/{rollId}:
     get:
       operationId: getRollStatusAWS
-      summary: Spot Get roll status (AWS)
+      summary: Spot Get Roll Status (aws)
       description: Get the status of a specific roll.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: rollId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: rollId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: stopRollAWS
-      summary: Spot Stop roll (AWS)
+      summary: Spot Stop Roll (aws)
       description: Stop an in-progress roll.
       tags:
-        - Deployments
+      - Deployments
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: rollId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: rollId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
@@ -297,350 +451,524 @@ paths:
                     status:
                       type: string
                       enum:
-                        - STOPPED
+                      - STOPPED
+            examples:
+              StoprollawsRequestExample:
+                summary: Default stopRollAWS request
+                x-microcks-default: true
+                value:
+                  roll:
+                    status: STOPPED
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/statefulInstance:
     get:
       operationId: listStatefulInstances
-      summary: Spot List stateful instances
+      summary: Spot List Stateful Instances
       description: List all stateful instances in an Elastigroup.
       tags:
-        - Stateful Instances
+      - Stateful Instances
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/statefulInstance/{statefulInstanceId}:
     put:
       operationId: recycleStatefulInstance
-      summary: Spot Recycle stateful instance
+      summary: Spot Recycle Stateful Instance
       description: Recycle a stateful instance, replacing it with a new one.
       tags:
-        - Stateful Instances
+      - Stateful Instances
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: statefulInstanceId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: statefulInstanceId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deallocateStatefulInstance
-      summary: Spot Deallocate stateful instance
+      summary: Spot Deallocate Stateful Instance
       description: Deallocate a stateful instance and its resources.
       tags:
-        - Stateful Instances
+      - Stateful Instances
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: statefulInstanceId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: statefulInstanceId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/logs:
     get:
       operationId: getElastigroupLogs
-      summary: Spot Get Elastigroup logs
+      summary: Spot Get Elastigroup Logs
       description: Retrieve activity logs for an Elastigroup.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: fromDate
-          in: query
-          schema:
-            type: string
-            format: date-time
-        - name: toDate
-          in: query
-          schema:
-            type: string
-            format: date-time
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/ec2/group/{groupId}/costs:
     get:
       operationId: getElastigroupCosts
-      summary: Spot Get Elastigroup costs
+      summary: Spot Get Elastigroup Costs
       description: Retrieve cost information for an Elastigroup.
       tags:
-        - Elastigroup AWS
+      - Elastigroup AWS
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: fromDate
-          in: query
-          schema:
-            type: string
-            format: date
-        - name: toDate
-          in: query
-          schema:
-            type: string
-            format: date
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/emr/mrScaler:
     post:
       operationId: createEMRCluster
-      summary: Spot Create EMR cluster
+      summary: Spot Create Emr Cluster
       description: Create a new Amazon EMR cluster managed by Elastigroup.
       tags:
-        - EMR
+      - EMR
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/EMRClusterRequest'
+            examples:
+              CreateemrclusterRequestExample:
+                summary: Default createEMRCluster request
+                x-microcks-default: true
+                value:
+                  mrScaler:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    strategy: example_value
+                    compute: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listEMRClusters
-      summary: Spot List EMR clusters
+      summary: Spot List Emr Clusters
       description: List all EMR clusters managed by Elastigroup.
       tags:
-        - EMR
+      - EMR
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /aws/emr/mrScaler/{mrScalerId}:
     get:
       operationId: getEMRCluster
-      summary: Spot Get EMR cluster
+      summary: Spot Get Emr Cluster
       description: Get details of an EMR cluster.
       tags:
-        - EMR
+      - EMR
       parameters:
-        - name: mrScalerId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: mrScalerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateEMRCluster
-      summary: Spot Update EMR cluster
+      summary: Spot Update Emr Cluster
       description: Update an existing EMR cluster.
       tags:
-        - EMR
+      - EMR
       parameters:
-        - name: mrScalerId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: mrScalerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/EMRClusterRequest'
+            examples:
+              UpdateemrclusterRequestExample:
+                summary: Default updateEMRCluster request
+                x-microcks-default: true
+                value:
+                  mrScaler:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    strategy: example_value
+                    compute: example_value
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteEMRCluster
-      summary: Spot Delete EMR cluster
+      summary: Spot Delete Emr Cluster
       description: Delete an EMR cluster.
       tags:
-        - EMR
+      - EMR
       parameters:
-        - name: mrScalerId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: mrScalerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /azure/compute/group:
     post:
       operationId: createElastigroupAzure
-      summary: Spot Create Elastigroup (Azure)
+      summary: Spot Create Elastigroup (azure)
       description: Create a new Elastigroup in Azure.
       tags:
-        - Elastigroup Azure
+      - Elastigroup Azure
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ElastigroupAzureRequest'
+            examples:
+              CreateelastigroupazureRequestExample:
+                summary: Default createElastigroupAzure request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    region: example_value
+                    resourceGroupName: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listElastigroupsAzure
-      summary: Spot List Elastigroups (Azure)
+      summary: Spot List Elastigroups (azure)
       description: List all Elastigroups in Azure.
       tags:
-        - Elastigroup Azure
+      - Elastigroup Azure
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /azure/compute/group/{groupId}:
     get:
       operationId: getElastigroupAzure
-      summary: Spot Get Elastigroup (Azure)
+      summary: Spot Get Elastigroup (azure)
       description: Get an existing Elastigroup in Azure.
       tags:
-        - Elastigroup Azure
+      - Elastigroup Azure
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateElastigroupAzure
-      summary: Spot Update Elastigroup (Azure)
+      summary: Spot Update Elastigroup (azure)
       description: Update an existing Elastigroup in Azure.
       tags:
-        - Elastigroup Azure
+      - Elastigroup Azure
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ElastigroupAzureRequest'
+            examples:
+              UpdateelastigroupazureRequestExample:
+                summary: Default updateElastigroupAzure request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    region: example_value
+                    resourceGroupName: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteElastigroupAzure
-      summary: Spot Delete Elastigroup (Azure)
+      summary: Spot Delete Elastigroup (azure)
       description: Delete an existing Elastigroup in Azure.
       tags:
-        - Elastigroup Azure
+      - Elastigroup Azure
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /gcp/gce/group:
     post:
       operationId: createElastigroupGCP
-      summary: Spot Create Elastigroup (GCP)
+      summary: Spot Create Elastigroup (gcp)
       description: Create a new Elastigroup in GCP.
       tags:
-        - Elastigroup GCP
+      - Elastigroup GCP
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ElastigroupGCPRequest'
+            examples:
+              CreateelastigroupgcpRequestExample:
+                summary: Default createElastigroupGCP request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      preemptiblePercentage: 10
+                      fallbackToOd: true
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     get:
       operationId: listElastigroupsGCP
-      summary: Spot List Elastigroups (GCP)
+      summary: Spot List Elastigroups (gcp)
       description: List all Elastigroups in GCP.
       tags:
-        - Elastigroup GCP
+      - Elastigroup GCP
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
   /gcp/gce/group/{groupId}:
     get:
       operationId: getElastigroupGCP
-      summary: Spot Get Elastigroup (GCP)
+      summary: Spot Get Elastigroup (gcp)
       description: Get an existing Elastigroup in GCP.
       tags:
-        - Elastigroup GCP
+      - Elastigroup GCP
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     put:
       operationId: updateElastigroupGCP
-      summary: Spot Update Elastigroup (GCP)
+      summary: Spot Update Elastigroup (gcp)
       description: Update an existing Elastigroup in GCP.
       tags:
-        - Elastigroup GCP
+      - Elastigroup GCP
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       requestBody:
         required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ElastigroupGCPRequest'
+            examples:
+              UpdateelastigroupgcpRequestExample:
+                summary: Default updateElastigroupGCP request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      preemptiblePercentage: 10
+                      fallbackToOd: true
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
     delete:
       operationId: deleteElastigroupGCP
-      summary: Spot Delete Elastigroup (GCP)
+      summary: Spot Delete Elastigroup (gcp)
       description: Delete an existing Elastigroup in GCP.
       tags:
-        - Elastigroup GCP
+      - Elastigroup GCP
       parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
       responses:
         '200':
           description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
 components:
   securitySchemes:
     bearerAuth:
@@ -674,8 +1002,8 @@ components:
                 unit:
                   type: string
                   enum:
-                    - instance
-                    - weight
+                  - instance
+                  - weight
             strategy:
               type: object
               properties:
@@ -687,10 +1015,10 @@ components:
                 availabilityVsCost:
                   type: string
                   enum:
-                    - balanced
-                    - costOriented
-                    - availabilityOriented
-                    - cheapest
+                  - balanced
+                  - costOriented
+                  - availabilityOriented
+                  - cheapest
                 fallbackToOd:
                   type: boolean
                 utilizeReservedInstances:
@@ -741,6 +1069,7 @@ components:
                         type: string
                       cronExpression:
                         type: string
+          example: example_value
     ElastigroupAzureRequest:
       type: object
       properties:
@@ -769,6 +1098,7 @@ components:
                   type: integer
                 fallbackToOd:
                   type: boolean
+          example: example_value
     ElastigroupGCPRequest:
       type: object
       properties:
@@ -795,11 +1125,13 @@ components:
                   type: integer
                 fallbackToOd:
                   type: boolean
+          example: example_value
     ElastigroupResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -807,11 +1139,13 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Elastigroup'
+          example: example_value
     ElastigroupListResponse:
       type: object
       properties:
         request:
           type: object
+          example: example_value
         response:
           type: object
           properties:
@@ -819,17 +1153,22 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Elastigroup'
+          example: example_value
     Elastigroup:
       type: object
       properties:
         id:
           type: string
+          example: abc123
         name:
           type: string
+          example: Example Title
         description:
           type: string
+          example: A sample description.
         region:
           type: string
+          example: example_value
         capacity:
           type: object
           properties:
@@ -839,28 +1178,34 @@ components:
               type: integer
             maximum:
               type: integer
+          example: example_value
         createdAt:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
         updatedAt:
           type: string
           format: date-time
+          example: '2026-01-15T10:30:00Z'
     RollRequest:
       type: object
       properties:
         batchSizePercentage:
           type: integer
           description: Percentage of instances to replace in each batch.
+          example: 10
         gracePeriod:
           type: integer
           description: Grace period in seconds before checking health.
+          example: 10
         healthCheckType:
           type: string
           enum:
-            - EC2
-            - ELB
-            - TARGET_GROUP
-            - NONE
+          - EC2
+          - ELB
+          - TARGET_GROUP
+          - NONE
+          example: EC2
     EMRClusterRequest:
       type: object
       properties:
@@ -877,3 +1222,4 @@ components:
               type: object
             compute:
               type: object
+          example: example_value

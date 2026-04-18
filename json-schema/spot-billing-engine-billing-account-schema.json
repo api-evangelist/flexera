@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BillingAccount",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "The Spot account identifier."
+    },
+    "cloudProvider": {
+      "type": "string",
+      "description": "The cloud provider type."
+    },
+    "status": {
+      "type": "string",
+      "description": "The setup status of the billing account."
+    },
+    "billingAccountId": {
+      "type": "string",
+      "description": "The cloud provider billing account identifier."
+    }
+  }
+}

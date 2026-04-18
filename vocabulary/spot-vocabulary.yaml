@@ -1,0 +1,39 @@
+name: spot API Vocabulary
+provider: spot
+created: '2026-04-18'
+modified: '2026-04-18'
+operations: 119
+schemas: 47
+tags:
+- Access Policies
+- Accounts
+- Audit
+- Billing Accounts
+- Billing Engine Setup
+- Cloud Credentials
+- Cost Analysis
+- Cost Intelligence
+- Deployments
+- EMR
+- Eco AWS
+- Eco Azure
+- Eco GCP
+- Elastigroup AWS
+- Elastigroup Azure
+- Elastigroup GCP
+- Families
+- Health Check
+- Ocean AKS
+- Ocean AWS
+- Ocean CD
+- Ocean ECS
+- Ocean GKE
+- Ocean Spark
+- Organizations
+- Right Sizing
+- Rolls
+- Savings Analysis
+- Stateful Instances
+- Subscriptions
+- Users
+- Virtual Node Groups

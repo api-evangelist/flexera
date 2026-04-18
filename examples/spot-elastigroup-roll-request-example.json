@@ -1,0 +1,5 @@
+{
+  "batchSizePercentage": 10,
+  "gracePeriod": 10,
+  "healthCheckType": "example_value"
+}

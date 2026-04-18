@@ -1,0 +1,303 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Spot Elastigroup"
+  description: "Programmatic management of Elastigroup compute groups across AWS, Azure, and GCP for cost-optimized spot instance workloads."
+  tags:
+    - Spot
+    - Elastigroup
+    - Compute
+    - Autoscaling
+  created: "2026-04-18"
+  modified: "2026-04-18"
+
+binds:
+  - namespace: env
+    keys:
+      SPOT_API_TOKEN: SPOT_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: spot-elastigroup
+      baseUri: https://api.spotinst.io
+      description: "Spot Elastigroup API"
+      authentication:
+        type: bearer
+        token: "{{SPOT_API_TOKEN}}"
+      resources:
+        - name: elastigroup-aws
+          path: /aws/ec2/group
+          description: "Manage AWS Elastigroups"
+          operations:
+            - name: create-elastigroup-aws
+              method: POST
+              description: "Create an AWS Elastigroup"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-elastigroups-aws
+              method: GET
+              description: "List all AWS Elastigroups"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-elastigroup-aws
+              method: GET
+              description: "Get an AWS Elastigroup"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: update-elastigroup-aws
+              method: PUT
+              description: "Update an AWS Elastigroup"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-elastigroup-aws
+              method: DELETE
+              description: "Delete an AWS Elastigroup"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-elastigroup-status-aws
+              method: GET
+              description: "Get Elastigroup instance status"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: scale-up-elastigroup-aws
+              method: PUT
+              description: "Scale up an AWS Elastigroup"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: scale-down-elastigroup-aws
+              method: PUT
+              description: "Scale down an AWS Elastigroup"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: roll-elastigroup-aws
+              method: PUT
+              description: "Initiate a roll for an AWS Elastigroup"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-elastigroup-logs
+              method: GET
+              description: "Get Elastigroup activity logs"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-elastigroup-costs
+              method: GET
+              description: "Get Elastigroup cost data"
+              inputParameters:
+                - name: groupId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Elastigroup ID"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: elastigroup-azure
+          path: /azure/compute/group
+          description: "Manage Azure Elastigroups"
+          operations:
+            - name: create-elastigroup-azure
+              method: POST
+              description: "Create an Azure Elastigroup"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-elastigroups-azure
+              method: GET
+              description: "List all Azure Elastigroups"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: elastigroup-gcp
+          path: /gcp/compute/group
+          description: "Manage GCP Elastigroups"
+          operations:
+            - name: create-elastigroup-gcp
+              method: POST
+              description: "Create a GCP Elastigroup"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-elastigroups-gcp
+              method: GET
+              description: "List all GCP Elastigroups"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: emr
+          path: /aws/emr/mrScaler
+          description: "Manage EMR clusters"
+          operations:
+            - name: create-emr-cluster
+              method: POST
+              description: "Create an EMR cluster"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-emr-clusters
+              method: GET
+              description: "List EMR clusters"
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: spot-elastigroup-rest-api
+      resources:
+        - path: /v1/elastigroups
+          name: elastigroups
+          description: "Elastigroup management"
+          operations:
+            - method: GET
+              name: list-elastigroups-aws
+              description: "List AWS Elastigroups"
+              call: "spot-elastigroup.list-elastigroups-aws"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: spot-elastigroup-mcp
+      transport: http
+      tools:
+        - name: list-elastigroups-aws
+          description: "List all AWS Elastigroups"
+          hints:
+            readOnly: true
+          call: "spot-elastigroup.list-elastigroups-aws"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-elastigroup-aws
+          description: "Get an AWS Elastigroup"
+          hints:
+            readOnly: true
+          call: "spot-elastigroup.get-elastigroup-aws"
+          with:
+            groupId: "tools.groupId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-elastigroup-status-aws
+          description: "Get Elastigroup instance status"
+          hints:
+            readOnly: true
+          call: "spot-elastigroup.get-elastigroup-status-aws"
+          with:
+            groupId: "tools.groupId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-elastigroup-costs
+          description: "Get Elastigroup cost data"
+          hints:
+            readOnly: true
+          call: "spot-elastigroup.get-elastigroup-costs"
+          with:
+            groupId: "tools.groupId"
+          outputParameters:
+            - type: object
+              mapping: "$."
