@@ -1,0 +1,13 @@
+{
+  "repo": "spot",
+  "feeds": [
+    {
+      "source": "https://spot.io/blog/",
+      "feed_url": "https://www.flexera.com/blog/feed/",
+      "saved": 10,
+      "title": "Flexera Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:37:02Z"
+}
