@@ -4,7 +4,8 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Spot
 providerId: spot
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Autoscaling
   - Cloud Infrastructure
@@ -13,21 +14,23 @@ tags:
   - FinOps
   - Kubernetes
   - Spot Instances
-description: Machine-readable plans and pricing scaffold for this API provider. Conforms to the API Commons
-  Plans schema. Tier limits and prices are scaffold defaults; replace with provider-published values.
+description: Spot by NetApp (now part of Flexera following the 2024 acquisition) bills its cloud-cost-optimization products (Elastigroup, Ocean, Eco, Cloud Analyzer) primarily as a percentage of customer cloud savings, with no public rate card. Trial access is available; production deployments are negotiated.
+notes: Spot historically used a "20% of net savings delivered" pricing model on Eco / commitment-management products with Elastigroup priced as a percentage of compute savings. Exact percentages and minimums are not publicly listed and may have changed under Flexera ownership; treating all numeric fees as contact-sales.
+sources:
+  - https://www.flexera.com/products
+  - https://spot.io/products/
 plans:
-  - id: flexera-free
-    name: Free
+  - id: spot-trial
+    name: Free Trial / Free Tier
     type: freemium
-    description: Free entry tier for the Spot API surface. Intended for evaluation, prototyping, and low-volume
-      integrations. Real limits and pricing must be reconciled with the provider's published plan documentation.
+    description: Time-limited or capacity-limited trial of Spot products (Ocean, Elastigroup, Eco, Cloud Analyzer) for evaluation. Cloud Analyzer in particular has historically offered a free read-only assessment tier.
     entries:
-      - label: API Requests
-        description: Monthly API request quota across all included endpoints
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 1000
+      - label: Trial Access
+        description: Evaluation tier; not for production use
+        name: trial
+        type: flat
+        metric: month
+        limit: -1
         timeFrame: month
         geo: global
         domains:
@@ -35,109 +38,71 @@ plans:
         unit: 1
         price: '0.00'
         userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the free tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 10
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.spotinst.io
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
     elements:
+      - name: Cloud Analyzer (Read-Only Assessment)
+      - name: Sandbox / Trial Access
       - name: Public Documentation
-      - name: Community Support
-      - name: Sandbox Access
-      - name: Spot Administration API
-      - name: Spot Elastigroup API
-      - name: Spot Ocean API
-      - name: Spot Eco API
-      - name: Spot Billing Engine API
-  - id: flexera-pro
-    name: Professional
-    type: paid
-    description: Production tier for Spot. Provides higher quotas, priority support, and access to the
-      broader API portfolio. Pricing placeholder; align with the provider's pricing page.
+  - id: spot-savings-share
+    name: Production (Savings-Share)
+    type: usage-based
+    description: Production Spot products are typically billed as a share of net cloud savings delivered (Eco) or of compute spend optimized (Ocean, Elastigroup). Historical published rate was approximately a 20% share of savings on Eco; current pricing under Flexera is contact-sales.
     entries:
-      - label: API Requests
-        description: Monthly API request quota
-        name: api_requests
-        type: quota
-        metric: requests
-        limit: 100000
-        timeFrame: month
-        geo: global
-        domains:
-          - https://api.spotinst.io
-        unit: 1
-        price: TBD
-        userMultiplied: false
-      - label: Rate Limit
-        description: Maximum requests per minute on the professional tier
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 100
-        timeFrame: minute
-        geo: global
-        domains:
-          - https://api.spotinst.io
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Overage
-        description: Per-request price after monthly quota is exceeded
-        name: overage
-        type: metered
-        metric: requests
+      - label: Spot Eco (Commitment Management)
+        description: Share of savings on AWS / Azure / GCP commitment portfolio managed by Eco
+        name: eco_savings_share
+        type: tiered
+        metric: USD
         limit: -1
         timeFrame: month
         geo: global
         domains:
           - https://api.spotinst.io
-        unit: 1000
-        price: TBD
+        unit: 1
+        price: contact sales (historically ~20% of net savings)
+        userMultiplied: false
+      - label: Spot Ocean (K8s)
+        description: Per-cluster or savings-share pricing on Ocean Kubernetes autoscaling
+        name: ocean
+        type: usage-based
+        metric: cluster
+        limit: -1
+        timeFrame: month
+        geo: global
+        domains:
+          - https://api.spotinst.io
+        unit: 1
+        price: contact sales
+        userMultiplied: false
+      - label: Spot Elastigroup
+        description: Spot-instance orchestration; share of compute savings
+        name: elastigroup
+        type: usage-based
+        metric: compute_hour
+        limit: -1
+        timeFrame: month
+        geo: global
+        domains:
+          - https://api.spotinst.io
+        unit: 1
+        price: contact sales
         userMultiplied: false
     elements:
-      - name: All Production Endpoints
-      - name: Email Support
-      - name: SLA Targets
-      - name: Webhook Subscriptions
-      - name: Spot Administration API
-      - name: Spot Elastigroup API
-      - name: Spot Ocean API
-      - name: Spot Eco API
-      - name: Spot Billing Engine API
-  - id: flexera-enterprise
-    name: Enterprise
+      - name: Production API Access
+      - name: Multi-Cloud (AWS, Azure, GCP)
+      - name: Email / Premium Support
+      - name: Spot Console
+  - id: spot-enterprise
+    name: Enterprise (Flexera One)
     type: enterprise
-    description: Custom-negotiated tier for Spot. Includes dedicated capacity, contractual SLAs, security
-      review, data residency options, and named technical account management.
+    description: Bundled Spot products under a Flexera One enterprise agreement. Custom pricing, dedicated support, integration with Flexera ITAM/SaaS Management, and volume commitments.
     entries:
-      - label: API Requests
-        description: Negotiated request volume; -1 indicates uncapped subject to fair use
-        name: api_requests
-        type: quota
-        metric: requests
+      - label: Enterprise Agreement
+        description: Custom Flexera One bundle
+        name: enterprise
+        type: subscription
+        metric: year
         limit: -1
-        timeFrame: month
-        geo: configurable
-        domains:
-          - https://api.spotinst.io
-        unit: 1
-        price: custom
-        userMultiplied: false
-      - label: Rate Limit
-        description: Negotiated burst and steady-state rate
-        name: rate_limit
-        type: rate
-        metric: requests_per_minute
-        limit: 1000
-        timeFrame: minute
+        timeFrame: year
         geo: configurable
         domains:
           - https://api.spotinst.io
@@ -145,17 +110,8 @@ plans:
         price: custom
         userMultiplied: false
     elements:
-      - name: Unlimited / Negotiated Volume
-      - name: 24/7 Dedicated Support
+      - name: Flexera One Integration
+      - name: Dedicated Account Management
       - name: Contractual SLA
-      - name: Security & Compliance Review
-      - name: Dedicated Account Manager
-      - name: Custom Data Residency
-      - name: Spot Administration API
-      - name: Spot Elastigroup API
-      - name: Spot Ocean API
-      - name: Spot Eco API
-      - name: Spot Billing Engine API
-maintainers:
-  - FN: Kin Lane
-    email: info@apievangelist.com
+      - name: Multi-Product Bundle
+maintainers: []

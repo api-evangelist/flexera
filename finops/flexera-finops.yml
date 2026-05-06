@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,181 +9,78 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Spot
 providerId: spot
-publisherName: Spot
-serviceCategory: API
+publisherName: Flexera Software LLC
+serviceCategory: FinOps / Cloud Cost Optimization
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - Autoscaling
-  - Cloud Infrastructure
-  - Containers
-  - Cost Optimization
   - FinOps
+  - FOCUS
+  - Cloud Cost Optimization
   - Kubernetes
   - Spot Instances
-  - FinOps
-  - Cost Management
-  - FOCUS
-description: FinOps framework definition for the Spot API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: FOCUS-aligned FinOps mapping for Spot (by Flexera) — savings-share billing on Eco/Ocean/Elastigroup with cloud-spend-under-management as the primary meter. Spot itself is a FinOps tool, so this artifact also describes the meters consumers should expose to their own FinOps practice.
+notes: Public pricing is contact-sales; meters reflect documented Spot product behavior (compute hours managed, commitments managed, net savings delivered).
+sources:
+  - https://www.flexera.com/products
+  - https://spot.io/products/
 billingModel:
-  pricingCategory: Usage-Based
+  pricingCategory: Savings Share
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
     - Usage
     - Purchase
-    - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Credit
 focusColumns:
-  ServiceName: Spot
-  ServiceCategory: Developer Tools / API
-  ProviderName: Spot
-  PublisherName: Spot
-  InvoiceIssuerName: Spot
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  ServiceName: Spot by NetApp / Flexera
+  ServiceCategory: FinOps / Cloud Cost Optimization
+  ProviderName: Flexera Software LLC
+  PublisherName: Flexera Software LLC
+  InvoiceIssuerName: Flexera Software LLC
   BillingCurrency: USD
   ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: net_savings_delivered
+    description: Net cloud savings delivered by Spot Eco (commitment portfolio optimization) — primary basis for savings-share billing
+    unit: USD
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
+      - cloud_provider
+      - account
+      - service
+  - name: managed_compute_hours
+    description: Compute hours under management by Elastigroup / Ocean
+    unit: instance-hour
+    aggregation: sum
+    dimensions:
+      - cloud_provider
       - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
-    aggregation: sum
+      - cluster
+      - instance_family
+  - name: commitments_managed
+    description: Reserved-instance / Savings-Plan / CUD volume managed by Eco
+    unit: USD
+    aggregation: avg
     dimensions:
-      - api
+      - cloud_provider
+      - commitment_type
+  - name: managed_clusters
+    description: Kubernetes clusters managed by Spot Ocean
+    unit: cluster-month
+    aggregation: max
+    dimensions:
+      - cloud_provider
       - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
-    dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Spot Administration API
-    baseURL: https://api.spotinst.io
-    tags:
-      - Access Control
-      - Accounts
-      - Administration
-      - Cloud Credentials
-      - Organizations
-      - Users
-    serviceName: Spot Administration API
-    serviceCategory: API
-  - name: Spot Elastigroup API
-    baseURL: https://api.spotinst.io
-    tags:
-      - Autoscaling
-      - AWS
-      - Azure
-      - Compute
-      - Elastigroup
-      - EMR
-      - GCP
-      - Spot Instances
-    serviceName: Spot Elastigroup API
-    serviceCategory: API
-  - name: Spot Ocean API
-    baseURL: https://api.spotinst.io
-    tags:
-      - AKS
-      - Apache Spark
-      - Autoscaling
-      - Containers
-      - ECS
-      - EKS
-      - GKE
-      - Kubernetes
-      - Ocean
-    serviceName: Spot Ocean API
-    serviceCategory: API
-  - name: Spot Eco API
-    baseURL: https://api.spotinst.io
-    tags:
-      - AWS
-      - Azure
-      - Commitments
-      - Cost Optimization
-      - FinOps
-      - GCP
-      - Reserved Instances
-      - Savings Plans
-    serviceName: Spot Eco API
-    serviceCategory: API
-  - name: Spot Billing Engine API
-    baseURL: https://api.spotinst.io
-    tags:
-      - Billing
-      - Chargeback
-      - Cost Allocation
-      - Cost Intelligence
-      - FinOps
-      - Invoicing
-    serviceName: Spot Billing Engine API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
-maintainers:
-  - FN: Kin Lane
-    email: info@apievangelist.com
+principles:
+  - name: Visibility
+    description: Pull Spot's Cloud Analyzer and Eco reporting daily; reconcile reported "net savings" against your CUR/Cost-and-Usage report to validate the savings-share invoice.
+  - name: Allocation
+    description: Tag clusters and groups in Spot with cost-center metadata so Spot's allocation views align with FOCUS dimensions you use for chargeback.
+  - name: Optimization
+    description: Spot is itself the optimization layer — measure unit-cost (cost per pod-hour, cost per instance-hour) before/after enabling Ocean and Eco and tune autoscaling policies based on observed savings.
+  - name: Accountability
+    description: Cloud platform / FinOps team owns the Spot relationship; finance audits the savings-share invoice against independent CUR-based savings calculations quarterly.
+maintainers: []
