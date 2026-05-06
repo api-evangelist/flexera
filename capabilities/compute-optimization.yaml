@@ -1,217 +1,592 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Spot Compute Optimization"
-  description: "Unified workflow for managing cloud compute optimization across Elastigroup and Ocean, combining instance management, autoscaling, and Kubernetes infrastructure automation. Used by DevOps engineers and cloud infrastructure teams."
+  label: Spot Compute Optimization
+  description: Unified workflow for managing cloud compute optimization across Elastigroup and Ocean, combining instance management,
+    autoscaling, and Kubernetes infrastructure automation. Used by DevOps engineers and cloud infrastructure teams.
   tags:
-    - Spot
-    - Compute
-    - Autoscaling
-    - Kubernetes
-  created: "2026-04-18"
-  modified: "2026-04-18"
-
+  - Spot
+  - Compute
+  - Autoscaling
+  - Kubernetes
+  created: '2026-04-18'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      SPOT_API_TOKEN: SPOT_API_TOKEN
-
+- namespace: env
+  keys:
+    SPOT_API_TOKEN: SPOT_API_TOKEN
 capability:
   consumes:
-    - import: spot-elastigroup
-      location: ./shared/elastigroup.yaml
-    - import: spot-ocean
-      location: ./shared/ocean.yaml
-
+  - type: http
+    namespace: spot-elastigroup
+    baseUri: https://api.spotinst.io
+    description: Spot Elastigroup API
+    authentication:
+      type: bearer
+      token: '{{SPOT_API_TOKEN}}'
+    resources:
+    - name: elastigroup-aws
+      path: /aws/ec2/group
+      description: Manage AWS Elastigroups
+      operations:
+      - name: create-elastigroup-aws
+        method: POST
+        description: Create an AWS Elastigroup
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-elastigroups-aws
+        method: GET
+        description: List all AWS Elastigroups
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-elastigroup-aws
+        method: GET
+        description: Get an AWS Elastigroup
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-elastigroup-aws
+        method: PUT
+        description: Update an AWS Elastigroup
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-elastigroup-aws
+        method: DELETE
+        description: Delete an AWS Elastigroup
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-elastigroup-status-aws
+        method: GET
+        description: Get Elastigroup instance status
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: scale-up-elastigroup-aws
+        method: PUT
+        description: Scale up an AWS Elastigroup
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: scale-down-elastigroup-aws
+        method: PUT
+        description: Scale down an AWS Elastigroup
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: roll-elastigroup-aws
+        method: PUT
+        description: Initiate a roll for an AWS Elastigroup
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-elastigroup-logs
+        method: GET
+        description: Get Elastigroup activity logs
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-elastigroup-costs
+        method: GET
+        description: Get Elastigroup cost data
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+          description: Elastigroup ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: elastigroup-azure
+      path: /azure/compute/group
+      description: Manage Azure Elastigroups
+      operations:
+      - name: create-elastigroup-azure
+        method: POST
+        description: Create an Azure Elastigroup
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-elastigroups-azure
+        method: GET
+        description: List all Azure Elastigroups
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: elastigroup-gcp
+      path: /gcp/compute/group
+      description: Manage GCP Elastigroups
+      operations:
+      - name: create-elastigroup-gcp
+        method: POST
+        description: Create a GCP Elastigroup
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-elastigroups-gcp
+        method: GET
+        description: List all GCP Elastigroups
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: emr
+      path: /aws/emr/mrScaler
+      description: Manage EMR clusters
+      operations:
+      - name: create-emr-cluster
+        method: POST
+        description: Create an EMR cluster
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-emr-clusters
+        method: GET
+        description: List EMR clusters
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  - type: http
+    namespace: spot-ocean
+    baseUri: https://api.spotinst.io
+    description: Spot Ocean API
+    authentication:
+      type: bearer
+      token: '{{SPOT_API_TOKEN}}'
+    resources:
+    - name: ocean-aws
+      path: /ocean/aws/k8s/cluster
+      description: Manage AWS Ocean clusters
+      operations:
+      - name: create-ocean-cluster-aws
+        method: POST
+        description: Create an AWS Ocean cluster
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-ocean-clusters-aws
+        method: GET
+        description: List AWS Ocean clusters
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-ocean-cluster-aws
+        method: GET
+        description: Get an AWS Ocean cluster
+        inputParameters:
+        - name: oceanId
+          in: path
+          type: string
+          required: true
+          description: Ocean cluster ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-ocean-cluster-aws
+        method: PUT
+        description: Update an AWS Ocean cluster
+        inputParameters:
+        - name: oceanId
+          in: path
+          type: string
+          required: true
+          description: Ocean cluster ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-ocean-cluster-aws
+        method: DELETE
+        description: Delete an AWS Ocean cluster
+        inputParameters:
+        - name: oceanId
+          in: path
+          type: string
+          required: true
+          description: Ocean cluster ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: initiate-roll-aws
+        method: POST
+        description: Initiate a cluster roll
+        inputParameters:
+        - name: oceanId
+          in: path
+          type: string
+          required: true
+          description: Ocean cluster ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-right-sizing-suggestions
+        method: GET
+        description: Get right-sizing recommendations
+        inputParameters:
+        - name: oceanId
+          in: path
+          type: string
+          required: true
+          description: Ocean cluster ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: virtual-node-groups
+      path: /ocean/aws/k8s/launchSpec
+      description: Manage virtual node groups
+      operations:
+      - name: create-virtual-node-group-aws
+        method: POST
+        description: Create a virtual node group
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-virtual-node-groups-aws
+        method: GET
+        description: List virtual node groups
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ocean-aks
+      path: /ocean/azure/k8s/cluster
+      description: Manage AKS Ocean clusters
+      operations:
+      - name: list-ocean-clusters-aks
+        method: GET
+        description: List AKS Ocean clusters
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ocean-gke
+      path: /ocean/gcp/k8s/cluster
+      description: Manage GKE Ocean clusters
+      operations:
+      - name: list-ocean-clusters-gke
+        method: GET
+        description: List GKE Ocean clusters
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ocean-spark
+      path: /ocean/spark/cluster
+      description: Manage Ocean Spark clusters
+      operations:
+      - name: list-ocean-spark-clusters
+        method: GET
+        description: List Ocean Spark clusters
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: spot-compute-api
-      description: "Unified REST API for Spot compute optimization."
-      resources:
-        - path: /v1/elastigroups
-          name: elastigroups
-          description: "Elastigroup compute groups"
-          operations:
-            - method: GET
-              name: list-elastigroups
-              description: "List AWS Elastigroups"
-              call: "spot-elastigroup.list-elastigroups-aws"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/ocean-clusters
-          name: ocean-clusters
-          description: "Ocean Kubernetes clusters"
-          operations:
-            - method: GET
-              name: list-ocean-clusters
-              description: "List AWS Ocean clusters"
-              call: "spot-ocean.list-ocean-clusters-aws"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/virtual-node-groups
-          name: virtual-node-groups
-          description: "Ocean virtual node groups"
-          operations:
-            - method: GET
-              name: list-virtual-node-groups
-              description: "List virtual node groups"
-              call: "spot-ocean.list-virtual-node-groups-aws"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: spot-compute-mcp
-      transport: http
-      description: "MCP server for AI-assisted Spot compute optimization."
-      tools:
-        - name: elastigroup-list-groups-aws
-          description: "List all AWS Elastigroups"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "spot-elastigroup.list-elastigroups-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-get-group-aws
-          description: "Get an AWS Elastigroup by ID"
-          hints:
-            readOnly: true
-          call: "spot-elastigroup.get-elastigroup-aws"
-          with:
-            groupId: "tools.groupId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-get-status-aws
-          description: "Get Elastigroup instance status"
-          hints:
-            readOnly: true
-          call: "spot-elastigroup.get-elastigroup-status-aws"
-          with:
-            groupId: "tools.groupId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-get-costs
-          description: "Get Elastigroup cost data"
-          hints:
-            readOnly: true
-          call: "spot-elastigroup.get-elastigroup-costs"
-          with:
-            groupId: "tools.groupId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-get-logs
-          description: "Get Elastigroup activity logs"
-          hints:
-            readOnly: true
-          call: "spot-elastigroup.get-elastigroup-logs"
-          with:
-            groupId: "tools.groupId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-scale-up-aws
-          description: "Scale up an AWS Elastigroup"
-          hints:
-            readOnly: false
-          call: "spot-elastigroup.scale-up-elastigroup-aws"
-          with:
-            groupId: "tools.groupId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-scale-down-aws
-          description: "Scale down an AWS Elastigroup"
-          hints:
-            readOnly: false
-          call: "spot-elastigroup.scale-down-elastigroup-aws"
-          with:
-            groupId: "tools.groupId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-list-azure
-          description: "List Azure Elastigroups"
-          hints:
-            readOnly: true
-          call: "spot-elastigroup.list-elastigroups-azure"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: elastigroup-list-gcp
-          description: "List GCP Elastigroups"
-          hints:
-            readOnly: true
-          call: "spot-elastigroup.list-elastigroups-gcp"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: ocean-list-clusters-aws
-          description: "List AWS Ocean clusters"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "spot-ocean.list-ocean-clusters-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: ocean-get-cluster-aws
-          description: "Get an AWS Ocean cluster"
-          hints:
-            readOnly: true
-          call: "spot-ocean.get-ocean-cluster-aws"
-          with:
-            oceanId: "tools.oceanId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: ocean-get-right-sizing
-          description: "Get right-sizing suggestions for an Ocean cluster"
-          hints:
-            readOnly: true
-          call: "spot-ocean.get-right-sizing-suggestions"
-          with:
-            oceanId: "tools.oceanId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: ocean-list-virtual-node-groups
-          description: "List Ocean virtual node groups"
-          hints:
-            readOnly: true
-          call: "spot-ocean.list-virtual-node-groups-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: ocean-list-clusters-aks
-          description: "List AKS Ocean clusters"
-          hints:
-            readOnly: true
-          call: "spot-ocean.list-ocean-clusters-aks"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: ocean-list-clusters-gke
-          description: "List GKE Ocean clusters"
-          hints:
-            readOnly: true
-          call: "spot-ocean.list-ocean-clusters-gke"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: ocean-list-spark-clusters
-          description: "List Ocean Spark clusters"
-          hints:
-            readOnly: true
-          call: "spot-ocean.list-ocean-spark-clusters"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: spot-compute-api
+    description: Unified REST API for Spot compute optimization.
+    resources:
+    - path: /v1/elastigroups
+      name: elastigroups
+      description: Elastigroup compute groups
+      operations:
+      - method: GET
+        name: list-elastigroups
+        description: List AWS Elastigroups
+        call: spot-elastigroup.list-elastigroups-aws
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ocean-clusters
+      name: ocean-clusters
+      description: Ocean Kubernetes clusters
+      operations:
+      - method: GET
+        name: list-ocean-clusters
+        description: List AWS Ocean clusters
+        call: spot-ocean.list-ocean-clusters-aws
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/virtual-node-groups
+      name: virtual-node-groups
+      description: Ocean virtual node groups
+      operations:
+      - method: GET
+        name: list-virtual-node-groups
+        description: List virtual node groups
+        call: spot-ocean.list-virtual-node-groups-aws
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: spot-compute-mcp
+    transport: http
+    description: MCP server for AI-assisted Spot compute optimization.
+    tools:
+    - name: elastigroup-list-groups-aws
+      description: List all AWS Elastigroups
+      hints:
+        readOnly: true
+        openWorld: true
+      call: spot-elastigroup.list-elastigroups-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-get-group-aws
+      description: Get an AWS Elastigroup by ID
+      hints:
+        readOnly: true
+      call: spot-elastigroup.get-elastigroup-aws
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-get-status-aws
+      description: Get Elastigroup instance status
+      hints:
+        readOnly: true
+      call: spot-elastigroup.get-elastigroup-status-aws
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-get-costs
+      description: Get Elastigroup cost data
+      hints:
+        readOnly: true
+      call: spot-elastigroup.get-elastigroup-costs
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-get-logs
+      description: Get Elastigroup activity logs
+      hints:
+        readOnly: true
+      call: spot-elastigroup.get-elastigroup-logs
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-scale-up-aws
+      description: Scale up an AWS Elastigroup
+      hints:
+        readOnly: false
+      call: spot-elastigroup.scale-up-elastigroup-aws
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-scale-down-aws
+      description: Scale down an AWS Elastigroup
+      hints:
+        readOnly: false
+      call: spot-elastigroup.scale-down-elastigroup-aws
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-list-azure
+      description: List Azure Elastigroups
+      hints:
+        readOnly: true
+      call: spot-elastigroup.list-elastigroups-azure
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: elastigroup-list-gcp
+      description: List GCP Elastigroups
+      hints:
+        readOnly: true
+      call: spot-elastigroup.list-elastigroups-gcp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ocean-list-clusters-aws
+      description: List AWS Ocean clusters
+      hints:
+        readOnly: true
+        openWorld: true
+      call: spot-ocean.list-ocean-clusters-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ocean-get-cluster-aws
+      description: Get an AWS Ocean cluster
+      hints:
+        readOnly: true
+      call: spot-ocean.get-ocean-cluster-aws
+      with:
+        oceanId: tools.oceanId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ocean-get-right-sizing
+      description: Get right-sizing suggestions for an Ocean cluster
+      hints:
+        readOnly: true
+      call: spot-ocean.get-right-sizing-suggestions
+      with:
+        oceanId: tools.oceanId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ocean-list-virtual-node-groups
+      description: List Ocean virtual node groups
+      hints:
+        readOnly: true
+      call: spot-ocean.list-virtual-node-groups-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ocean-list-clusters-aks
+      description: List AKS Ocean clusters
+      hints:
+        readOnly: true
+      call: spot-ocean.list-ocean-clusters-aks
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ocean-list-clusters-gke
+      description: List GKE Ocean clusters
+      hints:
+        readOnly: true
+      call: spot-ocean.list-ocean-clusters-gke
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: ocean-list-spark-clusters
+      description: List Ocean Spark clusters
+      hints:
+        readOnly: true
+      call: spot-ocean.list-ocean-spark-clusters
+      outputParameters:
+      - type: object
+        mapping: $.

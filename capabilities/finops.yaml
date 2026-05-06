@@ -1,207 +1,717 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Spot FinOps"
-  description: "Unified workflow for cloud financial operations combining commitment management (Eco), billing analytics (Billing Engine), and cost optimization. Used by FinOps teams, cloud finance analysts, and platform administrators."
+  label: Spot FinOps
+  description: Unified workflow for cloud financial operations combining commitment management (Eco), billing analytics (Billing
+    Engine), and cost optimization. Used by FinOps teams, cloud finance analysts, and platform administrators.
   tags:
-    - Spot
-    - FinOps
-    - Cost Optimization
-    - Billing
-  created: "2026-04-18"
-  modified: "2026-04-18"
-
+  - Spot
+  - FinOps
+  - Cost Optimization
+  - Billing
+  created: '2026-04-18'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      SPOT_API_TOKEN: SPOT_API_TOKEN
-
+- namespace: env
+  keys:
+    SPOT_API_TOKEN: SPOT_API_TOKEN
 capability:
   consumes:
-    - import: spot-eco
-      location: ./shared/eco.yaml
-    - import: spot-billing
-      location: ./shared/billing-engine.yaml
-    - import: spot-admin
-      location: ./shared/administration.yaml
-
+  - type: http
+    namespace: spot-eco
+    baseUri: https://api.spotinst.io
+    description: Spot Eco API
+    authentication:
+      type: bearer
+      token: '{{SPOT_API_TOKEN}}'
+    resources:
+    - name: commitments-aws
+      path: /eco/aws
+      description: AWS commitment management
+      operations:
+      - name: list-commitment-plans-aws
+        method: GET
+        description: List AWS commitment plans
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-commitment-plan-aws
+        method: GET
+        description: Get an AWS commitment plan
+        inputParameters:
+        - name: planId
+          in: path
+          type: string
+          required: true
+          description: Plan ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-unused-ris-aws
+        method: GET
+        description: Get unused AWS reserved instances
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-savings-plans-aws
+        method: GET
+        description: List AWS savings plans
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-reserved-instances-aws
+        method: GET
+        description: List AWS reserved instances
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-savings-analysis-aws
+        method: GET
+        description: Get AWS savings analysis
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-commitment-analysis-aws
+        method: GET
+        description: Get AWS commitment analysis
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: commitments-azure
+      path: /eco/azure
+      description: Azure commitment management
+      operations:
+      - name: list-commitment-plans-azure
+        method: GET
+        description: List Azure commitment plans
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-savings-analysis-azure
+        method: GET
+        description: Get Azure savings analysis
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: commitments-gcp
+      path: /eco/gcp
+      description: GCP commitment management
+      operations:
+      - name: list-commitment-plans-gcp
+        method: GET
+        description: List GCP commitment plans
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-savings-analysis-gcp
+        method: GET
+        description: Get GCP savings analysis
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  - type: http
+    namespace: spot-billing
+    baseUri: https://api.spotinst.io
+    description: Spot Billing Engine API
+    authentication:
+      type: bearer
+      token: '{{SPOT_API_TOKEN}}'
+    resources:
+    - name: billing-accounts
+      path: /billing/account
+      description: Manage billing accounts
+      operations:
+      - name: list-billing-accounts
+        method: GET
+        description: List billing engine accounts
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: setup-billing-engine
+        method: POST
+        description: Set up billing engine
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: validate-billing-setup
+        method: POST
+        description: Validate billing engine setup
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: account-families
+      path: /billing/accountFamily
+      description: Manage account families
+      operations:
+      - name: create-account-family
+        method: POST
+        description: Create an account family
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-account-families
+        method: GET
+        description: List account families
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-account-family
+        method: GET
+        description: Get an account family
+        inputParameters:
+        - name: familyId
+          in: path
+          type: string
+          required: true
+          description: Account family ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-account-family
+        method: PUT
+        description: Update an account family
+        inputParameters:
+        - name: familyId
+          in: path
+          type: string
+          required: true
+          description: Account family ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-account-family
+        method: DELETE
+        description: Delete an account family
+        inputParameters:
+        - name: familyId
+          in: path
+          type: string
+          required: true
+          description: Account family ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: cost-analysis
+      path: /billing/costAnalysis
+      description: Cost analysis
+      operations:
+      - name: get-cost-analysis
+        method: GET
+        description: Get cost analysis data
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: cost-intelligence
+      path: /billing/costIntelligence
+      description: Cost intelligence
+      operations:
+      - name: setup-cost-intelligence
+        method: POST
+        description: Set up cost intelligence
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: validate-cost-intelligence
+        method: POST
+        description: Validate cost intelligence setup
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  - type: http
+    namespace: spot-admin
+    baseUri: https://api.spotinst.io
+    description: Spot Administration API
+    authentication:
+      type: bearer
+      token: '{{SPOT_API_TOKEN}}'
+    resources:
+    - name: organizations
+      path: /setup/organization
+      description: Manage Spot organizations
+      operations:
+      - name: create-organization
+        method: POST
+        description: Create a new organization
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-organization
+        method: DELETE
+        description: Delete an organization
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: accounts
+      path: /setup/account
+      description: Manage Spot accounts
+      operations:
+      - name: create-account
+        method: POST
+        description: Create a new account
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-accounts
+        method: GET
+        description: List all accounts
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-account
+        method: PUT
+        description: Update an account
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-account
+        method: DELETE
+        description: Delete an account
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: users
+      path: /setup/user
+      description: Manage users
+      operations:
+      - name: create-user
+        method: POST
+        description: Create a new user
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-users
+        method: GET
+        description: List organization users
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-user
+        method: GET
+        description: Get a specific user
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: User ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-user-permissions
+        method: PUT
+        description: Update user permissions
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: User ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-user
+        method: DELETE
+        description: Delete a user
+        inputParameters:
+        - name: userId
+          in: path
+          type: string
+          required: true
+          description: User ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-programmatic-user
+        method: POST
+        description: Create a programmatic API user
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: access-policies
+      path: /setup/access/policy
+      description: Manage access policies
+      operations:
+      - name: create-access-policy
+        method: POST
+        description: Create an access policy
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-access-policies
+        method: GET
+        description: List access policies
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: update-access-policy
+        method: PUT
+        description: Update an access policy
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-access-policy
+        method: DELETE
+        description: Delete an access policy
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: cloud-credentials
+      path: /setup/credentials
+      description: Link cloud provider credentials
+      operations:
+      - name: set-aws-credentials
+        method: POST
+        description: Set AWS cloud credentials
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: set-azure-credentials
+        method: POST
+        description: Set Azure cloud credentials
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: set-gcp-credentials
+        method: POST
+        description: Set GCP cloud credentials
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: subscriptions
+      path: /events/subscription
+      description: Manage event subscriptions
+      operations:
+      - name: create-subscription
+        method: POST
+        description: Create an event subscription
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: list-subscriptions
+        method: GET
+        description: List event subscriptions
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: delete-subscription
+        method: DELETE
+        description: Delete an event subscription
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: health
+      path: /healthCheck
+      description: API health check
+      operations:
+      - name: health-check
+        method: GET
+        description: Check API health status
+        inputParameters: []
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8081
-      namespace: spot-finops-api
-      description: "Unified REST API for Spot FinOps operations."
-      resources:
-        - path: /v1/commitment-plans
-          name: commitment-plans
-          description: "Cloud commitment plans"
-          operations:
-            - method: GET
-              name: list-commitment-plans
-              description: "List AWS commitment plans"
-              call: "spot-eco.list-commitment-plans-aws"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/savings-analysis
-          name: savings-analysis
-          description: "Savings analysis"
-          operations:
-            - method: GET
-              name: get-savings-analysis
-              description: "Get AWS savings analysis"
-              call: "spot-eco.get-savings-analysis-aws"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/billing-accounts
-          name: billing-accounts
-          description: "Billing accounts"
-          operations:
-            - method: GET
-              name: list-billing-accounts
-              description: "List billing accounts"
-              call: "spot-billing.list-billing-accounts"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-        - path: /v1/cost-analysis
-          name: cost-analysis
-          description: "Cost analysis"
-          operations:
-            - method: GET
-              name: get-cost-analysis
-              description: "Get cost analysis"
-              call: "spot-billing.get-cost-analysis"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9091
-      namespace: spot-finops-mcp
-      transport: http
-      description: "MCP server for AI-assisted Spot FinOps operations."
-      tools:
-        - name: eco-list-commitment-plans-aws
-          description: "List AWS commitment plans"
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "spot-eco.list-commitment-plans-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-get-commitment-plan-aws
-          description: "Get a specific AWS commitment plan"
-          hints:
-            readOnly: true
-          call: "spot-eco.get-commitment-plan-aws"
-          with:
-            planId: "tools.planId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-get-savings-analysis-aws
-          description: "Get AWS savings analysis"
-          hints:
-            readOnly: true
-          call: "spot-eco.get-savings-analysis-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-get-commitment-analysis-aws
-          description: "Get AWS commitment analysis"
-          hints:
-            readOnly: true
-          call: "spot-eco.get-commitment-analysis-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-list-savings-plans-aws
-          description: "List AWS savings plans"
-          hints:
-            readOnly: true
-          call: "spot-eco.list-savings-plans-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-list-reserved-instances-aws
-          description: "List AWS reserved instances"
-          hints:
-            readOnly: true
-          call: "spot-eco.list-reserved-instances-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-get-unused-ris-aws
-          description: "Get unused AWS reserved instances"
-          hints:
-            readOnly: true
-          call: "spot-eco.get-unused-ris-aws"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-list-commitment-plans-azure
-          description: "List Azure commitment plans"
-          hints:
-            readOnly: true
-          call: "spot-eco.list-commitment-plans-azure"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-get-savings-analysis-azure
-          description: "Get Azure savings analysis"
-          hints:
-            readOnly: true
-          call: "spot-eco.get-savings-analysis-azure"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-list-commitment-plans-gcp
-          description: "List GCP commitment plans"
-          hints:
-            readOnly: true
-          call: "spot-eco.list-commitment-plans-gcp"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: eco-get-savings-analysis-gcp
-          description: "Get GCP savings analysis"
-          hints:
-            readOnly: true
-          call: "spot-eco.get-savings-analysis-gcp"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: billing-list-accounts
-          description: "List billing engine accounts"
-          hints:
-            readOnly: true
-          call: "spot-billing.list-billing-accounts"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: billing-list-account-families
-          description: "List billing account families"
-          hints:
-            readOnly: true
-          call: "spot-billing.list-account-families"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: billing-get-cost-analysis
-          description: "Get billing cost analysis"
-          hints:
-            readOnly: true
-          call: "spot-billing.get-cost-analysis"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: admin-list-accounts
-          description: "List Spot accounts for context"
-          hints:
-            readOnly: true
-          call: "spot-admin.list-accounts"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8081
+    namespace: spot-finops-api
+    description: Unified REST API for Spot FinOps operations.
+    resources:
+    - path: /v1/commitment-plans
+      name: commitment-plans
+      description: Cloud commitment plans
+      operations:
+      - method: GET
+        name: list-commitment-plans
+        description: List AWS commitment plans
+        call: spot-eco.list-commitment-plans-aws
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/savings-analysis
+      name: savings-analysis
+      description: Savings analysis
+      operations:
+      - method: GET
+        name: get-savings-analysis
+        description: Get AWS savings analysis
+        call: spot-eco.get-savings-analysis-aws
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/billing-accounts
+      name: billing-accounts
+      description: Billing accounts
+      operations:
+      - method: GET
+        name: list-billing-accounts
+        description: List billing accounts
+        call: spot-billing.list-billing-accounts
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/cost-analysis
+      name: cost-analysis
+      description: Cost analysis
+      operations:
+      - method: GET
+        name: get-cost-analysis
+        description: Get cost analysis
+        call: spot-billing.get-cost-analysis
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9091
+    namespace: spot-finops-mcp
+    transport: http
+    description: MCP server for AI-assisted Spot FinOps operations.
+    tools:
+    - name: eco-list-commitment-plans-aws
+      description: List AWS commitment plans
+      hints:
+        readOnly: true
+        openWorld: true
+      call: spot-eco.list-commitment-plans-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-get-commitment-plan-aws
+      description: Get a specific AWS commitment plan
+      hints:
+        readOnly: true
+      call: spot-eco.get-commitment-plan-aws
+      with:
+        planId: tools.planId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-get-savings-analysis-aws
+      description: Get AWS savings analysis
+      hints:
+        readOnly: true
+      call: spot-eco.get-savings-analysis-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-get-commitment-analysis-aws
+      description: Get AWS commitment analysis
+      hints:
+        readOnly: true
+      call: spot-eco.get-commitment-analysis-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-list-savings-plans-aws
+      description: List AWS savings plans
+      hints:
+        readOnly: true
+      call: spot-eco.list-savings-plans-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-list-reserved-instances-aws
+      description: List AWS reserved instances
+      hints:
+        readOnly: true
+      call: spot-eco.list-reserved-instances-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-get-unused-ris-aws
+      description: Get unused AWS reserved instances
+      hints:
+        readOnly: true
+      call: spot-eco.get-unused-ris-aws
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-list-commitment-plans-azure
+      description: List Azure commitment plans
+      hints:
+        readOnly: true
+      call: spot-eco.list-commitment-plans-azure
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-get-savings-analysis-azure
+      description: Get Azure savings analysis
+      hints:
+        readOnly: true
+      call: spot-eco.get-savings-analysis-azure
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-list-commitment-plans-gcp
+      description: List GCP commitment plans
+      hints:
+        readOnly: true
+      call: spot-eco.list-commitment-plans-gcp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: eco-get-savings-analysis-gcp
+      description: Get GCP savings analysis
+      hints:
+        readOnly: true
+      call: spot-eco.get-savings-analysis-gcp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: billing-list-accounts
+      description: List billing engine accounts
+      hints:
+        readOnly: true
+      call: spot-billing.list-billing-accounts
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: billing-list-account-families
+      description: List billing account families
+      hints:
+        readOnly: true
+      call: spot-billing.list-account-families
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: billing-get-cost-analysis
+      description: Get billing cost analysis
+      hints:
+        readOnly: true
+      call: spot-billing.get-cost-analysis
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: admin-list-accounts
+      description: List Spot accounts for context
+      hints:
+        readOnly: true
+      call: spot-admin.list-accounts
+      outputParameters:
+      - type: object
+        mapping: $.
