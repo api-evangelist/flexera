@@ -1,0 +1,230 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Ocean API — Virtual Node Groups
+  description: 'Spot Ocean API — Virtual Node Groups. 5 operations. Lead operation: Spot Create Virtual Node Group (aws).
+    Self-contained Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Virtual Node Groups
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-ocean-virtual-node-groups
+    baseUri: https://api.spotinst.io
+    description: Spot Ocean API — Virtual Node Groups business capability. Self-contained, no shared references.
+    resources:
+    - name: ocean-aws-k8s-launchSpec
+      path: /ocean/aws/k8s/launchSpec
+      operations:
+      - name: createvirtualnodegroupaws
+        method: POST
+        description: Spot Create Virtual Node Group (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listvirtualnodegroupsaws
+        method: GET
+        description: Spot List Virtual Node Groups (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanId
+          in: query
+          type: string
+          description: Ocean cluster ID to filter by.
+    - name: ocean-aws-k8s-launchSpec-launchSpecId
+      path: /ocean/aws/k8s/launchSpec/{launchSpecId}
+      operations:
+      - name: getvirtualnodegroupaws
+        method: GET
+        description: Spot Get Virtual Node Group (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: launchSpecId
+          in: path
+          type: string
+          required: true
+      - name: updatevirtualnodegroupaws
+        method: PUT
+        description: Spot Update Virtual Node Group (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: launchSpecId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deletevirtualnodegroupaws
+        method: DELETE
+        description: Spot Delete Virtual Node Group (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: launchSpecId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-ocean-virtual-node-groups-rest
+    port: 8080
+    description: REST adapter for Spot Ocean API — Virtual Node Groups. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/ocean/aws/k8s/launchspec
+      name: ocean-aws-k8s-launchspec
+      description: REST surface for ocean-aws-k8s-launchSpec.
+      operations:
+      - method: POST
+        name: createvirtualnodegroupaws
+        description: Spot Create Virtual Node Group (aws)
+        call: spot-ocean-virtual-node-groups.createvirtualnodegroupaws
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listvirtualnodegroupsaws
+        description: Spot List Virtual Node Groups (aws)
+        call: spot-ocean-virtual-node-groups.listvirtualnodegroupsaws
+        with:
+          oceanId: rest.oceanId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ocean/aws/k8s/launchspec/{launchspecid}
+      name: ocean-aws-k8s-launchspec-launchspecid
+      description: REST surface for ocean-aws-k8s-launchSpec-launchSpecId.
+      operations:
+      - method: GET
+        name: getvirtualnodegroupaws
+        description: Spot Get Virtual Node Group (aws)
+        call: spot-ocean-virtual-node-groups.getvirtualnodegroupaws
+        with:
+          launchSpecId: rest.launchSpecId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatevirtualnodegroupaws
+        description: Spot Update Virtual Node Group (aws)
+        call: spot-ocean-virtual-node-groups.updatevirtualnodegroupaws
+        with:
+          launchSpecId: rest.launchSpecId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletevirtualnodegroupaws
+        description: Spot Delete Virtual Node Group (aws)
+        call: spot-ocean-virtual-node-groups.deletevirtualnodegroupaws
+        with:
+          launchSpecId: rest.launchSpecId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-ocean-virtual-node-groups-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Ocean API — Virtual Node Groups. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: spot-create-virtual-node-group
+      description: Spot Create Virtual Node Group (aws)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: spot-ocean-virtual-node-groups.createvirtualnodegroupaws
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-list-virtual-node-groups
+      description: Spot List Virtual Node Groups (aws)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-ocean-virtual-node-groups.listvirtualnodegroupsaws
+      with:
+        oceanId: tools.oceanId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-get-virtual-node-group
+      description: Spot Get Virtual Node Group (aws)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-ocean-virtual-node-groups.getvirtualnodegroupaws
+      with:
+        launchSpecId: tools.launchSpecId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-update-virtual-node-group
+      description: Spot Update Virtual Node Group (aws)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: spot-ocean-virtual-node-groups.updatevirtualnodegroupaws
+      with:
+        launchSpecId: tools.launchSpecId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-delete-virtual-node-group
+      description: Spot Delete Virtual Node Group (aws)
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: spot-ocean-virtual-node-groups.deletevirtualnodegroupaws
+      with:
+        launchSpecId: tools.launchSpecId
+      outputParameters:
+      - type: object
+        mapping: $.

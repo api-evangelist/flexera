@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Billing Engine API — Cost Intelligence
+  description: 'Spot Billing Engine API — Cost Intelligence. 2 operations. Lead operation: Spot Set up Cost Intelligence.
+    Self-contained Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Cost Intelligence
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-billing-engine-cost-intelligence
+    baseUri: https://api.spotinst.io
+    description: Spot Billing Engine API — Cost Intelligence business capability. Self-contained, no shared references.
+    resources:
+    - name: costIntelligence-setup
+      path: /costIntelligence/setup
+      operations:
+      - name: setupcostintelligence
+        method: POST
+        description: Spot Set up Cost Intelligence
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: costIntelligence-setup-validation
+      path: /costIntelligence/setup/validation
+      operations:
+      - name: validatecostintelligencesetup
+        method: POST
+        description: Spot Validate Cost Intelligence Setup
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-billing-engine-cost-intelligence-rest
+    port: 8080
+    description: REST adapter for Spot Billing Engine API — Cost Intelligence. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/costintelligence/setup
+      name: costintelligence-setup
+      description: REST surface for costIntelligence-setup.
+      operations:
+      - method: POST
+        name: setupcostintelligence
+        description: Spot Set up Cost Intelligence
+        call: spot-billing-engine-cost-intelligence.setupcostintelligence
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/costintelligence/setup/validation
+      name: costintelligence-setup-validation
+      description: REST surface for costIntelligence-setup-validation.
+      operations:
+      - method: POST
+        name: validatecostintelligencesetup
+        description: Spot Validate Cost Intelligence Setup
+        call: spot-billing-engine-cost-intelligence.validatecostintelligencesetup
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-billing-engine-cost-intelligence-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Billing Engine API — Cost Intelligence. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: spot-set-up-cost-intelligence
+      description: Spot Set up Cost Intelligence
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: spot-billing-engine-cost-intelligence.setupcostintelligence
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-validate-cost-intelligence-setup
+      description: Spot Validate Cost Intelligence Setup
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: spot-billing-engine-cost-intelligence.validatecostintelligencesetup
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

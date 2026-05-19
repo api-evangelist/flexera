@@ -1,0 +1,85 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Administration API — Audit
+  description: 'Spot Administration API — Audit. 1 operations. Lead operation: Spot List Audit Events. Self-contained Naftiko
+    capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Audit
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-administration-audit
+    baseUri: https://api.spotinst.io
+    description: Spot Administration API — Audit business capability. Self-contained, no shared references.
+    resources:
+    - name: audit-events
+      path: /audit/events
+      operations:
+      - name: listauditevents
+        method: GET
+        description: Spot List Audit Events
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: fromDate
+          in: query
+          type: string
+          description: Start date for audit events.
+        - name: toDate
+          in: query
+          type: string
+          description: End date for audit events.
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-administration-audit-rest
+    port: 8080
+    description: REST adapter for Spot Administration API — Audit. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/audit/events
+      name: audit-events
+      description: REST surface for audit-events.
+      operations:
+      - method: GET
+        name: listauditevents
+        description: Spot List Audit Events
+        call: spot-administration-audit.listauditevents
+        with:
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-administration-audit-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Administration API — Audit. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: spot-list-audit-events
+      description: Spot List Audit Events
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-administration-audit.listauditevents
+      with:
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+      outputParameters:
+      - type: object
+        mapping: $.

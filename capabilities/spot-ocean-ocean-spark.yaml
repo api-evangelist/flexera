@@ -1,0 +1,180 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Ocean API — Ocean Spark
+  description: 'Spot Ocean API — Ocean Spark. 4 operations. Lead operation: Spot Create Ocean Spark Cluster. Self-contained
+    Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Ocean Spark
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-ocean-ocean-spark
+    baseUri: https://api.spotinst.io
+    description: Spot Ocean API — Ocean Spark business capability. Self-contained, no shared references.
+    resources:
+    - name: ocean-spark-cluster
+      path: /ocean/spark/cluster
+      operations:
+      - name: createoceansparkcluster
+        method: POST
+        description: Spot Create Ocean Spark Cluster
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listoceansparkclusters
+        method: GET
+        description: Spot List Ocean Spark Clusters
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: ocean-spark-cluster-oceanSparkClusterId
+      path: /ocean/spark/cluster/{oceanSparkClusterId}
+      operations:
+      - name: getoceansparkcluster
+        method: GET
+        description: Spot Get Ocean Spark Cluster
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanSparkClusterId
+          in: path
+          type: string
+          required: true
+      - name: deleteoceansparkcluster
+        method: DELETE
+        description: Spot Delete Ocean Spark Cluster
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanSparkClusterId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-ocean-ocean-spark-rest
+    port: 8080
+    description: REST adapter for Spot Ocean API — Ocean Spark. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ocean/spark/cluster
+      name: ocean-spark-cluster
+      description: REST surface for ocean-spark-cluster.
+      operations:
+      - method: POST
+        name: createoceansparkcluster
+        description: Spot Create Ocean Spark Cluster
+        call: spot-ocean-ocean-spark.createoceansparkcluster
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listoceansparkclusters
+        description: Spot List Ocean Spark Clusters
+        call: spot-ocean-ocean-spark.listoceansparkclusters
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ocean/spark/cluster/{oceansparkclusterid}
+      name: ocean-spark-cluster-oceansparkclusterid
+      description: REST surface for ocean-spark-cluster-oceanSparkClusterId.
+      operations:
+      - method: GET
+        name: getoceansparkcluster
+        description: Spot Get Ocean Spark Cluster
+        call: spot-ocean-ocean-spark.getoceansparkcluster
+        with:
+          oceanSparkClusterId: rest.oceanSparkClusterId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteoceansparkcluster
+        description: Spot Delete Ocean Spark Cluster
+        call: spot-ocean-ocean-spark.deleteoceansparkcluster
+        with:
+          oceanSparkClusterId: rest.oceanSparkClusterId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-ocean-ocean-spark-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Ocean API — Ocean Spark. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: spot-create-ocean-spark-cluster
+      description: Spot Create Ocean Spark Cluster
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: spot-ocean-ocean-spark.createoceansparkcluster
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-list-ocean-spark-clusters
+      description: Spot List Ocean Spark Clusters
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-ocean-ocean-spark.listoceansparkclusters
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-get-ocean-spark-cluster
+      description: Spot Get Ocean Spark Cluster
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-ocean-ocean-spark.getoceansparkcluster
+      with:
+        oceanSparkClusterId: tools.oceanSparkClusterId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-delete-ocean-spark-cluster
+      description: Spot Delete Ocean Spark Cluster
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: spot-ocean-ocean-spark.deleteoceansparkcluster
+      with:
+        oceanSparkClusterId: tools.oceanSparkClusterId
+      outputParameters:
+      - type: object
+        mapping: $.

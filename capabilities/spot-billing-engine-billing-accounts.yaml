@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Billing Engine API — Billing Accounts
+  description: 'Spot Billing Engine API — Billing Accounts. 1 operations. Lead operation: Spot List Billing Engine Accounts.
+    Self-contained Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Billing Accounts
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-billing-engine-billing-accounts
+    baseUri: https://api.spotinst.io
+    description: Spot Billing Engine API — Billing Accounts business capability. Self-contained, no shared references.
+    resources:
+    - name: billingEngine-account
+      path: /billingEngine/account
+      operations:
+      - name: listbillingengineaccounts
+        method: GET
+        description: Spot List Billing Engine Accounts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-billing-engine-billing-accounts-rest
+    port: 8080
+    description: REST adapter for Spot Billing Engine API — Billing Accounts. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/billingengine/account
+      name: billingengine-account
+      description: REST surface for billingEngine-account.
+      operations:
+      - method: GET
+        name: listbillingengineaccounts
+        description: Spot List Billing Engine Accounts
+        call: spot-billing-engine-billing-accounts.listbillingengineaccounts
+        with:
+          accountId: rest.accountId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-billing-engine-billing-accounts-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Billing Engine API — Billing Accounts. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: spot-list-billing-engine-accounts
+      description: Spot List Billing Engine Accounts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-billing-engine-billing-accounts.listbillingengineaccounts
+      with:
+        accountId: tools.accountId
+      outputParameters:
+      - type: object
+        mapping: $.

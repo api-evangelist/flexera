@@ -1,0 +1,221 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Elastigroup API — Elastigroup GCP
+  description: 'Spot Elastigroup API — Elastigroup GCP. 5 operations. Lead operation: Spot Create Elastigroup (gcp). Self-contained
+    Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Elastigroup GCP
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-elastigroup-elastigroup-gcp
+    baseUri: https://api.spotinst.io
+    description: Spot Elastigroup API — Elastigroup GCP business capability. Self-contained, no shared references.
+    resources:
+    - name: gcp-gce-group
+      path: /gcp/gce/group
+      operations:
+      - name: createelastigroupgcp
+        method: POST
+        description: Spot Create Elastigroup (gcp)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listelastigroupsgcp
+        method: GET
+        description: Spot List Elastigroups (gcp)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: gcp-gce-group-groupId
+      path: /gcp/gce/group/{groupId}
+      operations:
+      - name: getelastigroupgcp
+        method: GET
+        description: Spot Get Elastigroup (gcp)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+      - name: updateelastigroupgcp
+        method: PUT
+        description: Spot Update Elastigroup (gcp)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteelastigroupgcp
+        method: DELETE
+        description: Spot Delete Elastigroup (gcp)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-elastigroup-elastigroup-gcp-rest
+    port: 8080
+    description: REST adapter for Spot Elastigroup API — Elastigroup GCP. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/gcp/gce/group
+      name: gcp-gce-group
+      description: REST surface for gcp-gce-group.
+      operations:
+      - method: POST
+        name: createelastigroupgcp
+        description: Spot Create Elastigroup (gcp)
+        call: spot-elastigroup-elastigroup-gcp.createelastigroupgcp
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listelastigroupsgcp
+        description: Spot List Elastigroups (gcp)
+        call: spot-elastigroup-elastigroup-gcp.listelastigroupsgcp
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/gcp/gce/group/{groupid}
+      name: gcp-gce-group-groupid
+      description: REST surface for gcp-gce-group-groupId.
+      operations:
+      - method: GET
+        name: getelastigroupgcp
+        description: Spot Get Elastigroup (gcp)
+        call: spot-elastigroup-elastigroup-gcp.getelastigroupgcp
+        with:
+          groupId: rest.groupId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateelastigroupgcp
+        description: Spot Update Elastigroup (gcp)
+        call: spot-elastigroup-elastigroup-gcp.updateelastigroupgcp
+        with:
+          groupId: rest.groupId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteelastigroupgcp
+        description: Spot Delete Elastigroup (gcp)
+        call: spot-elastigroup-elastigroup-gcp.deleteelastigroupgcp
+        with:
+          groupId: rest.groupId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-elastigroup-elastigroup-gcp-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Elastigroup API — Elastigroup GCP. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: spot-create-elastigroup-gcp
+      description: Spot Create Elastigroup (gcp)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: spot-elastigroup-elastigroup-gcp.createelastigroupgcp
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-list-elastigroups-gcp
+      description: Spot List Elastigroups (gcp)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-elastigroup-elastigroup-gcp.listelastigroupsgcp
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-get-elastigroup-gcp
+      description: Spot Get Elastigroup (gcp)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-elastigroup-elastigroup-gcp.getelastigroupgcp
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-update-elastigroup-gcp
+      description: Spot Update Elastigroup (gcp)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: spot-elastigroup-elastigroup-gcp.updateelastigroupgcp
+      with:
+        groupId: tools.groupId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-delete-elastigroup-gcp
+      description: Spot Delete Elastigroup (gcp)
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: spot-elastigroup-elastigroup-gcp.deleteelastigroupgcp
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.

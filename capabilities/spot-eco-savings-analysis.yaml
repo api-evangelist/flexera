@@ -1,0 +1,240 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Eco API — Savings Analysis
+  description: 'Spot Eco API — Savings Analysis. 4 operations. Lead operation: Spot Get Commitment Analysis (aws). Self-contained
+    Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Savings Analysis
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-eco-savings-analysis
+    baseUri: https://api.spotinst.io
+    description: Spot Eco API — Savings Analysis business capability. Self-contained, no shared references.
+    resources:
+    - name: eco-aws-analysis-commitment
+      path: /eco/aws/analysis/commitment
+      operations:
+      - name: getcommitmentanalysisaws
+        method: GET
+        description: Spot Get Commitment Analysis (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+        - name: fromDate
+          in: query
+          type: string
+        - name: toDate
+          in: query
+          type: string
+    - name: eco-aws-analysis-savings
+      path: /eco/aws/analysis/savings
+      operations:
+      - name: getsavingsanalysisaws
+        method: GET
+        description: Spot Get Savings Analysis (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+        - name: fromDate
+          in: query
+          type: string
+          description: Start date for the analysis period.
+        - name: toDate
+          in: query
+          type: string
+          description: End date for the analysis period.
+    - name: eco-azure-analysis-savings
+      path: /eco/azure/analysis/savings
+      operations:
+      - name: getsavingsanalysisazure
+        method: GET
+        description: Spot Get Savings Analysis (azure)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+        - name: fromDate
+          in: query
+          type: string
+        - name: toDate
+          in: query
+          type: string
+    - name: eco-gcp-analysis-savings
+      path: /eco/gcp/analysis/savings
+      operations:
+      - name: getsavingsanalysisgcp
+        method: GET
+        description: Spot Get Savings Analysis (gcp)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+        - name: fromDate
+          in: query
+          type: string
+        - name: toDate
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-eco-savings-analysis-rest
+    port: 8080
+    description: REST adapter for Spot Eco API — Savings Analysis. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/eco/aws/analysis/commitment
+      name: eco-aws-analysis-commitment
+      description: REST surface for eco-aws-analysis-commitment.
+      operations:
+      - method: GET
+        name: getcommitmentanalysisaws
+        description: Spot Get Commitment Analysis (aws)
+        call: spot-eco-savings-analysis.getcommitmentanalysisaws
+        with:
+          accountId: rest.accountId
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/eco/aws/analysis/savings
+      name: eco-aws-analysis-savings
+      description: REST surface for eco-aws-analysis-savings.
+      operations:
+      - method: GET
+        name: getsavingsanalysisaws
+        description: Spot Get Savings Analysis (aws)
+        call: spot-eco-savings-analysis.getsavingsanalysisaws
+        with:
+          accountId: rest.accountId
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/eco/azure/analysis/savings
+      name: eco-azure-analysis-savings
+      description: REST surface for eco-azure-analysis-savings.
+      operations:
+      - method: GET
+        name: getsavingsanalysisazure
+        description: Spot Get Savings Analysis (azure)
+        call: spot-eco-savings-analysis.getsavingsanalysisazure
+        with:
+          accountId: rest.accountId
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/eco/gcp/analysis/savings
+      name: eco-gcp-analysis-savings
+      description: REST surface for eco-gcp-analysis-savings.
+      operations:
+      - method: GET
+        name: getsavingsanalysisgcp
+        description: Spot Get Savings Analysis (gcp)
+        call: spot-eco-savings-analysis.getsavingsanalysisgcp
+        with:
+          accountId: rest.accountId
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-eco-savings-analysis-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Eco API — Savings Analysis. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: spot-get-commitment-analysis-aws
+      description: Spot Get Commitment Analysis (aws)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-eco-savings-analysis.getcommitmentanalysisaws
+      with:
+        accountId: tools.accountId
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-get-savings-analysis-aws
+      description: Spot Get Savings Analysis (aws)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-eco-savings-analysis.getsavingsanalysisaws
+      with:
+        accountId: tools.accountId
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-get-savings-analysis-azure
+      description: Spot Get Savings Analysis (azure)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-eco-savings-analysis.getsavingsanalysisazure
+      with:
+        accountId: tools.accountId
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-get-savings-analysis-gcp
+      description: Spot Get Savings Analysis (gcp)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-eco-savings-analysis.getsavingsanalysisgcp
+      with:
+        accountId: tools.accountId
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+      outputParameters:
+      - type: object
+        mapping: $.

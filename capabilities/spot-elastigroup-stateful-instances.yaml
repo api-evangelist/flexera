@@ -1,0 +1,166 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Elastigroup API — Stateful Instances
+  description: 'Spot Elastigroup API — Stateful Instances. 3 operations. Lead operation: Spot List Stateful Instances. Self-contained
+    Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Stateful Instances
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-elastigroup-stateful-instances
+    baseUri: https://api.spotinst.io
+    description: Spot Elastigroup API — Stateful Instances business capability. Self-contained, no shared references.
+    resources:
+    - name: aws-ec2-group-groupId-statefulInstance
+      path: /aws/ec2/group/{groupId}/statefulInstance
+      operations:
+      - name: liststatefulinstances
+        method: GET
+        description: Spot List Stateful Instances
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+    - name: aws-ec2-group-groupId-statefulInstance-statefulInstanceId
+      path: /aws/ec2/group/{groupId}/statefulInstance/{statefulInstanceId}
+      operations:
+      - name: recyclestatefulinstance
+        method: PUT
+        description: Spot Recycle Stateful Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+        - name: statefulInstanceId
+          in: path
+          type: string
+          required: true
+      - name: deallocatestatefulinstance
+        method: DELETE
+        description: Spot Deallocate Stateful Instance
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: groupId
+          in: path
+          type: string
+          required: true
+        - name: statefulInstanceId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-elastigroup-stateful-instances-rest
+    port: 8080
+    description: REST adapter for Spot Elastigroup API — Stateful Instances. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/aws/ec2/group/{groupid}/statefulinstance
+      name: aws-ec2-group-groupid-statefulinstance
+      description: REST surface for aws-ec2-group-groupId-statefulInstance.
+      operations:
+      - method: GET
+        name: liststatefulinstances
+        description: Spot List Stateful Instances
+        call: spot-elastigroup-stateful-instances.liststatefulinstances
+        with:
+          groupId: rest.groupId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/aws/ec2/group/{groupid}/statefulinstance/{statefulinstanceid}
+      name: aws-ec2-group-groupid-statefulinstance-statefulinstanceid
+      description: REST surface for aws-ec2-group-groupId-statefulInstance-statefulInstanceId.
+      operations:
+      - method: PUT
+        name: recyclestatefulinstance
+        description: Spot Recycle Stateful Instance
+        call: spot-elastigroup-stateful-instances.recyclestatefulinstance
+        with:
+          groupId: rest.groupId
+          statefulInstanceId: rest.statefulInstanceId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deallocatestatefulinstance
+        description: Spot Deallocate Stateful Instance
+        call: spot-elastigroup-stateful-instances.deallocatestatefulinstance
+        with:
+          groupId: rest.groupId
+          statefulInstanceId: rest.statefulInstanceId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-elastigroup-stateful-instances-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Elastigroup API — Stateful Instances. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: spot-list-stateful-instances
+      description: Spot List Stateful Instances
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-elastigroup-stateful-instances.liststatefulinstances
+      with:
+        groupId: tools.groupId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-recycle-stateful-instance
+      description: Spot Recycle Stateful Instance
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: spot-elastigroup-stateful-instances.recyclestatefulinstance
+      with:
+        groupId: tools.groupId
+        statefulInstanceId: tools.statefulInstanceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-deallocate-stateful-instance
+      description: Spot Deallocate Stateful Instance
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: spot-elastigroup-stateful-instances.deallocatestatefulinstance
+      with:
+        groupId: tools.groupId
+        statefulInstanceId: tools.statefulInstanceId
+      outputParameters:
+      - type: object
+        mapping: $.

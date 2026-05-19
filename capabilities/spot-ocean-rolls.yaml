@@ -1,0 +1,214 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Ocean API — Rolls
+  description: 'Spot Ocean API — Rolls. 4 operations. Lead operation: Spot Initiate Cluster Roll (aws). Self-contained Naftiko
+    capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Rolls
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-ocean-rolls
+    baseUri: https://api.spotinst.io
+    description: Spot Ocean API — Rolls business capability. Self-contained, no shared references.
+    resources:
+    - name: ocean-aws-k8s-cluster-oceanClusterId-roll
+      path: /ocean/aws/k8s/cluster/{oceanClusterId}/roll
+      operations:
+      - name: initiaterollaws
+        method: POST
+        description: Spot Initiate Cluster Roll (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanClusterId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listrollsaws
+        method: GET
+        description: Spot List Cluster Rolls (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanClusterId
+          in: path
+          type: string
+          required: true
+    - name: ocean-aws-k8s-cluster-oceanClusterId-roll-rollId
+      path: /ocean/aws/k8s/cluster/{oceanClusterId}/roll/{rollId}
+      operations:
+      - name: getrollaws
+        method: GET
+        description: Spot Get Roll Details (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanClusterId
+          in: path
+          type: string
+          required: true
+        - name: rollId
+          in: path
+          type: string
+          required: true
+      - name: updaterollaws
+        method: PUT
+        description: Spot Update Roll (aws)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanClusterId
+          in: path
+          type: string
+          required: true
+        - name: rollId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-ocean-rolls-rest
+    port: 8080
+    description: REST adapter for Spot Ocean API — Rolls. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ocean/aws/k8s/cluster/{oceanclusterid}/roll
+      name: ocean-aws-k8s-cluster-oceanclusterid-roll
+      description: REST surface for ocean-aws-k8s-cluster-oceanClusterId-roll.
+      operations:
+      - method: POST
+        name: initiaterollaws
+        description: Spot Initiate Cluster Roll (aws)
+        call: spot-ocean-rolls.initiaterollaws
+        with:
+          oceanClusterId: rest.oceanClusterId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listrollsaws
+        description: Spot List Cluster Rolls (aws)
+        call: spot-ocean-rolls.listrollsaws
+        with:
+          oceanClusterId: rest.oceanClusterId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/ocean/aws/k8s/cluster/{oceanclusterid}/roll/{rollid}
+      name: ocean-aws-k8s-cluster-oceanclusterid-roll-rollid
+      description: REST surface for ocean-aws-k8s-cluster-oceanClusterId-roll-rollId.
+      operations:
+      - method: GET
+        name: getrollaws
+        description: Spot Get Roll Details (aws)
+        call: spot-ocean-rolls.getrollaws
+        with:
+          oceanClusterId: rest.oceanClusterId
+          rollId: rest.rollId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updaterollaws
+        description: Spot Update Roll (aws)
+        call: spot-ocean-rolls.updaterollaws
+        with:
+          oceanClusterId: rest.oceanClusterId
+          rollId: rest.rollId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-ocean-rolls-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Ocean API — Rolls. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: spot-initiate-cluster-roll-aws
+      description: Spot Initiate Cluster Roll (aws)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: spot-ocean-rolls.initiaterollaws
+      with:
+        oceanClusterId: tools.oceanClusterId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-list-cluster-rolls-aws
+      description: Spot List Cluster Rolls (aws)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-ocean-rolls.listrollsaws
+      with:
+        oceanClusterId: tools.oceanClusterId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-get-roll-details-aws
+      description: Spot Get Roll Details (aws)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-ocean-rolls.getrollaws
+      with:
+        oceanClusterId: tools.oceanClusterId
+        rollId: tools.rollId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-update-roll-aws
+      description: Spot Update Roll (aws)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: spot-ocean-rolls.updaterollaws
+      with:
+        oceanClusterId: tools.oceanClusterId
+        rollId: tools.rollId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Administration API — Health Check
+  description: 'Spot Administration API — Health Check. 1 operations. Lead operation: Spot Health Check. Self-contained Naftiko
+    capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Health Check
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-administration-health-check
+    baseUri: https://api.spotinst.io
+    description: Spot Administration API — Health Check business capability. Self-contained, no shared references.
+    resources:
+    - name: healthCheck
+      path: /healthCheck
+      operations:
+      - name: healthcheck
+        method: GET
+        description: Spot Health Check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-administration-health-check-rest
+    port: 8080
+    description: REST adapter for Spot Administration API — Health Check. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/healthcheck
+      name: healthcheck
+      description: REST surface for healthCheck.
+      operations:
+      - method: GET
+        name: healthcheck
+        description: Spot Health Check
+        call: spot-administration-health-check.healthcheck
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-administration-health-check-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Administration API — Health Check. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: spot-health-check
+      description: Spot Health Check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-administration-health-check.healthcheck
+      outputParameters:
+      - type: object
+        mapping: $.

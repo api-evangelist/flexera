@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Eco API — Eco GCP
+  description: 'Spot Eco API — Eco GCP. 1 operations. Lead operation: Spot List Commitment Plans (gcp). Self-contained Naftiko
+    capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Eco GCP
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-eco-eco-gcp
+    baseUri: https://api.spotinst.io
+    description: Spot Eco API — Eco GCP business capability. Self-contained, no shared references.
+    resources:
+    - name: eco-gcp-commitmentPlan
+      path: /eco/gcp/commitmentPlan
+      operations:
+      - name: listcommitmentplansgcp
+        method: GET
+        description: Spot List Commitment Plans (gcp)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-eco-eco-gcp-rest
+    port: 8080
+    description: REST adapter for Spot Eco API — Eco GCP. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/eco/gcp/commitmentplan
+      name: eco-gcp-commitmentplan
+      description: REST surface for eco-gcp-commitmentPlan.
+      operations:
+      - method: GET
+        name: listcommitmentplansgcp
+        description: Spot List Commitment Plans (gcp)
+        call: spot-eco-eco-gcp.listcommitmentplansgcp
+        with:
+          accountId: rest.accountId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-eco-eco-gcp-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Eco API — Eco GCP. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: spot-list-commitment-plans-gcp
+      description: Spot List Commitment Plans (gcp)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-eco-eco-gcp.listcommitmentplansgcp
+      with:
+        accountId: tools.accountId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,96 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Billing Engine API — Cost Analysis
+  description: 'Spot Billing Engine API — Cost Analysis. 1 operations. Lead operation: Spot Get Cost Analysis. Self-contained
+    Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Cost Analysis
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-billing-engine-cost-analysis
+    baseUri: https://api.spotinst.io
+    description: Spot Billing Engine API — Cost Analysis business capability. Self-contained, no shared references.
+    resources:
+    - name: billingEngine-cost
+      path: /billingEngine/cost
+      operations:
+      - name: getcostanalysis
+        method: GET
+        description: Spot Get Cost Analysis
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountId
+          in: query
+          type: string
+        - name: fromDate
+          in: query
+          type: string
+          description: Start date for the cost analysis period.
+        - name: toDate
+          in: query
+          type: string
+          description: End date for the cost analysis period.
+        - name: groupBy
+          in: query
+          type: string
+          description: Dimension to group costs by.
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-billing-engine-cost-analysis-rest
+    port: 8080
+    description: REST adapter for Spot Billing Engine API — Cost Analysis. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/billingengine/cost
+      name: billingengine-cost
+      description: REST surface for billingEngine-cost.
+      operations:
+      - method: GET
+        name: getcostanalysis
+        description: Spot Get Cost Analysis
+        call: spot-billing-engine-cost-analysis.getcostanalysis
+        with:
+          accountId: rest.accountId
+          fromDate: rest.fromDate
+          toDate: rest.toDate
+          groupBy: rest.groupBy
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-billing-engine-cost-analysis-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Billing Engine API — Cost Analysis. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: spot-get-cost-analysis
+      description: Spot Get Cost Analysis
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-billing-engine-cost-analysis.getcostanalysis
+      with:
+        accountId: tools.accountId
+        fromDate: tools.fromDate
+        toDate: tools.toDate
+        groupBy: tools.groupBy
+      outputParameters:
+      - type: object
+        mapping: $.

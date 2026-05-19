@@ -1,0 +1,187 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Administration API — Access Policies
+  description: 'Spot Administration API — Access Policies. 4 operations. Lead operation: Spot Create Access Policy. Self-contained
+    Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Access Policies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-administration-access-policies
+    baseUri: https://api.spotinst.io
+    description: Spot Administration API — Access Policies business capability. Self-contained, no shared references.
+    resources:
+    - name: setup-access-policy
+      path: /setup/access/policy
+      operations:
+      - name: createaccesspolicy
+        method: POST
+        description: Spot Create Access Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listaccesspolicies
+        method: GET
+        description: Spot List Access Policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: setup-access-policy-policyId
+      path: /setup/access/policy/{policyId}
+      operations:
+      - name: updateaccesspolicy
+        method: PUT
+        description: Spot Update Access Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policyId
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteaccesspolicy
+        method: DELETE
+        description: Spot Delete Access Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: policyId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-administration-access-policies-rest
+    port: 8080
+    description: REST adapter for Spot Administration API — Access Policies. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/setup/access/policy
+      name: setup-access-policy
+      description: REST surface for setup-access-policy.
+      operations:
+      - method: POST
+        name: createaccesspolicy
+        description: Spot Create Access Policy
+        call: spot-administration-access-policies.createaccesspolicy
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listaccesspolicies
+        description: Spot List Access Policies
+        call: spot-administration-access-policies.listaccesspolicies
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/setup/access/policy/{policyid}
+      name: setup-access-policy-policyid
+      description: REST surface for setup-access-policy-policyId.
+      operations:
+      - method: PUT
+        name: updateaccesspolicy
+        description: Spot Update Access Policy
+        call: spot-administration-access-policies.updateaccesspolicy
+        with:
+          policyId: rest.policyId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteaccesspolicy
+        description: Spot Delete Access Policy
+        call: spot-administration-access-policies.deleteaccesspolicy
+        with:
+          policyId: rest.policyId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-administration-access-policies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Administration API — Access Policies. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: spot-create-access-policy
+      description: Spot Create Access Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: spot-administration-access-policies.createaccesspolicy
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-list-access-policies
+      description: Spot List Access Policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-administration-access-policies.listaccesspolicies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-update-access-policy
+      description: Spot Update Access Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: spot-administration-access-policies.updateaccesspolicy
+      with:
+        policyId: tools.policyId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: spot-delete-access-policy
+      description: Spot Delete Access Policy
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: spot-administration-access-policies.deleteaccesspolicy
+      with:
+        policyId: tools.policyId
+      outputParameters:
+      - type: object
+        mapping: $.

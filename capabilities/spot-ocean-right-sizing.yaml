@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Spot Ocean API — Right Sizing
+  description: 'Spot Ocean API — Right Sizing. 1 operations. Lead operation: Spot Get Right-sizing Suggestions. Self-contained
+    Naftiko capability covering one Flexera business surface.'
+  tags:
+  - Flexera
+  - Right Sizing
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FLEXERA_API_KEY: FLEXERA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: spot-ocean-right-sizing
+    baseUri: https://api.spotinst.io
+    description: Spot Ocean API — Right Sizing business capability. Self-contained, no shared references.
+    resources:
+    - name: ocean-aws-k8s-cluster-oceanClusterId-rightSizing-suggestion
+      path: /ocean/aws/k8s/cluster/{oceanClusterId}/rightSizing/suggestion
+      operations:
+      - name: getrightsizingsuggestions
+        method: GET
+        description: Spot Get Right-sizing Suggestions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: oceanClusterId
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.FLEXERA_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: spot-ocean-right-sizing-rest
+    port: 8080
+    description: REST adapter for Spot Ocean API — Right Sizing. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/ocean/aws/k8s/cluster/{oceanclusterid}/rightsizing/suggestion
+      name: ocean-aws-k8s-cluster-oceanclusterid-rightsizing-suggestion
+      description: REST surface for ocean-aws-k8s-cluster-oceanClusterId-rightSizing-suggestion.
+      operations:
+      - method: GET
+        name: getrightsizingsuggestions
+        description: Spot Get Right-sizing Suggestions
+        call: spot-ocean-right-sizing.getrightsizingsuggestions
+        with:
+          oceanClusterId: rest.oceanClusterId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: spot-ocean-right-sizing-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Spot Ocean API — Right Sizing. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: spot-get-right-sizing-suggestions
+      description: Spot Get Right-sizing Suggestions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: spot-ocean-right-sizing.getrightsizingsuggestions
+      with:
+        oceanClusterId: tools.oceanClusterId
+      outputParameters:
+      - type: object
+        mapping: $.
