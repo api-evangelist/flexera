@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OceanAKSClusterRequest",
+  "title": "OceanAKSClusterRequest",
+  "type": "object",
+  "properties": {
+    "cluster": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "controllerClusterId": {
+          "type": "string"
+        },
+        "aks": {
+          "type": "object",
+          "properties": {
+            "clusterName": {
+              "type": "string"
+            },
+            "resourceGroupName": {
+              "type": "string"
+            },
+            "region": {
+              "type": "string"
+            }
+          }
+        },
+        "autoScaler": {
+          "type": "object",
+          "properties": {
+            "isEnabled": {
+              "type": "boolean"
+            },
+            "isAutoConfig": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

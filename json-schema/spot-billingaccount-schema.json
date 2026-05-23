@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BillingAccount",
+  "title": "BillingAccount",
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "type": "string",
+      "description": "The Spot account identifier.",
+      "example": "500123"
+    },
+    "cloudProvider": {
+      "type": "string",
+      "enum": [
+        "aws",
+        "azure",
+        "gcp"
+      ],
+      "description": "The cloud provider type.",
+      "example": "aws"
+    },
+    "status": {
+      "type": "string",
+      "description": "The setup status of the billing account.",
+      "example": "example_value"
+    },
+    "billingAccountId": {
+      "type": "string",
+      "description": "The cloud provider billing account identifier.",
+      "example": "500123"
+    }
+  }
+}

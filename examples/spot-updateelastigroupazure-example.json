@@ -1,0 +1,29 @@
+{
+  "operationId": "updateElastigroupAzure",
+  "method": "PUT",
+  "path": "/azure/compute/group/{groupId}",
+  "summary": "Spot Update Elastigroup (azure)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateelastigroupazureRequestExample",
+      "example": {
+        "group": {
+          "name": "Example Title",
+          "region": "example_value",
+          "resourceGroupName": "example_value",
+          "capacity": {
+            "target": 10,
+            "minimum": 10,
+            "maximum": 10
+          },
+          "strategy": {
+            "spotPercentage": 10,
+            "fallbackToOd": true
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

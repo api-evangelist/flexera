@@ -1,0 +1,22 @@
+{
+  "operationId": "listElastigroupsAWS",
+  "method": "GET",
+  "path": "/aws/ec2/group",
+  "summary": "Spot List Elastigroups (aws)",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Listelastigroupsaws200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

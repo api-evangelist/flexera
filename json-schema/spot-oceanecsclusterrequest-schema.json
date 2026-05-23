@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OceanECSClusterRequest",
+  "title": "OceanECSClusterRequest",
+  "type": "object",
+  "properties": {
+    "cluster": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "clusterName": {
+          "type": "string",
+          "description": "The ECS cluster name."
+        },
+        "region": {
+          "type": "string"
+        },
+        "autoScaler": {
+          "type": "object",
+          "properties": {
+            "isEnabled": {
+              "type": "boolean"
+            },
+            "isAutoConfig": {
+              "type": "boolean"
+            }
+          }
+        },
+        "capacity": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "integer"
+            },
+            "minimum": {
+              "type": "integer"
+            },
+            "maximum": {
+              "type": "integer"
+            }
+          }
+        },
+        "compute": {
+          "type": "object",
+          "properties": {
+            "instanceTypes": {
+              "type": "object",
+              "properties": {
+                "whitelist": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "subnetIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

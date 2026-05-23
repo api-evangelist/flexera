@@ -1,0 +1,22 @@
+{
+  "operationId": "listCommitmentPlansAWS",
+  "method": "GET",
+  "path": "/eco/aws/commitmentPlan",
+  "summary": "Spot List Commitment Plans (aws)",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Listcommitmentplansaws200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "operationId": "createVirtualNodeGroupAWS",
+  "method": "POST",
+  "path": "/ocean/aws/k8s/launchSpec",
+  "summary": "Spot Create Virtual Node Group (aws)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreatevirtualnodegroupawsRequestExample",
+      "example": {
+        "launchSpec": {
+          "name": "Example Title",
+          "oceanId": "500123",
+          "imageId": "500123",
+          "instanceTypes": [
+            "example_value"
+          ],
+          "labels": [
+            {
+              "key": "example_value",
+              "value": "example_value"
+            }
+          ],
+          "taints": [
+            {
+              "key": "example_value",
+              "value": "example_value",
+              "effect": "example_value"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

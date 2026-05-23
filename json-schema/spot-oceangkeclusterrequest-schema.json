@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OceanGKEClusterRequest",
+  "title": "OceanGKEClusterRequest",
+  "type": "object",
+  "properties": {
+    "cluster": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "controllerClusterId": {
+          "type": "string"
+        },
+        "gke": {
+          "type": "object",
+          "properties": {
+            "clusterName": {
+              "type": "string"
+            },
+            "masterLocation": {
+              "type": "string"
+            }
+          }
+        },
+        "autoScaler": {
+          "type": "object",
+          "properties": {
+            "isEnabled": {
+              "type": "boolean"
+            },
+            "isAutoConfig": {
+              "type": "boolean"
+            }
+          }
+        },
+        "capacity": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "integer"
+            },
+            "minimum": {
+              "type": "integer"
+            },
+            "maximum": {
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

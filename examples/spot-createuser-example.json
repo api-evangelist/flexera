@@ -1,0 +1,33 @@
+{
+  "operationId": "createUser",
+  "method": "POST",
+  "path": "/setup/user",
+  "summary": "Spot Create User",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateuserRequestExample",
+      "example": {
+        "firstName": "example_value",
+        "lastName": "example_value",
+        "email": "user@example.com",
+        "role": "admin"
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Createuser200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

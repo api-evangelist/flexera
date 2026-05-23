@@ -1,0 +1,22 @@
+{
+  "operationId": "updateAccountFamily",
+  "method": "PUT",
+  "path": "/billingEngine/family/{familyId}",
+  "summary": "Spot Update Account Family",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateaccountfamilyRequestExample",
+      "example": {
+        "family": {
+          "name": "Example Title",
+          "description": "A sample description.",
+          "accountIds": [
+            "example_value"
+          ]
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

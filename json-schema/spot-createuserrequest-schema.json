@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CreateUserRequest",
+  "title": "CreateUserRequest",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "example": "example_value"
+    },
+    "lastName": {
+      "type": "string",
+      "example": "example_value"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "example": "user@example.com"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "viewer",
+        "editor"
+      ],
+      "example": "admin"
+    }
+  }
+}

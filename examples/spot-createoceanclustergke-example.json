@@ -1,0 +1,32 @@
+{
+  "operationId": "createOceanClusterGKE",
+  "method": "POST",
+  "path": "/ocean/gke/cluster",
+  "summary": "Spot Create Ocean Cluster (gke)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateoceanclustergkeRequestExample",
+      "example": {
+        "cluster": {
+          "name": "Example Title",
+          "controllerClusterId": "500123",
+          "gke": {
+            "clusterName": "example_value",
+            "masterLocation": "example_value"
+          },
+          "autoScaler": {
+            "isEnabled": true,
+            "isAutoConfig": true
+          },
+          "capacity": {
+            "target": 10,
+            "minimum": 10,
+            "maximum": 10
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

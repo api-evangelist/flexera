@@ -1,0 +1,22 @@
+{
+  "operationId": "createAccountFamily",
+  "method": "POST",
+  "path": "/billingEngine/family",
+  "summary": "Spot Create Account Family",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateaccountfamilyRequestExample",
+      "example": {
+        "family": {
+          "name": "Example Title",
+          "description": "A sample description.",
+          "accountIds": [
+            "example_value"
+          ]
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

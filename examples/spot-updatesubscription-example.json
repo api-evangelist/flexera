@@ -1,0 +1,21 @@
+{
+  "operationId": "updateSubscription",
+  "method": "PUT",
+  "path": "/events/subscription/{subscriptionId}",
+  "summary": "Spot Update Event Subscription",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdatesubscriptionRequestExample",
+      "example": {
+        "subscription": {
+          "resourceId": "500123",
+          "protocol": "http",
+          "endpoint": "example_value",
+          "eventType": "example_value"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,22 @@
+{
+  "operationId": "createOrganization",
+  "method": "POST",
+  "path": "/setup/organization",
+  "summary": "Spot Create Organization",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Createorganization200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

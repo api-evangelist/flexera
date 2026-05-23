@@ -1,0 +1,22 @@
+{
+  "operationId": "listBillingEngineAccounts",
+  "method": "GET",
+  "path": "/billingEngine/account",
+  "summary": "Spot List Billing Engine Accounts",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Listbillingengineaccounts200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

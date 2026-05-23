@@ -1,0 +1,18 @@
+{
+  "operationId": "rollElastigroupAWS",
+  "method": "POST",
+  "path": "/aws/ec2/group/{groupId}/roll",
+  "summary": "Spot Roll Elastigroup (aws)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "RollelastigroupawsRequestExample",
+      "example": {
+        "batchSizePercentage": 10,
+        "gracePeriod": 10,
+        "healthCheckType": "EC2"
+      }
+    }
+  ],
+  "responseExamples": []
+}

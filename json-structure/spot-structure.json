@@ -1,0 +1,429 @@
+{
+  "provider": "Spot",
+  "providerId": "spot",
+  "kind": "json-structure",
+  "description": "Structural overview of the Spot API surface; extracted from openapi/.",
+  "schemaCount": 11,
+  "operationCount": 39,
+  "schemas": [
+    {
+      "name": "OceanAWSClusterRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OceanECSClusterRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OceanGKEClusterRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OceanAKSClusterRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "VirtualNodeGroupAWSRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OceanRollRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OceanCDClusterRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OceanSparkClusterRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": []
+    },
+    {
+      "name": "OceanClusterResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "OceanClusterListResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "OceanCluster",
+      "type": "object",
+      "propertyCount": 10,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/ocean/aws/k8s/cluster",
+      "operationId": "listOceanClustersAWS",
+      "summary": "Spot List Ocean Clusters (aws)",
+      "tags": [
+        "Ocean AWS"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/aws/k8s/cluster",
+      "operationId": "createOceanClusterAWS",
+      "summary": "Spot Create Ocean Cluster (aws)",
+      "tags": [
+        "Ocean AWS"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}",
+      "operationId": "getOceanClusterAWS",
+      "summary": "Spot Get Ocean Cluster (aws)",
+      "tags": [
+        "Ocean AWS"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}",
+      "operationId": "updateOceanClusterAWS",
+      "summary": "Spot Update Ocean Cluster (aws)",
+      "tags": [
+        "Ocean AWS"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}",
+      "operationId": "deleteOceanClusterAWS",
+      "summary": "Spot Delete Ocean Cluster (aws)",
+      "tags": [
+        "Ocean AWS"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}/roll",
+      "operationId": "listRollsAWS",
+      "summary": "Spot List Cluster Rolls (aws)",
+      "tags": [
+        "Rolls"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}/roll",
+      "operationId": "initiateRollAWS",
+      "summary": "Spot Initiate Cluster Roll (aws)",
+      "tags": [
+        "Rolls"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}/roll/{rollId}",
+      "operationId": "getRollAWS",
+      "summary": "Spot Get Roll Details (aws)",
+      "tags": [
+        "Rolls"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}/roll/{rollId}",
+      "operationId": "updateRollAWS",
+      "summary": "Spot Update Roll (aws)",
+      "tags": [
+        "Rolls"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/k8s/launchSpec",
+      "operationId": "listVirtualNodeGroupsAWS",
+      "summary": "Spot List Virtual Node Groups (aws)",
+      "tags": [
+        "Virtual Node Groups"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/aws/k8s/launchSpec",
+      "operationId": "createVirtualNodeGroupAWS",
+      "summary": "Spot Create Virtual Node Group (aws)",
+      "tags": [
+        "Virtual Node Groups"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/k8s/launchSpec/{launchSpecId}",
+      "operationId": "getVirtualNodeGroupAWS",
+      "summary": "Spot Get Virtual Node Group (aws)",
+      "tags": [
+        "Virtual Node Groups"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/ocean/aws/k8s/launchSpec/{launchSpecId}",
+      "operationId": "updateVirtualNodeGroupAWS",
+      "summary": "Spot Update Virtual Node Group (aws)",
+      "tags": [
+        "Virtual Node Groups"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/ocean/aws/k8s/launchSpec/{launchSpecId}",
+      "operationId": "deleteVirtualNodeGroupAWS",
+      "summary": "Spot Delete Virtual Node Group (aws)",
+      "tags": [
+        "Virtual Node Groups"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/ecs/cluster",
+      "operationId": "listOceanClustersECS",
+      "summary": "Spot List Ocean Clusters (ecs)",
+      "tags": [
+        "Ocean ECS"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/aws/ecs/cluster",
+      "operationId": "createOceanClusterECS",
+      "summary": "Spot Create Ocean Cluster (ecs)",
+      "tags": [
+        "Ocean ECS"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/ecs/cluster/{oceanClusterId}",
+      "operationId": "getOceanClusterECS",
+      "summary": "Spot Get Ocean Cluster (ecs)",
+      "tags": [
+        "Ocean ECS"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/ocean/aws/ecs/cluster/{oceanClusterId}",
+      "operationId": "updateOceanClusterECS",
+      "summary": "Spot Update Ocean Cluster (ecs)",
+      "tags": [
+        "Ocean ECS"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/ocean/aws/ecs/cluster/{oceanClusterId}",
+      "operationId": "deleteOceanClusterECS",
+      "summary": "Spot Delete Ocean Cluster (ecs)",
+      "tags": [
+        "Ocean ECS"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/gke/cluster",
+      "operationId": "listOceanClustersGKE",
+      "summary": "Spot List Ocean Clusters (gke)",
+      "tags": [
+        "Ocean GKE"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/gke/cluster",
+      "operationId": "createOceanClusterGKE",
+      "summary": "Spot Create Ocean Cluster (gke)",
+      "tags": [
+        "Ocean GKE"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/gke/cluster/{oceanClusterId}",
+      "operationId": "getOceanClusterGKE",
+      "summary": "Spot Get Ocean Cluster (gke)",
+      "tags": [
+        "Ocean GKE"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/ocean/gke/cluster/{oceanClusterId}",
+      "operationId": "updateOceanClusterGKE",
+      "summary": "Spot Update Ocean Cluster (gke)",
+      "tags": [
+        "Ocean GKE"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/ocean/gke/cluster/{oceanClusterId}",
+      "operationId": "deleteOceanClusterGKE",
+      "summary": "Spot Delete Ocean Cluster (gke)",
+      "tags": [
+        "Ocean GKE"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/azure/k8s/cluster",
+      "operationId": "listOceanClustersAKS",
+      "summary": "Spot List Ocean Clusters (aks)",
+      "tags": [
+        "Ocean AKS"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/azure/k8s/cluster",
+      "operationId": "createOceanClusterAKS",
+      "summary": "Spot Create Ocean Cluster (aks)",
+      "tags": [
+        "Ocean AKS"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/azure/k8s/cluster/{oceanClusterId}",
+      "operationId": "getOceanClusterAKS",
+      "summary": "Spot Get Ocean Cluster (aks)",
+      "tags": [
+        "Ocean AKS"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/ocean/azure/k8s/cluster/{oceanClusterId}",
+      "operationId": "updateOceanClusterAKS",
+      "summary": "Spot Update Ocean Cluster (aks)",
+      "tags": [
+        "Ocean AKS"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/ocean/azure/k8s/cluster/{oceanClusterId}",
+      "operationId": "deleteOceanClusterAKS",
+      "summary": "Spot Delete Ocean Cluster (aks)",
+      "tags": [
+        "Ocean AKS"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/aws/k8s/cluster/{oceanClusterId}/rightSizing/suggestion",
+      "operationId": "getRightSizingSuggestions",
+      "summary": "Spot Get Right-sizing Suggestions",
+      "tags": [
+        "Right Sizing"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/cd/cluster",
+      "operationId": "listOceanCDClusters",
+      "summary": "Spot List Ocean Cd Clusters",
+      "tags": [
+        "Ocean CD"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/cd/cluster",
+      "operationId": "createOceanCDCluster",
+      "summary": "Spot Create Ocean Cd Cluster",
+      "tags": [
+        "Ocean CD"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/cd/cluster/{clusterId}",
+      "operationId": "getOceanCDCluster",
+      "summary": "Spot Get Ocean Cd Cluster",
+      "tags": [
+        "Ocean CD"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/ocean/cd/cluster/{clusterId}",
+      "operationId": "updateOceanCDCluster",
+      "summary": "Spot Update Ocean Cd Cluster",
+      "tags": [
+        "Ocean CD"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/ocean/cd/cluster/{clusterId}",
+      "operationId": "deleteOceanCDCluster",
+      "summary": "Spot Delete Ocean Cd Cluster",
+      "tags": [
+        "Ocean CD"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/spark/cluster",
+      "operationId": "listOceanSparkClusters",
+      "summary": "Spot List Ocean Spark Clusters",
+      "tags": [
+        "Ocean Spark"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/ocean/spark/cluster",
+      "operationId": "createOceanSparkCluster",
+      "summary": "Spot Create Ocean Spark Cluster",
+      "tags": [
+        "Ocean Spark"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ocean/spark/cluster/{oceanSparkClusterId}",
+      "operationId": "getOceanSparkCluster",
+      "summary": "Spot Get Ocean Spark Cluster",
+      "tags": [
+        "Ocean Spark"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/ocean/spark/cluster/{oceanSparkClusterId}",
+      "operationId": "deleteOceanSparkCluster",
+      "summary": "Spot Delete Ocean Spark Cluster",
+      "tags": [
+        "Ocean Spark"
+      ]
+    }
+  ]
+}

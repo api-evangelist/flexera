@@ -1,0 +1,28 @@
+{
+  "operationId": "updateElastigroupGCP",
+  "method": "PUT",
+  "path": "/gcp/gce/group/{groupId}",
+  "summary": "Spot Update Elastigroup (gcp)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateelastigroupgcpRequestExample",
+      "example": {
+        "group": {
+          "name": "Example Title",
+          "description": "A sample description.",
+          "capacity": {
+            "target": 10,
+            "minimum": 10,
+            "maximum": 10
+          },
+          "strategy": {
+            "preemptiblePercentage": 10,
+            "fallbackToOd": true
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

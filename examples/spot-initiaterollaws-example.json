@@ -1,0 +1,21 @@
+{
+  "operationId": "initiateRollAWS",
+  "method": "POST",
+  "path": "/ocean/aws/k8s/cluster/{oceanClusterId}/roll",
+  "summary": "Spot Initiate Cluster Roll (aws)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "InitiaterollawsRequestExample",
+      "example": {
+        "roll": {
+          "batchSizePercentage": 10,
+          "comment": "example_value",
+          "batchMinHealthyPercentage": 10,
+          "respectPdb": true
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

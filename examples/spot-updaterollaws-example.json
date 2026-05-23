@@ -1,0 +1,18 @@
+{
+  "operationId": "updateRollAWS",
+  "method": "PUT",
+  "path": "/ocean/aws/k8s/cluster/{oceanClusterId}/roll/{rollId}",
+  "summary": "Spot Update Roll (aws)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdaterollawsRequestExample",
+      "example": {
+        "roll": {
+          "status": "STOPPED"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

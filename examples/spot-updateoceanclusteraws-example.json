@@ -1,0 +1,58 @@
+{
+  "operationId": "updateOceanClusterAWS",
+  "method": "PUT",
+  "path": "/ocean/aws/k8s/cluster/{oceanClusterId}",
+  "summary": "Spot Update Ocean Cluster (aws)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateoceanclusterawsRequestExample",
+      "example": {
+        "cluster": {
+          "name": "Example Title",
+          "controllerClusterId": "500123",
+          "region": "example_value",
+          "autoScaler": {
+            "isEnabled": true,
+            "isAutoConfig": true,
+            "cooldown": 10,
+            "resourceLimits": {
+              "maxMemoryGib": 10,
+              "maxVCpu": 10
+            },
+            "down": {
+              "maxScaleDownPercentage": 10
+            }
+          },
+          "capacity": {
+            "target": 10,
+            "minimum": 10,
+            "maximum": 10
+          },
+          "strategy": {
+            "spotPercentage": 10,
+            "fallbackToOd": true,
+            "utilizeReservedInstances": true,
+            "utilizeCommitments": true
+          },
+          "compute": {
+            "instanceTypes": {
+              "whitelist": {},
+              "blacklist": {}
+            },
+            "subnetIds": [
+              {}
+            ],
+            "launchSpecification": {
+              "imageId": "500123",
+              "securityGroupIds": {},
+              "keyPair": "example_value",
+              "tags": {}
+            }
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,66 @@
+{
+  "operationId": "createElastigroupAWS",
+  "method": "POST",
+  "path": "/aws/ec2/group",
+  "summary": "Spot Create Elastigroup (aws)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateelastigroupawsRequestExample",
+      "example": {
+        "group": {
+          "name": "Example Title",
+          "description": "A sample description.",
+          "region": "example_value",
+          "capacity": {
+            "target": 10,
+            "minimum": 10,
+            "maximum": 10,
+            "unit": "instance"
+          },
+          "strategy": {
+            "risk": 10,
+            "onDemandCount": 10,
+            "availabilityVsCost": "balanced",
+            "fallbackToOd": true,
+            "utilizeReservedInstances": true
+          },
+          "compute": {
+            "instanceTypes": {
+              "ondemand": "example_value",
+              "spot": {}
+            },
+            "availabilityZones": [
+              {}
+            ],
+            "launchSpecification": {
+              "imageId": "500123",
+              "securityGroupIds": {},
+              "keyPair": "example_value"
+            }
+          },
+          "scheduling": {
+            "tasks": [
+              {}
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Createelastigroupaws200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

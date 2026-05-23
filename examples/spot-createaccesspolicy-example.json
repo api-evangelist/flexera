@@ -1,0 +1,25 @@
+{
+  "operationId": "createAccessPolicy",
+  "method": "POST",
+  "path": "/setup/access/policy",
+  "summary": "Spot Create Access Policy",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateaccesspolicyRequestExample",
+      "example": {
+        "policy": {
+          "name": "Example Title",
+          "description": "A sample description.",
+          "permissions": [
+            {
+              "serviceId": "500123",
+              "actions": {}
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

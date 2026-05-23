@@ -1,0 +1,19 @@
+{
+  "operationId": "validateBillingEngineSetup",
+  "method": "POST",
+  "path": "/billingEngine/setup/validation",
+  "summary": "Spot Validate Billing Engine Setup",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "ValidatebillingenginesetupRequestExample",
+      "example": {
+        "billingEngine": {
+          "cloudProvider": "example_value",
+          "billingAccountId": "500123"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

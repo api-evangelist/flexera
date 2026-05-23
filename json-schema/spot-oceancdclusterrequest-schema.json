@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OceanCDClusterRequest",
+  "title": "OceanCDClusterRequest",
+  "type": "object",
+  "properties": {
+    "cluster": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "kubernetesClusterId": {
+          "type": "string"
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

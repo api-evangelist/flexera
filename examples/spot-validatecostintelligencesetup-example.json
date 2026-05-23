@@ -1,0 +1,19 @@
+{
+  "operationId": "validateCostIntelligenceSetup",
+  "method": "POST",
+  "path": "/costIntelligence/setup/validation",
+  "summary": "Spot Validate Cost Intelligence Setup",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "ValidatecostintelligencesetupRequestExample",
+      "example": {
+        "costIntelligence": {
+          "cloudProvider": "example_value",
+          "billingAccountId": "500123"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

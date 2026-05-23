@@ -1,0 +1,19 @@
+{
+  "operationId": "createOceanSparkCluster",
+  "method": "POST",
+  "path": "/ocean/spark/cluster",
+  "summary": "Spot Create Ocean Spark Cluster",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateoceansparkclusterRequestExample",
+      "example": {
+        "cluster": {
+          "oceanClusterId": "500123",
+          "config": "example_value"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

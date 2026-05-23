@@ -1,0 +1,19 @@
+{
+  "operationId": "updateOceanCDCluster",
+  "method": "PUT",
+  "path": "/ocean/cd/cluster/{clusterId}",
+  "summary": "Spot Update Ocean Cd Cluster",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateoceancdclusterRequestExample",
+      "example": {
+        "cluster": {
+          "name": "Example Title",
+          "kubernetesClusterId": "500123"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

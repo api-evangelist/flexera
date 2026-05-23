@@ -1,0 +1,22 @@
+{
+  "operationId": "listAccounts",
+  "method": "GET",
+  "path": "/setup/account",
+  "summary": "Spot List Accounts",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Listaccounts200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

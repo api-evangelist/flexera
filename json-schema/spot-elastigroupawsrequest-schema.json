@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ElastigroupAWSRequest",
+  "title": "ElastigroupAWSRequest",
+  "type": "object",
+  "properties": {
+    "group": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "capacity": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "integer"
+            },
+            "minimum": {
+              "type": "integer"
+            },
+            "maximum": {
+              "type": "integer"
+            },
+            "unit": {
+              "type": "string",
+              "enum": [
+                "instance",
+                "weight"
+              ]
+            }
+          }
+        },
+        "strategy": {
+          "type": "object",
+          "properties": {
+            "risk": {
+              "type": "integer",
+              "description": "Percentage of spot instances (0-100)."
+            },
+            "onDemandCount": {
+              "type": "integer"
+            },
+            "availabilityVsCost": {
+              "type": "string",
+              "enum": [
+                "balanced",
+                "costOriented",
+                "availabilityOriented",
+                "cheapest"
+              ]
+            },
+            "fallbackToOd": {
+              "type": "boolean"
+            },
+            "utilizeReservedInstances": {
+              "type": "boolean"
+            }
+          }
+        },
+        "compute": {
+          "type": "object",
+          "properties": {
+            "instanceTypes": {
+              "type": "object",
+              "properties": {
+                "ondemand": {
+                  "type": "string"
+                },
+                "spot": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "availabilityZones": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "subnetId": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "launchSpecification": {
+              "type": "object",
+              "properties": {
+                "imageId": {
+                  "type": "string"
+                },
+                "securityGroupIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "keyPair": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "scheduling": {
+          "type": "object",
+          "properties": {
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "isEnabled": {
+                    "type": "boolean"
+                  },
+                  "taskType": {
+                    "type": "string"
+                  },
+                  "cronExpression": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

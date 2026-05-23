@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OrganizationResponse",
+  "title": "OrganizationResponse",
+  "type": "object",
+  "properties": {
+    "request": {
+      "type": "object",
+      "example": "example_value"
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/Organization"
+          }
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

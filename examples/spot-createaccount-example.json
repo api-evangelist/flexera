@@ -1,0 +1,32 @@
+{
+  "operationId": "createAccount",
+  "method": "POST",
+  "path": "/setup/account",
+  "summary": "Spot Create Account",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateaccountRequestExample",
+      "example": {
+        "account": {
+          "name": "Example Title"
+        }
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Createaccount200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

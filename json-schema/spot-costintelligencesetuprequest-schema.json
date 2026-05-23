@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CostIntelligenceSetupRequest",
+  "title": "CostIntelligenceSetupRequest",
+  "type": "object",
+  "properties": {
+    "costIntelligence": {
+      "type": "object",
+      "properties": {
+        "cloudProvider": {
+          "type": "string",
+          "enum": [
+            "aws",
+            "azure",
+            "gcp"
+          ]
+        },
+        "billingAccountId": {
+          "type": "string"
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

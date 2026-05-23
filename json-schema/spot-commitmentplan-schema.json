@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/CommitmentPlan",
+  "title": "CommitmentPlan",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier of the commitment plan.",
+      "example": "abc123"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "reservedInstance",
+        "savingsPlan",
+        "committedUseDiscount"
+      ],
+      "description": "The type of commitment.",
+      "example": "reservedInstance"
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "aws",
+        "azure",
+        "gcp"
+      ],
+      "description": "The cloud provider.",
+      "example": "aws"
+    },
+    "status": {
+      "type": "string",
+      "description": "The current status of the commitment plan.",
+      "example": "example_value"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The start date of the commitment.",
+      "example": "2026-01-15T10:30:00Z"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The end date of the commitment.",
+      "example": "2026-01-15T10:30:00Z"
+    },
+    "monthlySavings": {
+      "type": "number",
+      "description": "Estimated monthly savings from this commitment.",
+      "example": 42.5
+    },
+    "utilizationPercentage": {
+      "type": "number",
+      "description": "Current utilization percentage of the commitment.",
+      "example": 42.5
+    }
+  }
+}

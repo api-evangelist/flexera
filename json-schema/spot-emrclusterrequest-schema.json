@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/EMRClusterRequest",
+  "title": "EMRClusterRequest",
+  "type": "object",
+  "properties": {
+    "mrScaler": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "strategy": {
+          "type": "object"
+        },
+        "compute": {
+          "type": "object"
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "operationId": "updateOceanClusterAKS",
+  "method": "PUT",
+  "path": "/ocean/azure/k8s/cluster/{oceanClusterId}",
+  "summary": "Spot Update Ocean Cluster (aks)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateoceanclusteraksRequestExample",
+      "example": {
+        "cluster": {
+          "name": "Example Title",
+          "controllerClusterId": "500123",
+          "aks": {
+            "clusterName": "example_value",
+            "resourceGroupName": "example_value",
+            "region": "example_value"
+          },
+          "autoScaler": {
+            "isEnabled": true,
+            "isAutoConfig": true
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

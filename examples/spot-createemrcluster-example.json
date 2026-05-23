@@ -1,0 +1,22 @@
+{
+  "operationId": "createEMRCluster",
+  "method": "POST",
+  "path": "/aws/emr/mrScaler",
+  "summary": "Spot Create Emr Cluster",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateemrclusterRequestExample",
+      "example": {
+        "mrScaler": {
+          "name": "Example Title",
+          "description": "A sample description.",
+          "region": "example_value",
+          "strategy": "example_value",
+          "compute": "example_value"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

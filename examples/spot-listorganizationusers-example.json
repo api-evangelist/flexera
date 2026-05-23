@@ -1,0 +1,22 @@
+{
+  "operationId": "listOrganizationUsers",
+  "method": "GET",
+  "path": "/setup/organization/{organizationId}/user",
+  "summary": "Spot List Organization Users",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Listorganizationusers200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

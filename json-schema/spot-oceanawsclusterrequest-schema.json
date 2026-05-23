@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OceanAWSClusterRequest",
+  "title": "OceanAWSClusterRequest",
+  "type": "object",
+  "properties": {
+    "cluster": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "controllerClusterId": {
+          "type": "string",
+          "description": "The Ocean controller cluster identifier."
+        },
+        "region": {
+          "type": "string"
+        },
+        "autoScaler": {
+          "type": "object",
+          "properties": {
+            "isEnabled": {
+              "type": "boolean"
+            },
+            "isAutoConfig": {
+              "type": "boolean"
+            },
+            "cooldown": {
+              "type": "integer"
+            },
+            "resourceLimits": {
+              "type": "object",
+              "properties": {
+                "maxMemoryGib": {
+                  "type": "integer"
+                },
+                "maxVCpu": {
+                  "type": "integer"
+                }
+              }
+            },
+            "down": {
+              "type": "object",
+              "properties": {
+                "maxScaleDownPercentage": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "capacity": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "integer"
+            },
+            "minimum": {
+              "type": "integer"
+            },
+            "maximum": {
+              "type": "integer"
+            }
+          }
+        },
+        "strategy": {
+          "type": "object",
+          "properties": {
+            "spotPercentage": {
+              "type": "integer"
+            },
+            "fallbackToOd": {
+              "type": "boolean"
+            },
+            "utilizeReservedInstances": {
+              "type": "boolean"
+            },
+            "utilizeCommitments": {
+              "type": "boolean"
+            }
+          }
+        },
+        "compute": {
+          "type": "object",
+          "properties": {
+            "instanceTypes": {
+              "type": "object",
+              "properties": {
+                "whitelist": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "blacklist": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "subnetIds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "launchSpecification": {
+              "type": "object",
+              "properties": {
+                "imageId": {
+                  "type": "string"
+                },
+                "securityGroupIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "keyPair": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tagKey": {
+                        "type": "string"
+                      },
+                      "tagValue": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

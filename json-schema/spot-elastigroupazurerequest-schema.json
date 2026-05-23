@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ElastigroupAzureRequest",
+  "title": "ElastigroupAzureRequest",
+  "type": "object",
+  "properties": {
+    "group": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "resourceGroupName": {
+          "type": "string"
+        },
+        "capacity": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "integer"
+            },
+            "minimum": {
+              "type": "integer"
+            },
+            "maximum": {
+              "type": "integer"
+            }
+          }
+        },
+        "strategy": {
+          "type": "object",
+          "properties": {
+            "spotPercentage": {
+              "type": "integer"
+            },
+            "fallbackToOd": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

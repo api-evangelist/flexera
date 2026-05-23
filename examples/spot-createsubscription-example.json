@@ -1,0 +1,21 @@
+{
+  "operationId": "createSubscription",
+  "method": "POST",
+  "path": "/events/subscription",
+  "summary": "Spot Create Event Subscription",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreatesubscriptionRequestExample",
+      "example": {
+        "subscription": {
+          "resourceId": "500123",
+          "protocol": "http",
+          "endpoint": "example_value",
+          "eventType": "example_value"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

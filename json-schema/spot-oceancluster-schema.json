@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OceanCluster",
+  "title": "OceanCluster",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "abc123"
+    },
+    "name": {
+      "type": "string",
+      "example": "Example Title"
+    },
+    "controllerClusterId": {
+      "type": "string",
+      "example": "500123"
+    },
+    "region": {
+      "type": "string",
+      "example": "example_value"
+    },
+    "autoScaler": {
+      "type": "object",
+      "example": "example_value"
+    },
+    "capacity": {
+      "type": "object",
+      "example": "example_value"
+    },
+    "strategy": {
+      "type": "object",
+      "example": "example_value"
+    },
+    "compute": {
+      "type": "object",
+      "example": "example_value"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "example": "2026-01-15T10:30:00Z"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "example": "2026-01-15T10:30:00Z"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "operationId": "updateAccount",
+  "method": "PUT",
+  "path": "/setup/account/{accountId}",
+  "summary": "Spot Update Account",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateaccountRequestExample",
+      "example": {
+        "account": {
+          "name": "Example Title"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

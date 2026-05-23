@@ -1,0 +1,22 @@
+{
+  "operationId": "getOceanClusterAWS",
+  "method": "GET",
+  "path": "/ocean/aws/k8s/cluster/{oceanClusterId}",
+  "summary": "Spot Get Ocean Cluster (aws)",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Getoceanclusteraws200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

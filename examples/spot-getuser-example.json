@@ -1,0 +1,22 @@
+{
+  "operationId": "getUser",
+  "method": "GET",
+  "path": "/setup/user/{userId}",
+  "summary": "Spot Get User Details",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "Getuser200Example",
+      "example": {
+        "request": "example_value",
+        "response": {
+          "items": [
+            {}
+          ]
+        }
+      }
+    }
+  ]
+}

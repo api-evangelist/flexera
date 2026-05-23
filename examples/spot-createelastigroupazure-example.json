@@ -1,0 +1,29 @@
+{
+  "operationId": "createElastigroupAzure",
+  "method": "POST",
+  "path": "/azure/compute/group",
+  "summary": "Spot Create Elastigroup (azure)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateelastigroupazureRequestExample",
+      "example": {
+        "group": {
+          "name": "Example Title",
+          "region": "example_value",
+          "resourceGroupName": "example_value",
+          "capacity": {
+            "target": 10,
+            "minimum": 10,
+            "maximum": 10
+          },
+          "strategy": {
+            "spotPercentage": 10,
+            "fallbackToOd": true
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

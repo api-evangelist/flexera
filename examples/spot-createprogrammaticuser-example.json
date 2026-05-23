@@ -1,0 +1,23 @@
+{
+  "operationId": "createProgrammaticUser",
+  "method": "POST",
+  "path": "/setup/user/programmatic",
+  "summary": "Spot Create Programmatic User",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateprogrammaticuserRequestExample",
+      "example": {
+        "name": "Example Title",
+        "description": "A sample description.",
+        "accounts": [
+          {
+            "id": "abc123",
+            "role": "example_value"
+          }
+        ]
+      }
+    }
+  ],
+  "responseExamples": []
+}

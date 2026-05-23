@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RollRequest",
+  "title": "RollRequest",
+  "type": "object",
+  "properties": {
+    "batchSizePercentage": {
+      "type": "integer",
+      "description": "Percentage of instances to replace in each batch.",
+      "example": 10
+    },
+    "gracePeriod": {
+      "type": "integer",
+      "description": "Grace period in seconds before checking health.",
+      "example": 10
+    },
+    "healthCheckType": {
+      "type": "string",
+      "enum": [
+        "EC2",
+        "ELB",
+        "TARGET_GROUP",
+        "NONE"
+      ],
+      "example": "EC2"
+    }
+  }
+}

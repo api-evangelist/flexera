@@ -1,0 +1,23 @@
+name: Spot Domain Vocabulary
+provider: Spot
+providerId: spot
+description: Tag-derived vocabulary for the Spot API surface; sourced from openapi/ tags.
+terms:
+- term: Ocean AKS
+  description: Manage Ocean clusters for Azure Kubernetes Service.
+- term: Ocean AWS
+  description: Manage Ocean clusters for AWS EKS.
+- term: Ocean CD
+  description: Manage continuous delivery for Ocean clusters.
+- term: Ocean ECS
+  description: Manage Ocean clusters for Amazon ECS.
+- term: Ocean GKE
+  description: Manage Ocean clusters for Google Kubernetes Engine.
+- term: Ocean Spark
+  description: Manage Apache Spark clusters on Ocean.
+- term: Right Sizing
+  description: Get right-sizing recommendations for Ocean workloads.
+- term: Rolls
+  description: Manage rolling updates for Ocean clusters.
+- term: Virtual Node Groups
+  description: Manage virtual node groups (launch specifications) within Ocean clusters.

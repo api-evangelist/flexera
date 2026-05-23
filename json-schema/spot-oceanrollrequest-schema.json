@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/OceanRollRequest",
+  "title": "OceanRollRequest",
+  "type": "object",
+  "properties": {
+    "roll": {
+      "type": "object",
+      "properties": {
+        "batchSizePercentage": {
+          "type": "integer",
+          "description": "Percentage of nodes to replace in each batch."
+        },
+        "comment": {
+          "type": "string"
+        },
+        "batchMinHealthyPercentage": {
+          "type": "integer"
+        },
+        "respectPdb": {
+          "type": "boolean",
+          "description": "Respect pod disruption budgets during the roll."
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

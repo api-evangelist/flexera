@@ -1,0 +1,19 @@
+{
+  "operationId": "createOceanCDCluster",
+  "method": "POST",
+  "path": "/ocean/cd/cluster",
+  "summary": "Spot Create Ocean Cd Cluster",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateoceancdclusterRequestExample",
+      "example": {
+        "cluster": {
+          "name": "Example Title",
+          "kubernetesClusterId": "500123"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

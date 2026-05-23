@@ -1,0 +1,28 @@
+{
+  "operationId": "createOceanClusterAKS",
+  "method": "POST",
+  "path": "/ocean/azure/k8s/cluster",
+  "summary": "Spot Create Ocean Cluster (aks)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "CreateoceanclusteraksRequestExample",
+      "example": {
+        "cluster": {
+          "name": "Example Title",
+          "controllerClusterId": "500123",
+          "aks": {
+            "clusterName": "example_value",
+            "resourceGroupName": "example_value",
+            "region": "example_value"
+          },
+          "autoScaler": {
+            "isEnabled": true,
+            "isAutoConfig": true
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

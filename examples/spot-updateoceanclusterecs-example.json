@@ -1,0 +1,37 @@
+{
+  "operationId": "updateOceanClusterECS",
+  "method": "PUT",
+  "path": "/ocean/aws/ecs/cluster/{oceanClusterId}",
+  "summary": "Spot Update Ocean Cluster (ecs)",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateoceanclusterecsRequestExample",
+      "example": {
+        "cluster": {
+          "name": "Example Title",
+          "clusterName": "example_value",
+          "region": "example_value",
+          "autoScaler": {
+            "isEnabled": true,
+            "isAutoConfig": true
+          },
+          "capacity": {
+            "target": 10,
+            "minimum": 10,
+            "maximum": 10
+          },
+          "compute": {
+            "instanceTypes": {
+              "whitelist": {}
+            },
+            "subnetIds": [
+              {}
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

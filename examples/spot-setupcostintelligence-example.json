@@ -1,0 +1,19 @@
+{
+  "operationId": "setupCostIntelligence",
+  "method": "POST",
+  "path": "/costIntelligence/setup",
+  "summary": "Spot Set up Cost Intelligence",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "SetupcostintelligenceRequestExample",
+      "example": {
+        "costIntelligence": {
+          "cloudProvider": "aws",
+          "billingAccountId": "500123"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BillingEngineSetupRequest",
+  "title": "BillingEngineSetupRequest",
+  "type": "object",
+  "properties": {
+    "billingEngine": {
+      "type": "object",
+      "properties": {
+        "cloudProvider": {
+          "type": "string",
+          "enum": [
+            "aws",
+            "azure",
+            "gcp"
+          ]
+        },
+        "billingAccountId": {
+          "type": "string",
+          "description": "The cloud provider billing or payer account ID."
+        },
+        "bucketName": {
+          "type": "string",
+          "description": "The S3 bucket or storage container for cost and usage reports."
+        }
+      },
+      "example": "example_value"
+    }
+  }
+}

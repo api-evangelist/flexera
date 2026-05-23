@@ -1,0 +1,22 @@
+{
+  "operationId": "updateEMRCluster",
+  "method": "PUT",
+  "path": "/aws/emr/mrScaler/{mrScalerId}",
+  "summary": "Spot Update Emr Cluster",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "UpdateemrclusterRequestExample",
+      "example": {
+        "mrScaler": {
+          "name": "Example Title",
+          "description": "A sample description.",
+          "region": "example_value",
+          "strategy": "example_value",
+          "compute": "example_value"
+        }
+      }
+    }
+  ],
+  "responseExamples": []
+}
