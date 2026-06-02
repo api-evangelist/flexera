@@ -1,13 +1,21 @@
 {
-  "repo": "spot",
+  "repo": "flexera",
   "feeds": [
     {
-      "source": "https://spot.io/blog/",
+      "source": "https://spot.io/blog/feed/",
       "feed_url": "https://spot.io/blog/feed/",
-      "title": "FinOps \u2013 Flexera Blog",
-      "saved": 8
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://docs.spot.io/administration/api/create-api-token",
+      "feed_url": "https://docs.spot.io/administration/api/create-api-token",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
   "post_count": 18,
-  "fetched": "2026-05-17T20:20:35Z"
+  "fetched": "2026-06-01T23:35:02Z"
 }
