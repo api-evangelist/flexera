@@ -1,0 +1,799 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Ocean API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ocean AWS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Clusters (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all Ocean clusters for AWS in the account."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cluster (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean cluster for AWS EKS."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cluster (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the configuration of an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cluster (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Ocean cluster configuration."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cluster (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean cluster."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rolls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Cluster Rolls (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all rolls for an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Initiate Cluster Roll (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate a roll (rolling replacement) of nodes in an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Get Roll Details (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll/:rollId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "rollId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the details and status of a specific roll."
+        },
+        {
+          "info": {
+            "name": "Spot Update Roll (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll/:rollId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "rollId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stop or modify a running roll."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Virtual Node Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Virtual Node Groups (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec",
+            "params": [
+              {
+                "name": "oceanId",
+                "value": "500123",
+                "type": "query",
+                "description": "Ocean cluster ID to filter by."
+              }
+            ]
+          },
+          "docs": "List all virtual node groups for an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Create Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a virtual node group (launch specification) for an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Get Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec/:launchSpecId",
+            "params": [
+              {
+                "name": "launchSpecId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the configuration of a virtual node group."
+        },
+        {
+          "info": {
+            "name": "Spot Update Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec/:launchSpecId",
+            "params": [
+              {
+                "name": "launchSpecId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a virtual node group."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec/:launchSpecId",
+            "params": [
+              {
+                "name": "launchSpecId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a virtual node group."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ocean ECS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Clusters (ecs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/ecs/cluster"
+          },
+          "docs": "List all Ocean ECS clusters."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cluster (ecs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/aws/ecs/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean cluster for Amazon ECS."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cluster (ecs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/ecs/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Ocean ECS cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cluster (ecs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/aws/ecs/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Ocean ECS cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cluster (ecs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/aws/ecs/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean ECS cluster."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ocean GKE",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Clusters (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/gke/cluster"
+          },
+          "docs": "List all Ocean GKE clusters."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/gke/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean cluster for Google Kubernetes Engine."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/gke/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Ocean GKE cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/gke/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Ocean GKE cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/gke/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean GKE cluster."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ocean AKS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Clusters (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster"
+          },
+          "docs": "List all Ocean AKS clusters."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean cluster for Azure Kubernetes Service."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Ocean AKS cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Ocean AKS cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean AKS cluster."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Right Sizing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Get Right-sizing Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/rightSizing/suggestion",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get right-sizing recommendations for workloads running in an Ocean cluster. Returns CPU and memory recommendations based on actual usage."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ocean CD",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Cd Clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/cd/cluster"
+          },
+          "docs": "List all clusters registered with Ocean CD."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/cd/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a cluster with Ocean CD for continuous delivery."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/cd/cluster/:clusterId",
+            "params": [
+              {
+                "name": "clusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a cluster registered with Ocean CD."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/cd/cluster/:clusterId",
+            "params": [
+              {
+                "name": "clusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Ocean CD cluster configuration."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/cd/cluster/:clusterId",
+            "params": [
+              {
+                "name": "clusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unregister a cluster from Ocean CD."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ocean Spark",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Spark Clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/spark/cluster"
+          },
+          "docs": "List all Ocean Spark clusters."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Spark Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/spark/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean for Apache Spark cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Spark Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/spark/cluster/:oceanSparkClusterId",
+            "params": [
+              {
+                "name": "oceanSparkClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Ocean Spark cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Spark Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/spark/cluster/:oceanSparkClusterId",
+            "params": [
+              {
+                "name": "oceanSparkClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean Spark cluster."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

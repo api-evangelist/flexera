@@ -1,0 +1,294 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Eco API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Eco AWS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Commitment Plans (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/commitmentPlan",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query",
+                "description": "The Spot account ID."
+              }
+            ]
+          },
+          "docs": "List all AWS commitment plans including reserved instances and savings plans managed by Eco."
+        },
+        {
+          "info": {
+            "name": "Spot Get Commitment Plan (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/commitmentPlan/:commitmentPlanId",
+            "params": [
+              {
+                "name": "commitmentPlanId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get details of a specific AWS commitment plan."
+        },
+        {
+          "info": {
+            "name": "Spot Get Unused Reserved Instances (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/ri/unusedReservedInstances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of unused or underutilized AWS reserved instances to identify optimization opportunities."
+        },
+        {
+          "info": {
+            "name": "Spot List Savings Plans (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/ri/savingsPlans",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all AWS savings plans managed by Eco."
+        },
+        {
+          "info": {
+            "name": "Spot List Reserved Instances (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/ri/reservedInstances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all AWS reserved instances managed by Eco."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Savings Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Get Savings Analysis (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/analysis/savings",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "Start date for the analysis period."
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "End date for the analysis period."
+              }
+            ]
+          },
+          "docs": "Retrieve a savings analysis report showing realized and potential savings from AWS commitment optimization."
+        },
+        {
+          "info": {
+            "name": "Spot Get Commitment Analysis (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/analysis/commitment",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a commitment utilization analysis showing how effectively reserved instances and savings plans are being used."
+        },
+        {
+          "info": {
+            "name": "Spot Get Savings Analysis (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/azure/analysis/savings",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a savings analysis report for Azure commitment optimization."
+        },
+        {
+          "info": {
+            "name": "Spot Get Savings Analysis (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/gcp/analysis/savings",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a savings analysis report for GCP commitment optimization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Eco Azure",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Commitment Plans (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/azure/commitmentPlan",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all Azure reserved instance commitment plans managed by Eco."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Eco GCP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Commitment Plans (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/gcp/commitmentPlan",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all GCP committed use discount plans managed by Eco."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,254 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Billing Engine API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Billing Engine Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/billingEngine/account",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all accounts registered with Billing Engine, including their cloud provider type and configuration status."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Billing Engine Setup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Set up Billing Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/billingEngine/setup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set up Billing Engine on a Spot account by linking it to a cloud provider billing account for cost data ingestion."
+        },
+        {
+          "info": {
+            "name": "Spot Validate Billing Engine Setup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/billingEngine/setup/validation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform validation checks on a Billing Engine setup to ensure correct cloud provider credentials and billing access."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Families",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Account Families",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/billingEngine/family"
+          },
+          "docs": "List all account families configured in Billing Engine."
+        },
+        {
+          "info": {
+            "name": "Spot Create Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/billingEngine/family",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an account family for grouping related cloud accounts and enabling consolidated cost allocation."
+        },
+        {
+          "info": {
+            "name": "Spot Get Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/billingEngine/family/:familyId",
+            "params": [
+              {
+                "name": "familyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a specific account family."
+        },
+        {
+          "info": {
+            "name": "Spot Update Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/billingEngine/family/:familyId",
+            "params": [
+              {
+                "name": "familyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing account family."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/billingEngine/family/:familyId",
+            "params": [
+              {
+                "name": "familyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an account family."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cost Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Get Cost Analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/billingEngine/cost",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "Start date for the cost analysis period."
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "End date for the cost analysis period."
+              },
+              {
+                "name": "groupBy",
+                "value": "account",
+                "type": "query",
+                "description": "Dimension to group costs by."
+              }
+            ]
+          },
+          "docs": "Retrieve cost analysis data across registered cloud accounts, including breakdowns by service, account, and time period."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cost Intelligence",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Set up Cost Intelligence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/costIntelligence/setup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set up Cost Intelligence on a Spot account to enable granular cost analytics and actionable optimization recommendations."
+        },
+        {
+          "info": {
+            "name": "Spot Validate Cost Intelligence Setup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/costIntelligence/setup/validation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform validation checks on a Cost Intelligence setup to ensure correct access and configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

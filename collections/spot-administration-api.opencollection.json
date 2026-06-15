@@ -1,0 +1,513 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Create Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/organization"
+          },
+          "docs": "Create a new organization in Spot."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/setup/organization"
+          },
+          "docs": "Delete an existing organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/account",
+            "params": [
+              {
+                "name": "cloudAccountId",
+                "value": "500123",
+                "type": "query",
+                "description": "Filter by cloud account ID."
+              }
+            ]
+          },
+          "docs": "Get a list of Spot accounts in your organization. When used without parameters, the provided token must have Organization Admin permissions and the output will contain all the organization accounts."
+        },
+        {
+          "info": {
+            "name": "Spot Create Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new account within an organization."
+        },
+        {
+          "info": {
+            "name": "Spot Update Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/setup/account/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing account."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/setup/account/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user and link it to the creator's organization. If the role is a viewer, the user is also linked to the default account for the organization."
+        },
+        {
+          "info": {
+            "name": "Spot List Organization Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/organization/:organizationId/user",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all users in the organization, their details, and mapped accounts. Providing the optional account ID parameter will filter out all users not mapped to that account."
+        },
+        {
+          "info": {
+            "name": "Spot Get User Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a specific user."
+        },
+        {
+          "info": {
+            "name": "Spot Update User Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/setup/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update user permissions and role assignments."
+        },
+        {
+          "info": {
+            "name": "Spot Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/setup/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a user from the organization."
+        },
+        {
+          "info": {
+            "name": "Spot Create Programmatic User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/user/programmatic",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a programmatic user for API access."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Access Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Access Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/access/policy"
+          },
+          "docs": "Get all access policies of the organization."
+        },
+        {
+          "info": {
+            "name": "Spot Create Access Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/access/policy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new access policy for the organization."
+        },
+        {
+          "info": {
+            "name": "Spot Update Access Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/setup/access/policy/:policyId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing access policy."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Access Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/setup/access/policy/:policyId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an access policy."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Cloud Credentials",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Set Aws Cloud Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/credentials/aws",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link a Spot account to an AWS cloud account."
+        },
+        {
+          "info": {
+            "name": "Spot Set Azure Cloud Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/credentials/azure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link a Spot account to an Azure subscription."
+        },
+        {
+          "info": {
+            "name": "Spot Set Gcp Cloud Credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/credentials/gcp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Link a Spot account to a GCP project."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Event Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/events/subscription"
+          },
+          "docs": "Get all event subscriptions."
+        },
+        {
+          "info": {
+            "name": "Spot Create Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/events/subscription",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to event notifications for Spot resources."
+        },
+        {
+          "info": {
+            "name": "Spot Get Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/events/subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a specific event subscription."
+        },
+        {
+          "info": {
+            "name": "Spot Update Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/events/subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing event subscription."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/events/subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an event subscription."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Audit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Audit Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/audit/events",
+            "params": [
+              {
+                "name": "fromDate",
+                "value": "2026-01-15T10:30:00Z",
+                "type": "query",
+                "description": "Start date for audit events."
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15T10:30:00Z",
+                "type": "query",
+                "description": "End date for audit events."
+              }
+            ]
+          },
+          "docs": "Retrieve audit log events for the organization."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Health Check",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Health Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/healthCheck"
+          },
+          "docs": "Check the health status of the Spot API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
