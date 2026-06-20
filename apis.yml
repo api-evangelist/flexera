@@ -5,7 +5,7 @@ description: >-
   for compute workload management across spot, reserved, and on-demand instances, Ocean for Kubernetes and container
   infrastructure automation, and Eco for cloud commitment management. The Spot API enables programmatic control over all
   platform capabilities including administration, compute groups, Kubernetes clusters, and cost optimization.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/spot/refs/heads/main/apis.yml
 created: '2026-01-02'
 modified: '2026-05-19'
