@@ -2,11 +2,11 @@
   "repo": "flexera",
   "feeds": [
     {
-      "source": "https://www.flexera.com/blog/finops/",
+      "source": "https://www.flexera.com/blog/feed/",
       "feed_url": "https://www.flexera.com/blog/feed/",
       "title": "",
-      "saved": 5,
-      "method": "discovered"
+      "saved": 9,
+      "method": "feed"
     },
     {
       "source": "https://docs.spot.io/administration/api/create-api-token",
@@ -16,6 +16,6 @@
       "method": "none"
     }
   ],
-  "post_count": 23,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 36,
+  "fetched": "2026-06-27T12:03:07Z"
 }
