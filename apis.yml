@@ -169,11 +169,11 @@ apis:
         url: json-ld/spot-billing-engine-context.jsonld
 common:
   - type: VulnerabilityDisclosure
-    url: security/spot-vulnerability-disclosure.yml
+    url: security/flexera-vulnerability-disclosure.yml
   - type: DomainSecurity
-    url: security/spot-domain-security.yml
+    url: security/flexera-domain-security.yml
   - type: Authentication
-    url: authentication/spot-authentication.yml
+    url: authentication/flexera-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/spothq
   - type: GitHubOrganization
