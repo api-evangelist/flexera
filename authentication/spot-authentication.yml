@@ -1,0 +1,19 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/spot-administration-api-openapi.yml, openapi/spot-billing-engine-api-openapi.yml,
+  openapi/spot-eco-api-openapi.yml, openapi/spot-elastigroup-api-openapi.yml, openapi/spot-ocean-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization
+    header.
+  sources:
+  - openapi/spot-administration-api-openapi.yml
+  - openapi/spot-billing-engine-api-openapi.yml
+  - openapi/spot-eco-api-openapi.yml
+  - openapi/spot-elastigroup-api-openapi.yml
+  - openapi/spot-ocean-api-openapi.yml
