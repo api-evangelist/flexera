@@ -168,6 +168,8 @@ apis:
       - type: JSONLD
         url: json-ld/spot-billing-engine-context.jsonld
 common:
+  - type: AgenticAccess
+    url: agentic-access/flexera-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/flexera-vulnerability-disclosure.yml
   - type: DomainSecurity
