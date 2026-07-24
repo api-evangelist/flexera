@@ -1,0 +1,191 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics LPR API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: LPR
+paths:
+  /v1/lpr/cameras/{camera_id}/report:
+    get:
+      operationId: LprReport
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LprReport'
+              examples:
+                Example 1:
+                  value:
+                    plates:
+                    - first_seen: '2020-01-01T00:00:00.000Z'
+                      last_seen: '2020-01-01T00:00:00.000Z'
+                      plate: plate
+                      type_id: 1
+                      visits: 1
+                    - first_seen: '2020-01-01T00:00:00.000Z'
+                      last_seen: '2020-01-01T00:00:00.000Z'
+                      plate: plate1
+                      type_id: 2
+                      visits: 3
+                    summary:
+                      most_visits_by_plate: 6
+                      total_visits: 10
+                      unique_plates: 2
+                    timeseries:
+                    - date: '2023-01-01'
+                      visits: 1
+        '422':
+          description: "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days.\n      2) Invalid time format. Please use the 24-hour format (HH:mm)."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    message: The maximum date range is 30 days
+                    statusCode: 422
+                    name: InvalidDateRangeError
+      description: Get LPR report for a camera. Camera should be LPR enabled
+      summary: LPR Report
+      tags:
+      - LPR
+      security:
+      - bearer_security: []
+      parameters:
+      - description: Id of the camera
+        in: path
+        name: camera_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: ISO 8601 date-time string (UTC) indicating the beginning of the date range filter
+        in: query
+        name: start
+        required: true
+        schema:
+          type: string
+      - description: ISO 8601 date-time string (UTC) indicating the end of the date range filter
+        in: query
+        name: end
+        required: true
+        schema:
+          type: string
+      - description: Array of numbers indicating which days of the week to include in the results
+        in: query
+        name: days_of_week
+        required: false
+        schema:
+          default:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          type: array
+          items:
+            type: integer
+            format: int32
+      - description: Array of strings indicating which plates to include in the results
+        in: query
+        name: plates
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+components:
+  schemas:
+    LprReportSummary:
+      properties:
+        most_visits_by_plate:
+          type: number
+          format: double
+        total_visits:
+          type: number
+          format: double
+        unique_plates:
+          type: number
+          format: double
+      required:
+      - most_visits_by_plate
+      - total_visits
+      - unique_plates
+      type: object
+    LprReportTimeseries:
+      properties:
+        visits:
+          type: number
+          format: double
+        date:
+          type: string
+      required:
+      - visits
+      - date
+      type: object
+    LprReport:
+      properties:
+        timeseries:
+          items:
+            $ref: '#/components/schemas/LprReportTimeseries'
+          type: array
+        summary:
+          $ref: '#/components/schemas/LprReportSummary'
+        plates:
+          items:
+            $ref: '#/components/schemas/LprReportPlate'
+          type: array
+      required:
+      - timeseries
+      - summary
+      - plates
+      type: object
+    LprReportPlate:
+      properties:
+        visits:
+          type: number
+          format: double
+        last_seen:
+          type: string
+        first_seen:
+          type: string
+        type_id:
+          type: number
+          format: double
+        plate:
+          type: string
+      required:
+      - visits
+      - last_seen
+      - first_seen
+      - plate
+      type: object
+    ApiErrorResponse:
+      properties:
+        data: {}
+        statusCode:
+          type: number
+          format: double
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - message
+      - name
+      type: object
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

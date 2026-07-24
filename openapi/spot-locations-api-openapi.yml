@@ -1,0 +1,144 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Locations API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Locations
+paths:
+  /v1/locations:
+    get:
+      operationId: GetLocations
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationListResult'
+              examples:
+                Example 1:
+                  value:
+                    locations:
+                    - id: 1
+                      name: Main Warehouse
+                    - id: 2
+                      name: 'Store #2402'
+                    - id: 3
+                      name: 'Store #119'
+                    prev: eyAiaWQiOiA1MCwgImRpcmVjdGlvbiI6ICJwcmV2IiB9
+                    next: eyAiaWQiOiAxMDEsICJkaXJlY3Rpb24iOiAibmV4dCIgfQ==
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'Gets basic information (id and name) of locations the caller has access to.
+
+
+        Response data is paginated. The number of locations returned in any single
+
+        response will never be greater than the `limit`. If there are more
+
+        locations that can be requested, the response body will contain a non-null
+
+        `"next"` property. Use this `"next"` value to request the next page of data
+
+        by submitting a subsequent request with the `cursor` query param set to
+
+        this value of `"next"`. To fetch all pages of data, continue making
+
+        requests until `"next"` is `null` in the response body.'
+      summary: Get locations
+      tags:
+      - Locations
+      security:
+      - bearer_security: []
+      parameters:
+      - description: Cursor for pagination
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+      - description: 'Number of locations to return in a single response. Default is
+
+          `50`. Maximum allowed is `100`.'
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+components:
+  schemas:
+    Location:
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+          description: Name of the location
+          example: My Location
+      required:
+      - id
+      - name
+      type: object
+      additionalProperties: false
+    LocationListResult:
+      properties:
+        prev:
+          type: string
+          nullable: true
+        next:
+          type: string
+          nullable: true
+        locations:
+          items:
+            $ref: '#/components/schemas/Location'
+          type: array
+      required:
+      - prev
+      - next
+      - locations
+      type: object
+      additionalProperties: false
+    ValidationError:
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetails'
+          type: array
+      required:
+      - name
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    ValidationErrorDetails:
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+        value: {}
+      required:
+      - field
+      - message
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

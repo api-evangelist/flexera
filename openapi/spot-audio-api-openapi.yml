@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Audio API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Audio
+paths:
+  /v1/audio/play:
+    post:
+      operationId: PlayAudio
+      responses:
+        '204':
+          description: Audio successfully sent to device for playback
+        '400':
+          description: Camera not eligible for audio playback
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 400
+                    name: InvalidLimit
+                    data: {}
+                Example 2:
+                  value:
+                    statusCode: 400
+                    message: Camera not associated with a speaker that can play the audio
+                    name: BadRequest
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 403
+                    message: You do not have permission to play audio, requires camera.manage_audio on the specified camera
+                    name: AuthorizationError
+        '404':
+          description: Camera not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 404
+                    message: Camera not found
+                    name: NotFoundError
+        '500':
+          description: Error playing audio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 500
+                    message: Failed to play audio
+                    name: InternalServerError
+      description: 'Plays an audio file through the speakers associated with the specified camera.
+
+
+        There are two ways that speakers can be associated with a camera:
+
+        1. The camera is associated with a Bullhorn through an Integration.
+
+        2. The camera has a built in speaker which has Two-Way audio enabled.
+
+
+        If no associated speakers are found, the audio will not be played (status code 400).
+
+
+        Supported file formats include (but not limited to):
+
+        - MP3
+
+        - WAV
+
+        - M4A
+
+        - OGG
+
+        - FLAC
+
+
+        Processing may take a moment depending on file size and system load.
+
+
+        This endpoint requires the `camera.manage_audio` permission on the specified camera.'
+      summary: Play audio through a camera
+      tags:
+      - Audio
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                cameraId:
+                  type: string
+                  description: The ID of the camera to play audio through
+                audio:
+                  type: string
+                  format: binary
+                  description: 'The audio file to play (max size: 10MB)'
+              required:
+              - cameraId
+              - audio
+components:
+  schemas:
+    ApiErrorResponse:
+      properties:
+        data: {}
+        statusCode:
+          type: number
+          format: double
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - message
+      - name
+      type: object
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

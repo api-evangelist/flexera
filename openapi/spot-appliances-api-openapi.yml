@@ -1,0 +1,211 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Appliances API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Appliances
+paths:
+  /v1/appliances/{applianceId}:
+    get:
+      operationId: GetAppliance
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appliance'
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    serial: sn7-123456
+                    last_online: '2025-12-16T10:30:00.000Z'
+                    location_id: 1
+                    location_name: Location 1
+                    license_sku: LIC-IVR-A12-B34
+                    firmware_version: 1.0.0
+                    status: online
+        '404':
+          description: Appliance {applianceId} not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    message: Appliance {applianceId} not found
+                    name: NotFound
+      description: Returns information about a single appliance.
+      summary: Get appliance information
+      tags:
+      - Appliances
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- Id of the appliance'
+        in: path
+        name: applianceId
+        required: true
+        schema:
+          format: int32
+          type: integer
+  /v1/appliances:
+    get:
+      operationId: GetAppliances
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAppliancesQueryResult'
+              examples:
+                Example 1:
+                  value:
+                  - id: 1
+                    serial: sn7-123456
+                    last_online: '2025-12-16T10:30:00.000Z'
+                    location_id: 1
+                    location_name: Location 1
+                    license_sku: SKU-123456
+                    firmware_version: 1.0.0
+                    status: online
+                  - id: 2
+                    serial: sn7-123457
+                    last_online: '2025-12-16T10:30:00.000Z'
+                    location_id: 2
+                    location_name: Location 2
+                    license_sku: SKU-123457
+                    firmware_version: 1.0.0
+                    status: online
+      description: Returns a paginated list of appliances for an org. Response contains a cursor for pagination.
+      summary: Get a paginated list of appliances
+      tags:
+      - Appliances
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- Cursor for pagination'
+        in: query
+        name: cursor
+        required: false
+        schema:
+          default: ''
+          type: string
+      - description: '- Number of appliances to return. Max 100'
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          format: double
+          type: number
+      - description: '- Location ids to filter by. When present, only returns appliances associated with the indicated locations.'
+        in: query
+        name: location_ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+components:
+  schemas:
+    ApplianceStatus:
+      enum:
+      - online
+      - offline
+      type: string
+    Appliance:
+      properties:
+        id:
+          type: number
+          format: double
+          description: The id of the appliance
+          example: 1
+        serial:
+          type: string
+          description: The serial number of the appliance
+          example: sn7-123456
+        status:
+          $ref: '#/components/schemas/ApplianceStatus'
+          description: The status of the appliance
+          example: online
+        last_online:
+          type: string
+          format: date
+          nullable: true
+          description: The last online timestamp of the appliance
+        location_id:
+          type: number
+          format: double
+          description: The location id of the appliance
+          example: 1
+        location_name:
+          type: string
+          description: The name of the location
+          example: Main Location
+        license_sku:
+          type: string
+          description: The license sku of the appliance
+          example: '1234567890'
+        firmware_version:
+          type: string
+          nullable: true
+          description: The firmware version of the appliance
+          example: 1.0.0
+      required:
+      - id
+      - serial
+      - status
+      - last_online
+      - location_id
+      - location_name
+      - license_sku
+      - firmware_version
+      type: object
+      additionalProperties: false
+    ApiErrorResponse:
+      properties:
+        data: {}
+        statusCode:
+          type: number
+          format: double
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - message
+      - name
+      type: object
+    GetAppliancesQueryResult:
+      properties:
+        prev:
+          type: string
+          nullable: true
+        next:
+          type: string
+          nullable: true
+        appliances:
+          items:
+            $ref: '#/components/schemas/Appliance'
+          type: array
+      required:
+      - prev
+      - next
+      - appliances
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

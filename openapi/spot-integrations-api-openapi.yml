@@ -1,0 +1,356 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Integrations API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Integrations
+paths:
+  /v1/integrations:
+    post:
+      operationId: CreateIntegration
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationResult'
+              examples:
+                Example 1:
+                  value:
+                    integration:
+                      id: 1
+                      name: My Integration
+                      integration_type_id: 1
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+        '403':
+          description: The responder function for a forbidden response
+          content:
+            application/json:
+              schema:
+                properties:
+                  message:
+                    type: string
+                required:
+                - message
+                type: object
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint creates a new integration. You may choose a canned
+
+        integration type or create a fully custom integration.
+
+
+        Canned integrations will have a schema template to help you
+
+        create event types and a specific visualization layer.
+
+        You will still be able to customize the event type schema however you see fit.'
+      summary: Create a new integration
+      tags:
+      - Integrations
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        description: '- The integration to create'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIntegrationInput'
+              description: '- The integration to create'
+    get:
+      operationId: GetAllIntegrations
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationListResult'
+              examples:
+                Example 1:
+                  value:
+                    integrations:
+                    - id: 1
+                      name: My Integration
+                      integration_type_id: 1
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+                    - id: 2
+                      name: My Integration 2
+                      integration_type_id: 1
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+        '400':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint returns details of all integrations that the caller can access within an organization.
+
+        Integrations that the caller does not have access to will not be included in the response.
+
+        Details include integration number, integration name, and integration type.'
+      summary: Get all integrations
+      tags:
+      - Integrations
+      security:
+      - bearer_security: []
+      parameters: []
+  /v1/integrations/{integration_id}:
+    delete:
+      operationId: DeleteIntegration
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationResult'
+              examples:
+                Example 1:
+                  value:
+                    integration:
+                      id: 1
+                      name: My Integration
+                      integration_type_id: 1
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint can be used to delete an integration.
+
+        All associated data including integration devices, integration event types,
+
+        and events will also be deleted'
+      summary: Delete an existing integration
+      tags:
+      - Integrations
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- The ID of the integration to delete'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+    get:
+      operationId: GetIntegration
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationResult'
+              examples:
+                Example 1:
+                  value:
+                    integration:
+                      id: 1
+                      name: My Integration
+                      integration_type_id: 1
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+      description: 'This endpoint returns full details of a specific integration.
+
+
+        The integration ID is required to return integration name and integration type.'
+      summary: Get integration information
+      tags:
+      - Integrations
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+    put:
+      operationId: UpdateIntegration
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationResult'
+              examples:
+                Example 1:
+                  value:
+                    integration:
+                      id: 1
+                      name: My Integration
+                      integration_type_id: 1
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: This endpoint can be used to update an existing integration's name.
+      summary: Update integration name
+      tags:
+      - Integrations
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- The ID of the integration to update'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        description: '- The integration to create'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIntegrationInput'
+              description: '- The integration to create'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetails'
+          type: array
+      required:
+      - name
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    Integration:
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+          description: The name of the integration
+          example: My Integration
+          minLength: 1
+          maxLength: 40
+        integration_type_id:
+          type: number
+          format: double
+          description: 'The type of integration (default: custom)'
+          example: custom
+        created:
+          type: string
+          format: date-time
+          description: The date this integration was created
+          example: '2023-06-29T12:20:05.533Z'
+        updated:
+          type: string
+          format: date-time
+          description: The date this integration was last updated
+          example: '2023-06-29T12:20:05.533Z'
+      required:
+      - id
+      - name
+      - integration_type_id
+      - created
+      - updated
+      type: object
+      additionalProperties: false
+    ValidationErrorDetails:
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+        value: {}
+      required:
+      - field
+      - message
+      type: object
+      additionalProperties: false
+    IntegrationResult:
+      properties:
+        integration:
+          $ref: '#/components/schemas/Integration'
+      required:
+      - integration
+      type: object
+      additionalProperties: false
+    UpdateIntegrationInput:
+      properties:
+        name:
+          type: string
+          description: The updated name of the integration
+          example: My Integration
+          minLength: 1
+          maxLength: 40
+      required:
+      - name
+      type: object
+      additionalProperties: false
+    IntegrationTypeName:
+      enum:
+      - custom
+      - pos
+      type: string
+    CreateIntegrationInput:
+      properties:
+        name:
+          type: string
+          description: The name of the integration
+          example: My Integration
+          minLength: 1
+          maxLength: 40
+        integration_type:
+          $ref: '#/components/schemas/IntegrationTypeName'
+          description: 'The type of integration (default: custom)'
+          example: custom
+      required:
+      - name
+      type: object
+      additionalProperties: false
+    IntegrationListResult:
+      properties:
+        integrations:
+          items:
+            $ref: '#/components/schemas/Integration'
+          type: array
+      required:
+      - integrations
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

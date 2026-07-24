@@ -1,0 +1,224 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Shared Search API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Shared Search
+paths:
+  /v1/cameras/shared/search:
+    post:
+      operationId: CreateSharedCameraSearch
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedCameraSearch'
+              examples:
+                Example 1:
+                  value:
+                    token: 5d09fd895fc6b94c468b36a6b0b8788e
+                    link: https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e
+                    start: '2023-08-26T10:20:05.533Z'
+                    end: '2023-08-26T12:20:05.533Z'
+                    camera_ids:
+                    - 1
+                    - 2
+                    - 3
+                    expiry: '2023-08-29T12:20:05.533Z'
+      description: 'This endpoint creates a new shared camera search view. The view has a publicly accessible link that can be shared with anyone.
+
+        The link will expire after the expiry time. The expiry time is optional. If not provided, the link will expire after 1 week.'
+      summary: Create shared camera search view
+      tags:
+      - Shared Search
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSharedCameraSearchInput'
+  /v1/cameras/shared/search/{token}:
+    get:
+      operationId: GetSharedCameraSearch
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedCameraSearch'
+              examples:
+                Example 1:
+                  value:
+                    token: 5d09fd895fc6b94c468b36a6b0b8788e
+                    link: https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e
+                    start: '2023-08-26T10:20:05.533Z'
+                    end: '2023-08-26T12:20:05.533Z'
+                    camera_ids:
+                    - 1
+                    - 2
+                    - 3
+                    expiry: '2023-08-29T12:20:05.533Z'
+      description: This endpoint retrieves the shared camera search URL details.
+      summary: Get shared camera search view details
+      tags:
+      - Shared Search
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: token
+        required: true
+        schema:
+          type: string
+    patch:
+      operationId: UpdateSharedCameraSearch
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedCameraSearch'
+              examples:
+                Example 1:
+                  value:
+                    token: 5d09fd895fc6b94c468b36a6b0b8788e
+                    link: https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e
+                    start: '2023-08-26T10:20:05.533Z'
+                    end: '2023-08-26T12:20:05.533Z'
+                    camera_ids:
+                    - 1
+                    - 2
+                    - 3
+                    expiry: '2023-08-29T12:20:05.533Z'
+      description: This endpoint updates an existing shared camera search view. It allows updating the start, end time and the expiry of the shared search.
+      summary: Update shared camera search view details
+      tags:
+      - Shared Search
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pick_UpdateSharedCameraSearchInput.Exclude_keyofUpdateSharedCameraSearchInput.token__'
+components:
+  schemas:
+    CreateSharedCameraSearchInput:
+      properties:
+        expiry_in_seconds:
+          type: integer
+          format: int32
+          description: The expiry time of the created Shared search view
+          example: 86400
+          maximum: 604800
+        camera_ids:
+          items:
+            type: number
+            format: double
+          type: array
+          description: The list of cameras to be shown in the VOD view.
+          example:
+          - 1
+          - 2
+          - 3
+          minItems: 1
+          maxItems: 16
+        end:
+          type: string
+          description: The timestamp for the end of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T12:20:05.533Z'
+        start:
+          type: string
+          description: The timestamp for the start of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T10:20:05.533Z'
+      required:
+      - camera_ids
+      - end
+      - start
+      type: object
+    SharedCameraSearch:
+      properties:
+        expiry:
+          type: string
+          format: date-time
+          description: The timestamp after which the link will expire
+          example: '2023-06-29T12:20:05.533Z'
+        camera_ids:
+          items:
+            type: number
+            format: double
+          type: array
+          description: The list of cameras that are shown in the VOD view.
+          example:
+          - 1
+          - 2
+          - 3
+        end:
+          type: string
+          format: date-time
+          description: The timestamp for the end of the VOD search view
+          example: '2023-06-29T12:20:05.533Z'
+        start:
+          type: string
+          format: date-time
+          description: The timestamp for the start of the VOD search view
+          example: '2023-06-29T12:20:05.533Z'
+        link:
+          type: string
+          description: This is the link to the public page to view the share search VODs
+        token:
+          type: string
+          description: The token for the shared search
+      required:
+      - expiry
+      - camera_ids
+      - end
+      - start
+      - link
+      - token
+      type: object
+    Pick_UpdateSharedCameraSearchInput.Exclude_keyofUpdateSharedCameraSearchInput.token__:
+      properties:
+        start:
+          type: string
+          description: The timestamp for the start of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T10:20:05.533Z'
+        end:
+          type: string
+          description: The timestamp for the end of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T12:20:05.533Z'
+        expiry_in_seconds:
+          type: integer
+          format: int32
+          description: The expiry time of the created Shared search view
+          example: 86400
+          maximum: 604800
+      required:
+      - start
+      - end
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

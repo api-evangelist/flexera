@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Zones API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Zones
+paths:
+  /v1/cameras/{camera_id}/zones:
+    get:
+      operationId: GetZones
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetZonesQueryResult'
+              examples:
+                Example 1:
+                  value:
+                  - id: 1
+                    name: Zone 1
+                    shape:
+                    - x: 30.953702290852863
+                      y: 81.95704029224537
+                    - x: 37.12036895751953
+                      y: 72.47556333188658
+                    cameraId: 1
+                  - id: 2
+                    name: Zone 2
+                    shape:
+                    - x: 42.95370229085286
+                      y: 81.95704029224537
+                    - x: 47.12036895751953
+                      y: 72.47556333188658
+                    cameraId: 1
+      description: Returns a list of zones for a camera
+      summary: Get zones
+      tags:
+      - Zones
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: camera_id
+        required: true
+        schema:
+          format: double
+          type: number
+components:
+  schemas:
+    Zone:
+      properties:
+        cameraId:
+          type: number
+          format: double
+          description: The ID of the camera that the zone belongs to
+          example: 1
+        shape:
+          $ref: '#/components/schemas/ZoneShape'
+          description: The shape of the zone, defined by an array of Cartesian points (x,y)
+        name:
+          type: string
+          description: The name of the zone
+          example: Front Door
+        id:
+          type: number
+          format: double
+          description: The ID of the zone
+          example: 1
+      required:
+      - cameraId
+      - shape
+      - name
+      - id
+      type: object
+    ZoneShape:
+      items:
+        $ref: '#/components/schemas/ZonePoint'
+      type: array
+    ZonePoint:
+      properties:
+        y:
+          type: number
+          format: double
+        x:
+          type: number
+          format: double
+      required:
+      - y
+      - x
+      type: object
+    GetZonesQueryResult:
+      properties:
+        zones:
+          items:
+            $ref: '#/components/schemas/Zone'
+          type: array
+      required:
+      - zones
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

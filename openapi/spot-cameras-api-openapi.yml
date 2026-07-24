@@ -1,0 +1,803 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Cameras API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Cameras
+paths:
+  /v1/cameras/{cameraId}/footage:
+    post:
+      operationId: CreateHistoricalFootage
+      responses:
+        '200':
+          description: Redirected to existing job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateHistoricalFootageOutput'
+              examples:
+                Example 1:
+                  value:
+                    redirectId: 2
+        '201':
+          description: Job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateHistoricalFootageOutput'
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+        '404':
+          description: Camera or Organization not found
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    message:
+                      type: string
+                  required:
+                  - message
+                  type: object
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - message: Camera not found
+                  - message: Organization not found
+        '409':
+          description: Another request is already in progress for the same time range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    name: ApiError
+                    statusCode: 409
+                    message: Another request is already in progress for the same time range
+                    data:
+                      overlappingRequest:
+                        id: 1
+                        start: '2023-06-29T12:20:05.533Z'
+                        end: '2023-06-30T12:20:05.533Z'
+        '422':
+          description: Start and End time for the request are invalid
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    message:
+                      type: string
+                  required:
+                  - message
+                  type: object
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - message: Invalid date format
+                  - message: Camera has no footage
+                  - message: Start time is before the earliest available footage segment
+                  - message: End time is in the future
+                  - message: Start is before End
+      description: 'This endpoint allows you to trigger a background job to fetch and store historical footage for a camera.
+
+        The job will run asynchronously and the response will contain the id and status of the job.
+
+        The Id or redirectId returned can be used to query the status of the job.'
+      summary: Create historical footage job
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: cameraId
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHistoricalFootageInput'
+  /v1/cameras/shared/search:
+    post:
+      operationId: CreateSharedCameraSearch
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedCameraSearch'
+              examples:
+                Example 1:
+                  value:
+                    token: 5d09fd895fc6b94c468b36a6b0b8788e
+                    link: https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e
+                    start: '2023-08-26T10:20:05.533Z'
+                    end: '2023-08-26T12:20:05.533Z'
+                    camera_ids:
+                    - 1
+                    - 2
+                    - 3
+                    expiry: '2023-08-29T12:20:05.533Z'
+      description: 'This endpoint creates a new shared camera search view. The view has a publicly accessible link that can be shared with anyone.
+
+        The link will expire after the expiry time. The expiry time is optional. If not provided, the link will expire after 1 week.'
+      summary: Create shared camera search view
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSharedCameraSearchInput'
+  /v1/cameras/{cameraId}:
+    get:
+      operationId: GetCameraById
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    name: Camera 1
+                    status: online
+                    location_id: 1
+                    location_name: Location 1
+                    local_ip: 192.168.1.100
+                    last_online: '2023-06-29T12:20:05.533Z'
+                    mac_address: 01:23:45:67:89:0A
+                    appliance_id: 42
+                    has_speakers: true
+        '404':
+          description: Camera not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 404
+                    message: Camera not found
+                    name: QueryError
+      description: Returns information about a single camera.
+      summary: Get camera information
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- Id of the camera'
+        in: path
+        name: cameraId
+        required: true
+        schema:
+          format: int32
+          type: integer
+  /v1/cameras/count:
+    get:
+      operationId: GetCameraCount
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: number
+                format: double
+              examples:
+                Example 1:
+                  value: 2
+      description: Returns the number of enabled cameras for an organization
+      summary: Get camera count
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters: []
+  /v1/cameras:
+    get:
+      operationId: GetCameras
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCamerasForApiQueryResult'
+              examples:
+                Example 1:
+                  value:
+                  - id: 1
+                    name: Camera 1
+                    status: online
+                    location_id: 1
+                    location_name: Location 1
+                    local_ip: 192.168.1.100
+                    last_online: '2023-06-29T12:20:05.533Z'
+                    mac_address: 01:23:45:67:89:0A
+                    appliance_id: 42
+                    has_speakers: true
+                  - id: 2
+                    name: Camera 2
+                    status: offline
+                    location_id: 1
+                    location_name: Location 1
+                    local_ip: 192.168.1.101
+                    last_online: '2023-06-21T09:20:05.533Z'
+                    mac_address: 01:23:45:67:89:0B
+                    appliance_id: 42
+                    has_speakers: false
+        '400':
+          description: Max limit error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 400
+                    message: Max limit error
+                    name: InvalidLimitError
+      description: Paginated list of cameras for an org. Response contains a cursor for pagination.
+      summary: Get a paginated list of cameras
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- Cursor for pagination'
+        in: query
+        name: cursor
+        required: false
+        schema:
+          default: ''
+          type: string
+      - description: '- Number of cameras to return. Max 100'
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          format: double
+          type: number
+      - description: '- Location ids to filter by. When present, only returns cameras associated with the indicated locations.'
+        in: query
+        name: location_ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - description: '- Appliance ids to filter by. When present, only returns cameras associated with the indicated appliances.'
+        in: query
+        name: appliance_ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - description: '- Status to filter by ("online" or "offline"). When present, only returns cameras with the indicated status.'
+        in: query
+        name: status
+        required: false
+        schema:
+          $ref: '#/components/schemas/CameraStatus'
+  /v1/cameras/{cameraId}/footage/{footageId}:
+    get:
+      operationId: GetHistoricalFootage
+      responses:
+        '200':
+          description: Historical footage request found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetHistoricalFootage'
+              examples:
+                Request processing:
+                  value:
+                    cameraId: 1
+                    start: '2023-06-29T12:20:05.533Z'
+                    end: '2023-06-30T12:20:05.533Z'
+                    expiry: null
+                    id: 1
+                    progress: 20.1
+                    createdAt: '2023-06-29T13:20:05.533Z'
+                    objectPath: null
+                    state: PROCESSING
+                    stateDescription: Job is processing
+                    updatedAt: '2023-06-29T13:20:05.533Z'
+                Request succeeded:
+                  value:
+                    cameraId: 1
+                    start: '2023-06-29T12:20:05.533Z'
+                    end: '2023-06-30T12:20:05.533Z'
+                    expiry: '2023-07-02T13:20:05.533Z'
+                    id: 1
+                    progress: 100
+                    createdAt: '2023-06-29T13:20:05.533Z'
+                    objectPath: public/path/to/object
+                    state: SUCCEEDED
+                    stateDescription: Success
+                    updatedAt: '2023-07-01T13:20:05.533Z'
+                Request failed:
+                  value:
+                    cameraId: 1
+                    start: '2023-06-29T12:20:05.533Z'
+                    end: '2023-06-30T12:20:05.533Z'
+                    expiry: null
+                    id: 1
+                    progress: 75.21
+                    createdAt: '2023-06-29T13:20:05.533Z'
+                    objectPath: null
+                    state: FAILED
+                    stateDescription: Job failed because the camera was offline
+                    updatedAt: '2023-07-01T13:20:05.533Z'
+        '404':
+          description: 'Footage request not found '
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    message:
+                      type: string
+                  required:
+                  - message
+                  type: object
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - message: Camera not found
+                  - message: Footage request not found
+        '410':
+          description: Footage has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    name: ApiError
+                    statusCode: 410
+                    message: Footage has expired
+      summary: Get details of a submitted historical footage request
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: cameraId
+        required: true
+        schema:
+          format: double
+          type: number
+      - in: path
+        name: footageId
+        required: true
+        schema:
+          format: double
+          type: number
+  /v1/cameras/live:
+    post:
+      operationId: GetLiveUrl
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLiveUrlQueryResult'
+      description: Returns a url to a live stream of the cameras
+      summary: Get a url to a live stream of the cameras
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLiveUrlInput'
+  /v1/cameras/shared/search/{token}:
+    get:
+      operationId: GetSharedCameraSearch
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedCameraSearch'
+              examples:
+                Example 1:
+                  value:
+                    token: 5d09fd895fc6b94c468b36a6b0b8788e
+                    link: https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e
+                    start: '2023-08-26T10:20:05.533Z'
+                    end: '2023-08-26T12:20:05.533Z'
+                    camera_ids:
+                    - 1
+                    - 2
+                    - 3
+                    expiry: '2023-08-29T12:20:05.533Z'
+      description: This endpoint retrieves the shared camera search URL details.
+      summary: Get shared camera search view details
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: token
+        required: true
+        schema:
+          type: string
+    patch:
+      operationId: UpdateSharedCameraSearch
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SharedCameraSearch'
+              examples:
+                Example 1:
+                  value:
+                    token: 5d09fd895fc6b94c468b36a6b0b8788e
+                    link: https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e
+                    start: '2023-08-26T10:20:05.533Z'
+                    end: '2023-08-26T12:20:05.533Z'
+                    camera_ids:
+                    - 1
+                    - 2
+                    - 3
+                    expiry: '2023-08-29T12:20:05.533Z'
+      description: This endpoint updates an existing shared camera search view. It allows updating the start, end time and the expiry of the shared search.
+      summary: Update shared camera search view details
+      tags:
+      - Cameras
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: token
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pick_UpdateSharedCameraSearchInput.Exclude_keyofUpdateSharedCameraSearchInput.token__'
+components:
+  schemas:
+    Camera:
+      properties:
+        id:
+          type: number
+          format: double
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/CameraStatus'
+        location_id:
+          type: number
+          format: double
+        location_name:
+          type: string
+        local_ip:
+          type: string
+        last_online:
+          type: string
+          format: date-time
+        mac_address:
+          type: string
+        appliance_id:
+          type: number
+          format: double
+        has_speakers:
+          type: boolean
+          description: 'Indicates whether the camera has speaker capabilities for audio playback.
+
+            Returns true if the camera has either:
+
+            - Built-in two-way audio enabled (ONVIF backchannel), or
+
+            - A Bullhorn integration configured for remote speaker playback
+
+
+            Use this field to determine if the camera is eligible for the /v1/audio/play endpoint.'
+          example: true
+      required:
+      - id
+      - name
+      - status
+      - location_id
+      - location_name
+      - local_ip
+      - last_online
+      - mac_address
+      - appliance_id
+      - has_speakers
+      type: object
+      additionalProperties: false
+    GetLiveUrlInput:
+      properties:
+        camera_ids:
+          items:
+            type: integer
+            format: int32
+          type: array
+          description: Ids of the cameras to create live urls for
+          example:
+          - 1
+          - 2
+          - 3
+          - 4
+          minItems: 1
+          maxItems: 4
+      required:
+      - camera_ids
+      type: object
+      additionalProperties: false
+    GetLiveUrlQueryResult:
+      properties:
+        url:
+          type: string
+      required:
+      - url
+      type: object
+      additionalProperties: false
+    CreateSharedCameraSearchInput:
+      properties:
+        expiry_in_seconds:
+          type: integer
+          format: int32
+          description: The expiry time of the created Shared search view
+          example: 86400
+          maximum: 604800
+        camera_ids:
+          items:
+            type: number
+            format: double
+          type: array
+          description: The list of cameras to be shown in the VOD view.
+          example:
+          - 1
+          - 2
+          - 3
+          minItems: 1
+          maxItems: 16
+        end:
+          type: string
+          description: The timestamp for the end of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T12:20:05.533Z'
+        start:
+          type: string
+          description: The timestamp for the start of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T10:20:05.533Z'
+      required:
+      - camera_ids
+      - end
+      - start
+      type: object
+    SharedCameraSearch:
+      properties:
+        expiry:
+          type: string
+          format: date-time
+          description: The timestamp after which the link will expire
+          example: '2023-06-29T12:20:05.533Z'
+        camera_ids:
+          items:
+            type: number
+            format: double
+          type: array
+          description: The list of cameras that are shown in the VOD view.
+          example:
+          - 1
+          - 2
+          - 3
+        end:
+          type: string
+          format: date-time
+          description: The timestamp for the end of the VOD search view
+          example: '2023-06-29T12:20:05.533Z'
+        start:
+          type: string
+          format: date-time
+          description: The timestamp for the start of the VOD search view
+          example: '2023-06-29T12:20:05.533Z'
+        link:
+          type: string
+          description: This is the link to the public page to view the share search VODs
+        token:
+          type: string
+          description: The token for the shared search
+      required:
+      - expiry
+      - camera_ids
+      - end
+      - start
+      - link
+      - token
+      type: object
+    ApiErrorResponse:
+      properties:
+        data: {}
+        statusCode:
+          type: number
+          format: double
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - message
+      - name
+      type: object
+    CreateHistoricalFootageInput:
+      properties:
+        start:
+          type: string
+          description: The timestamp for the start of historical footage. Should be a valid ISO 8601 string
+          example: '2023-06-29T10:20:05.533Z'
+        end:
+          type: string
+          description: The timestamp for the end of the historical footage. Should be a valid ISO 8601 string
+          example: '2023-06-29T12:20:05.533Z'
+      required:
+      - start
+      - end
+      type: object
+      additionalProperties: false
+    GetCamerasForApiQueryResult:
+      properties:
+        prev:
+          type: string
+          nullable: true
+        next:
+          type: string
+          nullable: true
+        cameras:
+          items:
+            $ref: '#/components/schemas/Camera'
+          type: array
+      required:
+      - prev
+      - next
+      - cameras
+      type: object
+      additionalProperties: false
+    CameraStatus:
+      enum:
+      - offline
+      - online
+      type: string
+    CreateHistoricalFootageOutput:
+      properties:
+        id:
+          type: number
+          format: double
+        redirectId:
+          type: number
+          format: double
+      type: object
+      additionalProperties: false
+    GetHistoricalFootage:
+      properties:
+        id:
+          type: number
+          format: double
+        createdAt:
+          type: string
+          format: date-time
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        cameraId:
+          type: number
+          format: double
+        expiry:
+          type: string
+          format: date-time
+        objectPath:
+          type: string
+        progress:
+          type: number
+          format: double
+        state:
+          $ref: '#/components/schemas/historicalFootageState'
+        stateDescription:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - createdAt
+      - start
+      - end
+      - cameraId
+      - expiry
+      - objectPath
+      - progress
+      - state
+      - stateDescription
+      - updatedAt
+      type: object
+      additionalProperties: false
+    historicalFootageState:
+      description: Not deprecating enums from kysely because they are used all over the place
+      enum:
+      - FAILED
+      - PROCESSING
+      - QUEUED
+      - STALLED
+      - SUCCEEDED
+      type: string
+    Pick_UpdateSharedCameraSearchInput.Exclude_keyofUpdateSharedCameraSearchInput.token__:
+      properties:
+        start:
+          type: string
+          description: The timestamp for the start of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T10:20:05.533Z'
+        end:
+          type: string
+          description: The timestamp for the end of the VOD search view. Should be a valid ISO 8601 string
+          example: '2023-06-29T12:20:05.533Z'
+        expiry_in_seconds:
+          type: integer
+          format: int32
+          description: The expiry time of the created Shared search view
+          example: 86400
+          maximum: 604800
+      required:
+      - start
+      - end
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

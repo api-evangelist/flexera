@@ -1,0 +1,775 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Analytics
+paths:
+  /v1/cameras/{cameraId}/intelligence/{entity}/counting:
+    get:
+      operationId: Counting
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCountsQueryResult'
+              examples:
+                Successful Response Example:
+                  value:
+                    bucket_counts:
+                    - bucket_ms: 1687320000000
+                      total_count: 4
+                      idle_count: 3
+                      left_count: 0
+                      right_count: 0
+                    entities:
+                    - object_id: 1687319780950|1
+                      first_ms: 1687320000116
+                      last_ms: 1687322686450
+                      idle_sum: 2686
+                      queue_num: 1
+                      crossed_left: null
+                      crossed_right: null
+                    - object_id: 1687322709401|1
+                      first_ms: 1687322709567
+                      last_ms: 1687322737567
+                      idle_sum: 27
+                      queue_num: 2
+                      crossed_left: null
+                      crossed_right: null
+                    - object_id: 1687322759950|1
+                      first_ms: 1687322760116
+                      last_ms: 1687322760116
+                      idle_sum: 0
+                      queue_num: 3
+                      crossed_left: null
+                      crossed_right: null
+                    - object_id: 1687322759950|2
+                      first_ms: 1687322771783
+                      last_ms: 1687323599783
+                      idle_sum: 828
+                      queue_num: 4
+                      crossed_left: null
+                      crossed_right: null
+                    total_count: 4
+        '400':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '422':
+          description: "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days. \n      2) Bucket size cannot be larger than date range"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    message: The maximum date range is 30 days
+                    statusCode: 422
+                    name: InvalidDateRangeError
+      description: Count events and summary for a camera
+      summary: Count
+      tags:
+      - Analytics
+      security:
+      - bearer_security: []
+      parameters:
+      - description: Id of the camera
+        in: path
+        name: cameraId
+        required: true
+        schema:
+          format: double
+          type: number
+      - description: Type of entity to filter on (people, vehicles, or forklifts)
+        in: path
+        name: entity
+        required: true
+        schema:
+          $ref: '#/components/schemas/IntelligenceEntities'
+      - description: RFC3339 date string indicating the start of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+        in: query
+        name: start_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+      - description: RFC3339 date string indicating the end of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+        in: query
+        name: end_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+      - description: Time string indicating the beginning of the time range filter (HH:mm:ss)
+        in: query
+        name: start_time
+        required: false
+        schema:
+          default: 00:00:00
+          type: string
+      - description: Time string indicating the end of the time range filter (HH:mm:ss)
+        in: query
+        name: end_time
+        required: false
+        schema:
+          default: '23:59:59'
+          type: string
+      - description: 'Minimum number of entities that must be present
+
+          in a frame for it to be considered a presence event'
+        in: query
+        name: threshold
+        required: false
+        schema:
+          default: 1
+          format: double
+          type: number
+      - description: Array of numbers indicating which days of the week to include in the results
+        in: query
+        name: days_of_week
+        required: false
+        schema:
+          default:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          type: array
+          items:
+            type: number
+            format: double
+      - description: Size of the time buckets to group results by
+        in: query
+        name: bucket_size
+        required: false
+        schema:
+          $ref: '#/components/schemas/BucketSize'
+      - in: query
+        name: presence_threshold_seconds
+        required: false
+        schema:
+          default: 0
+          format: double
+          type: number
+      - in: query
+        name: presence_filter_seconds
+        required: false
+        schema:
+          default: 0
+          format: double
+          type: number
+  /v1/cameras/{cameraId}/intelligence/{entity}/idle:
+    get:
+      operationId: Idle
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIdleQueryResult'
+              examples:
+                Successful Response Example:
+                  value:
+                    bucket_counts:
+                    - bucket_ms: 1687320000000
+                      total_count: 4
+                      idle_count: 3
+                    idle_count: 3
+                    total_count: 4
+                    average_idle_time_seconds: 1180
+                    average_nonzero_idle_time_seconds: 1180
+                    entities:
+                    - object_id: 1687319780950|1
+                      first_ms: 1687320000116
+                      last_ms: 1687322686450
+                      idle_sum: 2686
+                      queue_num: 1
+                    - object_id: 1687322709401|1
+                      first_ms: 1687322709567
+                      last_ms: 1687322737567
+                      idle_sum: 27
+                      queue_num: 2
+                    - object_id: 1687322759950|1
+                      first_ms: 1687322760116
+                      last_ms: 1687322760116
+                      idle_sum: 0
+                      queue_num: 3
+                    - object_id: 1687322759950|2
+                      first_ms: 1687322771783
+                      last_ms: 1687323599783
+                      idle_sum: 828
+                      queue_num: 4
+                    max_idle_time_seconds: 2686
+        '400':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '422':
+          description: "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days. \n      2) Bucket size cannot be larger than date range"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    message: The maximum date range is 30 days
+                    statusCode: 422
+                    name: InvalidDateRangeError
+      description: Idling events and summary for a camera.
+      summary: Idle
+      tags:
+      - Analytics
+      security:
+      - bearer_security: []
+      parameters:
+      - description: Id of the camera
+        in: path
+        name: cameraId
+        required: true
+        schema:
+          format: double
+          type: number
+      - description: Type of entity to filter on (people, vehicles, or forklifts)
+        in: path
+        name: entity
+        required: true
+        schema:
+          $ref: '#/components/schemas/IntelligenceEntities'
+      - description: RFC3339 date string indicating the start of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+        in: query
+        name: start_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+      - description: RFC3339 date string indicating the end of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+        in: query
+        name: end_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+      - description: Time string indicating the beginning of the time range filter (HH:mm:ss)
+        in: query
+        name: start_time
+        required: false
+        schema:
+          default: 00:00:00
+          type: string
+      - description: Time string indicating the end of the time range filter (HH:mm:ss)
+        in: query
+        name: end_time
+        required: false
+        schema:
+          default: '23:59:59'
+          type: string
+      - description: 'Minimum number of entities that must be present
+
+          in a frame for it to be considered a presence event'
+        in: query
+        name: threshold
+        required: false
+        schema:
+          default: 1
+          format: double
+          type: number
+      - description: Array of numbers indicating which days of the week to include in the results
+        in: query
+        name: days_of_week
+        required: false
+        schema:
+          default:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          type: array
+          items:
+            type: number
+            format: double
+      - description: Size of the time buckets to group results by
+        in: query
+        name: bucket_size
+        required: false
+        schema:
+          $ref: '#/components/schemas/BucketSize'
+      - in: query
+        name: presence_threshold_seconds
+        required: false
+        schema:
+          default: 0
+          format: double
+          type: number
+      - in: query
+        name: presence_filter_seconds
+        required: false
+        schema:
+          default: 0
+          format: double
+          type: number
+      - in: query
+        name: zone_id
+        required: false
+        schema:
+          format: double
+          type: number
+  /v1/cameras/{cameraId}/intelligence/{entity}/presence:
+    get:
+      operationId: Presence
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPresenceQueryResult'
+              examples:
+                Successful Response Example:
+                  value:
+                    duration: 3600000
+                    duration_present: 3557551
+                    longest_presence:
+                      start: 1687320000116
+                      end: 1687322691450
+                      length_in_secs: 2691334
+                    longest_absence:
+                      start: 1687322691450
+                      end: 1687322709567
+                      length_in_secs: 18117
+                    buckets:
+                    - start_time: 1687320000000
+                      end_time: 1687323600000
+                      presence_sum: 3557551
+                      events:
+                      - start_ms: 1687322771783
+                        end_ms: 1687323600000
+                      - start_ms: 1687320000116
+                        end_ms: 1687322691450
+                      - start_ms: 1687322760116
+                        end_ms: 1687322765116
+                      - start_ms: 1687322709567
+                        end_ms: 1687322742567
+        '400':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '422':
+          description: "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days. \n      2) Bucket size cannot be larger than date range"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    message: The maximum date range is 30 days
+                    statusCode: 422
+                    name: InvalidDateRangeError
+      description: Presence events and summary for a camera.
+      summary: Presence
+      tags:
+      - Analytics
+      security:
+      - bearer_security: []
+      parameters:
+      - description: Id of the camera
+        in: path
+        name: cameraId
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: Type of entity to filter on (people, vehicles, or forklifts)
+        in: path
+        name: entity
+        required: true
+        schema:
+          $ref: '#/components/schemas/IntelligenceEntities'
+      - description: RFC3339 date string indicating the start of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+        in: query
+        name: start_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+      - description: RFC3339 date string indicating the end of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)
+        in: query
+        name: end_date
+        required: true
+        schema:
+          format: date-time
+          type: string
+      - description: Time string indicating the beginning of the time range filter (HH:mm:ss)
+        in: query
+        name: start_time
+        required: false
+        schema:
+          default: 00:00:00
+          type: string
+      - description: Time string indicating the end of the time range filter (HH:mm:ss)
+        in: query
+        name: end_time
+        required: false
+        schema:
+          default: '23:59:59'
+          type: string
+      - description: 'Minimum number of entities that must be present
+
+          in a frame for it to be considered a presence event'
+        in: query
+        name: threshold
+        required: false
+        schema:
+          default: 1
+          format: double
+          type: number
+      - description: Array of numbers indicating which days of the week to include in the results
+        in: query
+        name: days_of_week
+        required: false
+        schema:
+          default:
+          - 0
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          type: array
+          items:
+            type: number
+            format: double
+      - description: Size of the time buckets to group results by
+        in: query
+        name: bucket_size
+        required: false
+        schema:
+          $ref: '#/components/schemas/BucketSize'
+      - in: query
+        name: presence_threshold_seconds
+        required: false
+        schema:
+          default: 0
+          format: double
+          type: number
+      - in: query
+        name: presence_filter_seconds
+        required: false
+        schema:
+          default: 0
+          format: double
+          type: number
+components:
+  schemas:
+    IntelligenceEntities:
+      enum:
+      - people
+      - vehicles
+      - forklifts
+      type: string
+    ValidationError:
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetails'
+          type: array
+      required:
+      - name
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    IntelligenceCountBucketCount:
+      properties:
+        bucket_ms:
+          type: number
+          format: double
+        idle_count:
+          type: number
+          format: double
+        total_count:
+          type: number
+          format: double
+        left_count:
+          type: number
+          format: double
+        right_count:
+          type: number
+          format: double
+      required:
+      - bucket_ms
+      - idle_count
+      - total_count
+      type: object
+      additionalProperties: false
+    BaseIntelligenceIdleBucketCount:
+      properties:
+        bucket_ms:
+          type: number
+          format: double
+        idle_count:
+          type: number
+          format: double
+        total_count:
+          type: number
+          format: double
+      required:
+      - bucket_ms
+      - idle_count
+      - total_count
+      type: object
+      additionalProperties: false
+    ValidationErrorDetails:
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+        value: {}
+      required:
+      - field
+      - message
+      type: object
+      additionalProperties: false
+    SegmentResult:
+      properties:
+        start_ms:
+          type: number
+          format: double
+        end_ms:
+          type: number
+          format: double
+      required:
+      - start_ms
+      - end_ms
+      type: object
+      additionalProperties: false
+    GetCountsQueryResult:
+      properties:
+        total_count:
+          type: number
+          format: double
+        bucket_counts:
+          items:
+            $ref: '#/components/schemas/IntelligenceCountBucketCount'
+          type: array
+        entities:
+          items:
+            $ref: '#/components/schemas/IntelligenceCountIdleEntity'
+          type: array
+      required:
+      - total_count
+      - bucket_counts
+      - entities
+      type: object
+      additionalProperties: false
+    BucketSize:
+      enum:
+      - hour
+      - day
+      - week
+      - month
+      type: string
+    BucketResult:
+      properties:
+        start_time:
+          type: number
+          format: double
+        end_time:
+          type: number
+          format: double
+        presence_sum:
+          type: number
+          format: double
+        events:
+          items:
+            $ref: '#/components/schemas/SegmentResult'
+          type: array
+      required:
+      - start_time
+      - end_time
+      - presence_sum
+      - events
+      type: object
+      additionalProperties: false
+    GetIdleQueryResult:
+      properties:
+        total_count:
+          type: number
+          format: double
+        bucket_counts:
+          items:
+            $ref: '#/components/schemas/BaseIntelligenceIdleBucketCount'
+          type: array
+        entities:
+          items:
+            $ref: '#/components/schemas/BaseIntelligenceIdleEntity'
+          type: array
+        average_idle_time_seconds:
+          type: number
+          format: double
+        average_nonzero_idle_time_seconds:
+          type: number
+          format: double
+        max_idle_time_seconds:
+          type: number
+          format: double
+        idle_count:
+          type: number
+          format: double
+      required:
+      - total_count
+      - bucket_counts
+      - entities
+      - average_idle_time_seconds
+      - average_nonzero_idle_time_seconds
+      - max_idle_time_seconds
+      - idle_count
+      type: object
+      additionalProperties: false
+    IntelligenceSegment:
+      properties:
+        length_in_secs:
+          type: number
+          format: double
+        start:
+          type: number
+          format: double
+        end:
+          type: number
+          format: double
+      required:
+      - length_in_secs
+      - start
+      - end
+      type: object
+      additionalProperties: false
+    BaseIntelligenceIdleEntity:
+      properties:
+        object_id:
+          type: string
+        first_ms:
+          type: number
+          format: double
+        last_ms:
+          type: number
+          format: double
+        idle_sum:
+          type: number
+          format: double
+        presence_duration:
+          type: number
+          format: double
+        queue_num:
+          type: number
+          format: double
+      required:
+      - object_id
+      - first_ms
+      - last_ms
+      - idle_sum
+      - presence_duration
+      - queue_num
+      type: object
+      additionalProperties: false
+    IntelligenceCountIdleEntity:
+      properties:
+        object_id:
+          type: string
+        first_ms:
+          type: number
+          format: double
+        last_ms:
+          type: number
+          format: double
+        idle_sum:
+          type: number
+          format: double
+        presence_duration:
+          type: number
+          format: double
+        queue_num:
+          type: number
+          format: double
+        crossed_left:
+          type: boolean
+        crossed_right:
+          type: boolean
+      required:
+      - object_id
+      - first_ms
+      - last_ms
+      - idle_sum
+      - presence_duration
+      - queue_num
+      type: object
+      additionalProperties: false
+    ApiErrorResponse:
+      properties:
+        data: {}
+        statusCode:
+          type: number
+          format: double
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - message
+      - name
+      type: object
+    GetPresenceQueryResult:
+      properties:
+        duration:
+          type: number
+          format: double
+        duration_present:
+          type: number
+          format: double
+        longest_presence:
+          $ref: '#/components/schemas/IntelligenceSegment'
+        longest_absence:
+          $ref: '#/components/schemas/IntelligenceSegment'
+        buckets:
+          items:
+            $ref: '#/components/schemas/BucketResult'
+          type: array
+      required:
+      - duration
+      - duration_present
+      - buckets
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

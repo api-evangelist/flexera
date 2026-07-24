@@ -1,0 +1,210 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Embeds API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Embeds
+paths:
+  /v1/embeds/live:
+    post:
+      operationId: GenerateLiveEmbedUrl
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                required:
+                - url
+                type: object
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 403
+                    message: You do not have permission to create embed tokens for this camera
+                    name: AuthorizationError
+        '404':
+          description: Camera not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 404
+                    message: Camera not found
+                    name: NotFoundError
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+      description: 'Generates an embeddable URL for a live camera feed that can be used in an iframe.
+
+
+        This endpoint requires the `camera_share_create` permission on the specified camera.'
+      summary: Generate an embeddable URL for a live camera feed
+      tags:
+      - Embeds
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        description: The request body
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                expires_in:
+                  type: integer
+                  format: int32
+                  description: The number of seconds the token will be valid for. Defaults to 30 days (2592000 seconds).
+                  example: 3600
+                camera_id:
+                  type: integer
+                  format: int32
+                  description: The ID of the camera to generate the embed URL for
+              required:
+              - camera_id
+              type: object
+              description: The request body
+            examples:
+              camera_id:
+                value: 42
+              expires_in:
+                value: 3600
+  /v1/embeds/vod:
+    post:
+      operationId: GenerateVodEmbedUrl
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                required:
+                - url
+                type: object
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 403
+                    message: You do not have permission to create embed tokens for this camera
+                    name: AuthorizationError
+        '404':
+          description: Camera not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 404
+                    message: Camera not found
+                    name: NotFoundError
+      description: 'Generates an embeddable URL for a VOD (Video on Demand) camera feed
+
+        that can be used in an iframe.
+
+
+        This endpoint requires the `clip_share_create` permission on the specified camera.'
+      summary: Generate an embeddable URL for a VOD camera feed
+      tags:
+      - Embeds
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        description: The request body
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                expires_in:
+                  type: integer
+                  format: int32
+                  description: The number of seconds the token will be valid for. Defaults to 30 days (2592000 seconds).
+                  example: 3600
+                end:
+                  type: string
+                  description: The end time of the recording in ISO 8601 format
+                  example: '2023-01-01T01:00:00Z'
+                start:
+                  type: string
+                  description: The start time of the recording in ISO 8601 format
+                  example: '2023-01-01T00:00:00Z'
+                camera_id:
+                  type: integer
+                  format: int32
+                  description: The ID of the camera to generate the embed URL for
+                  example: 42
+              required:
+              - end
+              - start
+              - camera_id
+              type: object
+              description: The request body
+            examples:
+              camera_id:
+                value: 42
+              start:
+                value: '2023-01-01T00:00:00Z'
+              end:
+                value: '2023-01-01T01:00:00Z'
+              expires_in:
+                value: 3600
+components:
+  schemas:
+    ApiErrorResponse:
+      properties:
+        data: {}
+        statusCode:
+          type: number
+          format: double
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - message
+      - name
+      type: object
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

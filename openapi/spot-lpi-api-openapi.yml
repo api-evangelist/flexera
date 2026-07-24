@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics LPI API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: LPI
+paths:
+  /v1/lpi:
+    post:
+      operationId: CreateInterestList
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestList'
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+                    name: My Interest List
+                    type: LPI
+                    items:
+                    - name: ABC123
+                      notes: Most common plate
+      description: Create a Licence Plate Interest List
+      summary: Create a Licence Plate Interest List
+      tags:
+      - LPI
+      security:
+      - bearer_security: []
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pick_InterestList.Exclude_keyofInterestList.id-or-type__'
+    get:
+      operationId: GetInterestLists
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/InterestList'
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - id: 1
+                    name: Frequent visitors
+                    type: LPR
+                    items:
+                    - name: ABC123
+                      notes: Most common plate
+                    - name: DEF456
+                      notes: Second most common plate
+                  - id: 2
+                    name: Suspicious visitors
+                    type: LPR
+                    items:
+                    - name: GHI789
+                      notes: Third most common plate
+                    - name: JKL012
+                      notes: Fourth most common plate
+      description: Get all Licence Plate Interest Lists
+      summary: Get all Licence Plate Interest Lists
+      tags:
+      - LPI
+      security:
+      - bearer_security: []
+      parameters: []
+components:
+  schemas:
+    Item:
+      properties:
+        name:
+          type: string
+        notes:
+          type: string
+        source:
+          type: string
+      required:
+      - name
+      type: object
+      additionalProperties: false
+    Pick_InterestList.Exclude_keyofInterestList.id-or-type__:
+      properties:
+        name:
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/Item'
+          type: array
+      required:
+      - name
+      - items
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    InterestList:
+      properties:
+        id:
+          type: number
+          format: double
+        type:
+          type: string
+        name:
+          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/Item'
+          type: array
+      required:
+      - id
+      - type
+      - name
+      - items
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

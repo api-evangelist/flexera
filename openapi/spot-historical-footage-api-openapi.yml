@@ -1,0 +1,314 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Historical Footage API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Historical Footage
+paths:
+  /v1/cameras/{cameraId}/footage:
+    post:
+      operationId: CreateHistoricalFootage
+      responses:
+        '200':
+          description: Redirected to existing job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateHistoricalFootageOutput'
+              examples:
+                Example 1:
+                  value:
+                    redirectId: 2
+        '201':
+          description: Job created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateHistoricalFootageOutput'
+              examples:
+                Example 1:
+                  value:
+                    id: 1
+        '404':
+          description: Camera or Organization not found
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    message:
+                      type: string
+                  required:
+                  - message
+                  type: object
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - message: Camera not found
+                  - message: Organization not found
+        '409':
+          description: Another request is already in progress for the same time range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    name: ApiError
+                    statusCode: 409
+                    message: Another request is already in progress for the same time range
+                    data:
+                      overlappingRequest:
+                        id: 1
+                        start: '2023-06-29T12:20:05.533Z'
+                        end: '2023-06-30T12:20:05.533Z'
+        '422':
+          description: Start and End time for the request are invalid
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    message:
+                      type: string
+                  required:
+                  - message
+                  type: object
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - message: Invalid date format
+                  - message: Camera has no footage
+                  - message: Start time is before the earliest available footage segment
+                  - message: End time is in the future
+                  - message: Start is before End
+      description: 'This endpoint allows you to trigger a background job to fetch and store historical footage for a camera.
+
+        The job will run asynchronously and the response will contain the id and status of the job.
+
+        The Id or redirectId returned can be used to query the status of the job.'
+      summary: Create historical footage job
+      tags:
+      - Historical Footage
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: cameraId
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHistoricalFootageInput'
+  /v1/cameras/{cameraId}/footage/{footageId}:
+    get:
+      operationId: GetHistoricalFootage
+      responses:
+        '200':
+          description: Historical footage request found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetHistoricalFootage'
+              examples:
+                Request processing:
+                  value:
+                    cameraId: 1
+                    start: '2023-06-29T12:20:05.533Z'
+                    end: '2023-06-30T12:20:05.533Z'
+                    expiry: null
+                    id: 1
+                    progress: 20.1
+                    createdAt: '2023-06-29T13:20:05.533Z'
+                    objectPath: null
+                    state: PROCESSING
+                    stateDescription: Job is processing
+                    updatedAt: '2023-06-29T13:20:05.533Z'
+                Request succeeded:
+                  value:
+                    cameraId: 1
+                    start: '2023-06-29T12:20:05.533Z'
+                    end: '2023-06-30T12:20:05.533Z'
+                    expiry: '2023-07-02T13:20:05.533Z'
+                    id: 1
+                    progress: 100
+                    createdAt: '2023-06-29T13:20:05.533Z'
+                    objectPath: public/path/to/object
+                    state: SUCCEEDED
+                    stateDescription: Success
+                    updatedAt: '2023-07-01T13:20:05.533Z'
+                Request failed:
+                  value:
+                    cameraId: 1
+                    start: '2023-06-29T12:20:05.533Z'
+                    end: '2023-06-30T12:20:05.533Z'
+                    expiry: null
+                    id: 1
+                    progress: 75.21
+                    createdAt: '2023-06-29T13:20:05.533Z'
+                    objectPath: null
+                    state: FAILED
+                    stateDescription: Job failed because the camera was offline
+                    updatedAt: '2023-07-01T13:20:05.533Z'
+        '404':
+          description: 'Footage request not found '
+          content:
+            application/json:
+              schema:
+                items:
+                  properties:
+                    message:
+                      type: string
+                  required:
+                  - message
+                  type: object
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - message: Camera not found
+                  - message: Footage request not found
+        '410':
+          description: Footage has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    name: ApiError
+                    statusCode: 410
+                    message: Footage has expired
+      summary: Get details of a submitted historical footage request
+      tags:
+      - Historical Footage
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: cameraId
+        required: true
+        schema:
+          format: double
+          type: number
+      - in: path
+        name: footageId
+        required: true
+        schema:
+          format: double
+          type: number
+components:
+  schemas:
+    CreateHistoricalFootageInput:
+      properties:
+        start:
+          type: string
+          description: The timestamp for the start of historical footage. Should be a valid ISO 8601 string
+          example: '2023-06-29T10:20:05.533Z'
+        end:
+          type: string
+          description: The timestamp for the end of the historical footage. Should be a valid ISO 8601 string
+          example: '2023-06-29T12:20:05.533Z'
+      required:
+      - start
+      - end
+      type: object
+      additionalProperties: false
+    CreateHistoricalFootageOutput:
+      properties:
+        id:
+          type: number
+          format: double
+        redirectId:
+          type: number
+          format: double
+      type: object
+      additionalProperties: false
+    GetHistoricalFootage:
+      properties:
+        id:
+          type: number
+          format: double
+        createdAt:
+          type: string
+          format: date-time
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        cameraId:
+          type: number
+          format: double
+        expiry:
+          type: string
+          format: date-time
+        objectPath:
+          type: string
+        progress:
+          type: number
+          format: double
+        state:
+          $ref: '#/components/schemas/historicalFootageState'
+        stateDescription:
+          type: string
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+      - id
+      - createdAt
+      - start
+      - end
+      - cameraId
+      - expiry
+      - objectPath
+      - progress
+      - state
+      - stateDescription
+      - updatedAt
+      type: object
+      additionalProperties: false
+    historicalFootageState:
+      description: Not deprecating enums from kysely because they are used all over the place
+      enum:
+      - FAILED
+      - PROCESSING
+      - QUEUED
+      - STALLED
+      - SUCCEEDED
+      type: string
+    ApiErrorResponse:
+      properties:
+        data: {}
+        statusCode:
+          type: number
+          format: double
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - message
+      - name
+      type: object
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

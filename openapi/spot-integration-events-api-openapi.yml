@@ -1,0 +1,476 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Integration Events API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Integration Events
+paths:
+  /v1/integrations/{integration_id}/events/import:
+    post:
+      operationId: CreateIntegrationEvents
+      responses:
+        '202':
+          description: Accepted
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint allows for importing a list of events.
+
+
+        Required parameters include timestamp, device ID, and the user-defined schema/metadata.
+
+
+        For single events forwarded through a webhook, use the Ingest Integration Event endpoint.'
+      summary: Import Integration Events
+      tags:
+      - Integration Events
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the events belong to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIntegrationEventsInput'
+  /v1/integrations/{integration_id}/events/{integration_event_id}:
+    delete:
+      operationId: DeleteIntegrationEvent
+      responses:
+        '202':
+          description: Accepted
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: This endpoint deletes an existing integration event.
+      summary: Delete Integration Event
+      tags:
+      - Integration Events
+      security:
+      - bearer_security: []
+      parameters:
+      - in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - in: path
+        name: integration_event_id
+        required: true
+        schema:
+          type: string
+    put:
+      operationId: UpdateIntegrationEvent
+      responses:
+        '202':
+          description: Accepted
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint allows for updating the attributes, duration, and buffer of an event.
+
+        When updating attributes, only updated values should be included. These will overwrite existing values.'
+      summary: Update Integration Event
+      tags:
+      - Integration Events
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the event belongs to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: '- ID of the integration event to update'
+        in: path
+        name: integration_event_id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateIntegrationEventInput'
+  /v1/integrations/{integration_id}/events:
+    get:
+      operationId: GetIntegrationEvents
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationEventListResult'
+              examples:
+                Example 1:
+                  value:
+                    integration_events:
+                    - id: b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3
+                      integration_event_type_id: 1
+                      integration_id: 1
+                      integration_device_id: 1
+                      timestamp: '2023-06-29T12:20:05.533Z'
+                      attributes:
+                        foo: bar
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+                    - id: c3c3c3c3-c3c3-c3c3-c3c3-c3c3c3c3c3c3
+                      integration_event_type_id: 2
+                      integration_id: 1
+                      integration_device_id: 1
+                      timestamp: '2023-06-29T12:20:05.533Z'
+                      attributes:
+                        baz: qux
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint retrieves a list of all integration events for an integration that the caller has access to,
+
+        and allows filter criteria to support searching for specific events.
+
+        Events that the caller does not have access to will not be included in the response.'
+      summary: Get all integration events
+      tags:
+      - Integration Events
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the events belong to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: '- List of integration event type ids to filter by'
+        in: query
+        name: integrationEventTypeIds
+        required: false
+        schema:
+          default: []
+          type: array
+          items:
+            type: integer
+            format: int32
+      - description: '- List of integration device ids to filter by'
+        in: query
+        name: integrationDeviceIds
+        required: false
+        schema:
+          default: []
+          type: array
+          items:
+            type: integer
+            format: int32
+      - description: '- List of camera ids to filter by'
+        in: query
+        name: cameraIds
+        required: false
+        schema:
+          default: []
+          type: array
+          items:
+            type: integer
+            format: int32
+      - description: '- Start date to filter by'
+        in: query
+        name: start
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: '- End date to filter by'
+        in: query
+        name: end
+        required: false
+        schema:
+          format: date-time
+          type: string
+    post:
+      operationId: IntegrationEventIngestionWebhook
+      responses:
+        '202':
+          description: Accepted
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: "This endpoint creates a new integration event. Required parameters include\ntimestamp and the user-defined schema/metadata (attributes).\n\n**Device Resolution:**\n\nDevice identification follows this precedence order:\n1. `integration_device_id` — if provided, used directly (highest precedence)\n2. `device_external_id` — if provided, looks up or auto-creates a device with that external ID\n3. **Device ID Template** — if configured on the event type, evaluates the template against\n   event attributes to derive an external ID, then looks up or auto-creates the device\n4. **Error** — if none of the above resolve a device, the request fails with 400 Bad Request\n\nThere is no fallback between these options. If you provide an invalid `integration_device_id`,\nthe request fails without trying `device_external_id` or templates.\n\nFor details on configuring Device ID Templates, see the\n[Automatic Device Creation](/reference/device-auto-creation) guide.\n\nThis endpoint should be used for events forwarded through a webhook. For\nbulk upload of events, use the Import Integration Events endpoint."
+      summary: Ingest Integration Event
+      tags:
+      - Integration Events
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the event belongs to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IntegrationEventIngestionWebhookInput'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetails'
+          type: array
+      required:
+      - name
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    ValidationErrorDetails:
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+        value: {}
+      required:
+      - field
+      - message
+      type: object
+      additionalProperties: false
+    IntegrationEventIngestionWebhookInput:
+      properties:
+        integration_event_type_id:
+          type: integer
+          format: int32
+          description: The ID of this event's type
+          example: 1
+        integration_device_id:
+          type: integer
+          format: int32
+          description: The ID of the integration device that generated this event
+          example: 1
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp of this event
+          example: '2023-06-29T12:20:05.533Z'
+        duration:
+          type: integer
+          format: int64
+          description: The event's duration, in milliseconds
+          maximum: 600000
+        buffer:
+          type: integer
+          format: int64
+          description: The event's buffer, in milliseconds
+          maximum: 120000
+        attributes:
+          additionalProperties: false
+          type: object
+          description: The attributes of this event
+          example:
+            foo: bar
+      required:
+      - integration_event_type_id
+      - integration_device_id
+      - timestamp
+      - attributes
+      type: object
+      additionalProperties: false
+    UpdateIntegrationEventInput:
+      properties:
+        integration_event_type_id:
+          type: integer
+          format: int32
+          description: The ID of this event's type
+          example: 1
+        attributes:
+          additionalProperties: false
+          type: object
+          description: The attributes of this event
+          example:
+            foo: bar
+        duration:
+          type: integer
+          format: int64
+          description: The event's duration, in milliseconds
+          maximum: 600000
+        buffer:
+          type: integer
+          format: int64
+          description: The event's buffer, in milliseconds
+          maximum: 120000
+      required:
+      - integration_event_type_id
+      - attributes
+      type: object
+      additionalProperties: false
+    CreateIntegrationEventsInput:
+      properties:
+        integration_events:
+          items:
+            $ref: '#/components/schemas/IntegrationEventInput'
+          type: array
+          description: The integration events to create
+          minItems: 1
+      required:
+      - integration_events
+      type: object
+      additionalProperties: false
+    IntegrationEventInput:
+      properties:
+        integration_event_type_id:
+          type: integer
+          format: int32
+          description: The ID of this event's type
+          example: 1
+        integration_device_id:
+          type: integer
+          format: int32
+          description: The ID of the integration device that generated this event
+          example: 1
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp of this event
+          example: '2023-06-29T12:20:05.533Z'
+        duration:
+          type: integer
+          format: int64
+          description: The event's duration, in milliseconds
+          maximum: 600000
+        buffer:
+          type: integer
+          format: int64
+          description: The event's buffer, in milliseconds
+          maximum: 120000
+        attributes:
+          additionalProperties: false
+          type: object
+          description: The attributes of this event
+          example:
+            foo: bar
+      required:
+      - integration_event_type_id
+      - integration_device_id
+      - timestamp
+      - attributes
+      type: object
+      additionalProperties: false
+    IntegrationEventListResult:
+      properties:
+        integration_events:
+          items:
+            $ref: '#/components/schemas/IntegrationEvent'
+          type: array
+      required:
+      - integration_events
+      type: object
+      additionalProperties: false
+    IntegrationEvent:
+      properties:
+        id:
+          type: string
+        integration_event_type_id:
+          type: integer
+          format: int32
+          description: The ID of this event's type
+          example: 1
+        integration_id:
+          type: integer
+          format: int32
+          description: The ID of the integration this event is associated with
+          example: 1
+        integration_device_id:
+          type: integer
+          format: int32
+          description: The ID of the integration device that generated this event
+          example: 1
+        timestamp:
+          type: string
+          format: date-time
+          description: The timestamp of this event
+          example: '2023-06-29T12:20:05.533Z'
+        duration:
+          type: integer
+          format: int64
+          description: The event's duration, in milliseconds
+          maximum: 600000
+        buffer:
+          type: integer
+          format: int64
+          description: The event's buffer, in milliseconds
+          maximum: 120000
+        attributes:
+          additionalProperties: false
+          type: object
+          description: The attributes of this event
+          example:
+            foo: bar
+        created:
+          type: string
+          format: date-time
+          description: The date this event was created
+          example: '2023-06-29T12:20:05.533Z'
+        updated:
+          type: string
+          format: date-time
+          description: The date this event was last updated
+          example: '2023-06-29T12:20:05.533Z'
+      required:
+      - id
+      - integration_event_type_id
+      - integration_id
+      - integration_device_id
+      - timestamp
+      - attributes
+      - created
+      - updated
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer

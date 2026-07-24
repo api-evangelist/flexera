@@ -1,0 +1,602 @@
+openapi: 3.0.0
+info:
+  title: Spot AI — Spot Connect (beta) Analytics Integration Devices API
+  version: 1.10.0
+  description: Spot AI Developer API
+  contact:
+    name: Spot AI
+    url: https://developers.spot.ai/
+servers:
+- url: https://dev-api.spot.ai/
+tags:
+- name: Integration Devices
+paths:
+  /v1/integrations/{integration_id}/devices:
+    post:
+      operationId: CreateIntegrationDevice
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationDeviceResult'
+              examples:
+                Example 1:
+                  value:
+                    integration_device:
+                      id: 51
+                      integration_id: 1
+                      name: Device 51
+                      external_id: STORE-042:LANE-3
+                      camera_ids:
+                      - 1
+                      - 2
+                      - 3
+                      tags:
+                      - tag1
+                      - tag2
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint creates a new integration device. You can choose up to four
+
+        cameras in the same location to tie to the integration device.
+
+
+        Whenever there is an event from this integration device, you will
+
+        automatically see the footage from all attached cameras.'
+      summary: Create integration device
+      tags:
+      - Integration Devices
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the device belongs to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        description: '- Integration device information'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIntegrationDeviceInput'
+              description: '- Integration device information'
+    get:
+      operationId: GetAllDevicesForIntegration
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationDeviceListResult'
+              examples:
+                Example 1:
+                  value:
+                    integration_devices:
+                    - id: 51
+                      integration_id: 1
+                      name: Device 51
+                      external_id: STORE-042:LANE-3
+                      camera_ids:
+                      - 1
+                      - 2
+                      - 3
+                      tags:
+                      - tag1
+                      - tag2
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+                    prev: eyAiaWQiOiA1MCwgImRpcmVjdGlvbiI6ICJwcmV2IiB9
+                    next: eyAiaWQiOiAxMDEsICJkaXJlY3Rpb24iOiAibmV4dCIgfQ==
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint returns a paginated list of all devices in an integration
+
+        that the caller has access to, along with the cameras associated with each device.
+
+        Devices that the caller does not have access to will not be included in the response.'
+      summary: Get all devices for integration
+      tags:
+      - Integration Devices
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the devices belong to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: '- List of camera ids to filter by'
+        in: query
+        name: camera_ids
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - description: '- List of tags to filter by'
+        in: query
+        name: tags
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+      - description: '- Cursor for pagination'
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+      - description: '- Number of cameras to return. Max 100'
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+  /v1/integrations/{integration_id}/devices/{integration_device_id}:
+    delete:
+      operationId: DeleteIntegrationDevice
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationDeviceResult'
+              examples:
+                Example 1:
+                  value:
+                    integration_device:
+                      id: 51
+                      integration_id: 1
+                      name: Device 51
+                      external_id: STORE-042:LANE-3
+                      camera_ids:
+                      - 1
+                      - 2
+                      - 3
+                      tags:
+                      - tag1
+                      - tag2
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:30:00.533Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint deletes an integration device. All integration events
+
+        associated with the integration device will also be deleted. Required
+
+        parameters are integration ID and integration device ID.'
+      summary: Delete an integration device
+      tags:
+      - Integration Devices
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: '- ID of the integration device'
+        in: path
+        name: integration_device_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+    get:
+      operationId: GetIntegrationDeviceById
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationDeviceResult'
+              examples:
+                Example 1:
+                  value:
+                    integration_device:
+                      id: 51
+                      integration_id: 1
+                      name: Device 51
+                      external_id: STORE-042:LANE-3
+                      camera_ids:
+                      - 1
+                      - 2
+                      - 3
+                      tags:
+                      - tag1
+                      - tag2
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:20:05.533Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint returns details of an integration device, which include
+
+        device name, tags, integration ID, linked camera IDs, and audit stamps.'
+      summary: Get integration device by id
+      tags:
+      - Integration Devices
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the device belongs to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: '- ID of the integration device'
+        in: path
+        name: integration_device_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+    put:
+      operationId: UpdateIntegrationDeviceProperties
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationDeviceResult'
+              examples:
+                Example 1:
+                  value:
+                    integration_device:
+                      id: 51
+                      integration_id: 1
+                      name: Device 51 - Updated
+                      external_id: STORE-042:LANE-3
+                      camera_ids:
+                      - 1
+                      - 2
+                      - 3
+                      tags:
+                      - tag1
+                      - tag2
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:30:00.000Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint can be used to update an existing integration device''s name and tags.
+
+
+        Note: The `external_id` field cannot be updated after device creation, as it serves
+
+        as an immutable identifier for automatic device resolution during event ingestion.'
+      summary: Update integration device properties
+      tags:
+      - Integration Devices
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the device belongs to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: '- ID of the integration device'
+        in: path
+        name: integration_device_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        description: '- JSON object containing the updated integration device name'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Partial_Pick_IntegrationDevice.tags-or-name__'
+              description: '- JSON object containing the updated integration device name'
+  /v1/integrations/{integration_id}/devices/{integration_device_id}/cameras:
+    put:
+      operationId: UpdateIntegrationDeviceCameras
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntegrationDeviceResult'
+              examples:
+                Example 1:
+                  value:
+                    integration_device:
+                      id: 51
+                      integration_id: 1
+                      name: Device 51 - Updated
+                      external_id: STORE-042:LANE-3
+                      camera_ids:
+                      - 1
+                      - 2
+                      - 4
+                      tags:
+                      - tag1
+                      - tag2
+                      - tag3
+                      created: '2023-06-29T12:20:05.533Z'
+                      updated: '2023-06-29T12:30:00.000Z'
+        '422':
+          description: Validation Failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+      description: 'This endpoint can be used to update the cameras associated with an
+
+        integration device. Up to four cameras in the same location may be
+
+        tied to an integration device.
+
+
+        Notes:
+
+        1) Older events will reference the new cameras.
+
+        2) If the updated cameras are in a different location, it may affect
+
+        users'' access to the integration device.'
+      summary: Update integration device camera links
+      tags:
+      - Integration Devices
+      security:
+      - bearer_security: []
+      parameters:
+      - description: '- ID of the integration that the device belongs to'
+        in: path
+        name: integration_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      - description: '- ID of the integration device'
+        in: path
+        name: integration_device_id
+        required: true
+        schema:
+          format: int32
+          type: integer
+      requestBody:
+        description: '- JSON object containing the updated integration device camera ids'
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pick_IntegrationDevice.camera_ids_'
+              description: '- JSON object containing the updated integration device camera ids'
+components:
+  schemas:
+    ValidationError:
+      properties:
+        name:
+          type: string
+        message:
+          type: string
+        details:
+          items:
+            $ref: '#/components/schemas/ValidationErrorDetails'
+          type: array
+      required:
+      - name
+      - message
+      - details
+      type: object
+      additionalProperties: false
+    Pick_IntegrationDevice.camera_ids_:
+      properties:
+        camera_ids:
+          items:
+            type: integer
+            format: int32
+          type: array
+          description: The IDs of the cameras linked to this integration device
+          example:
+          - 1
+          - 2
+          - 3
+          maxItems: 4
+      required:
+      - camera_ids
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    Partial_Pick_IntegrationDevice.tags-or-name__:
+      properties:
+        name:
+          type: string
+          description: The name of the integration device
+          example: My Integration Device
+          minLength: 1
+          maxLength: 40
+        tags:
+          items:
+            type: string
+          type: array
+          description: The tags associated with this integration device
+          example:
+          - Tag1
+          - Tag2
+      type: object
+      description: Make all properties in T optional
+    ValidationErrorDetails:
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+        value: {}
+      required:
+      - field
+      - message
+      type: object
+      additionalProperties: false
+    Pick_IntegrationDevice.name-or-camera_ids_:
+      properties:
+        name:
+          type: string
+          description: The name of the integration device
+          example: My Integration Device
+          minLength: 1
+          maxLength: 40
+        camera_ids:
+          items:
+            type: integer
+            format: int32
+          type: array
+          description: The IDs of the cameras linked to this integration device
+          example:
+          - 1
+          - 2
+          - 3
+          maxItems: 4
+      required:
+      - name
+      - camera_ids
+      type: object
+      description: From T, pick a set of properties whose keys are in the union K
+    CreateIntegrationDeviceInput:
+      allOf:
+      - $ref: '#/components/schemas/Pick_IntegrationDevice.name-or-camera_ids_'
+      - $ref: '#/components/schemas/Partial_Pick_IntegrationDevice.tags__'
+    IntegrationDeviceListResult:
+      properties:
+        prev:
+          type: string
+          nullable: true
+        next:
+          type: string
+          nullable: true
+        integration_devices:
+          items:
+            $ref: '#/components/schemas/IntegrationDevice'
+          type: array
+      required:
+      - prev
+      - next
+      - integration_devices
+      type: object
+      additionalProperties: false
+    IntegrationDeviceResult:
+      properties:
+        integration_device:
+          $ref: '#/components/schemas/IntegrationDevice'
+      required:
+      - integration_device
+      type: object
+      additionalProperties: false
+    Partial_Pick_IntegrationDevice.tags__:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+          description: The tags associated with this integration device
+          example:
+          - Tag1
+          - Tag2
+      type: object
+      description: Make all properties in T optional
+    IntegrationDevice:
+      properties:
+        id:
+          type: number
+          format: double
+        integration_id:
+          type: integer
+          format: int32
+          description: The ID of the integration this device belongs to
+          example: 1
+        name:
+          type: string
+          description: The name of the integration device
+          example: My Integration Device
+          minLength: 1
+          maxLength: 40
+        camera_ids:
+          items:
+            type: integer
+            format: int32
+          type: array
+          description: The IDs of the cameras linked to this integration device
+          example:
+          - 1
+          - 2
+          - 3
+          maxItems: 4
+        tags:
+          items:
+            type: string
+          type: array
+          description: The tags associated with this integration device
+          example:
+          - Tag1
+          - Tag2
+        created:
+          type: string
+          format: date-time
+          description: The date this integration device was created
+          example: '2023-06-29T12:20:05.533Z'
+        updated:
+          type: string
+          format: date-time
+          description: The date this integration device was last updated
+          example: '2023-06-29T12:20:05.533Z'
+      required:
+      - id
+      - integration_id
+      - name
+      - camera_ids
+      - tags
+      - created
+      - updated
+      type: object
+      additionalProperties: false
+  securitySchemes:
+    bearer_security:
+      type: http
+      scheme: bearer
