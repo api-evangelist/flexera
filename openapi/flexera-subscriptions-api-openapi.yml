@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Subscriptions API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Subscriptions
+  description: Manage event notification subscriptions for Spot resources.
+paths:
+  /events/subscription:
+    post:
+      operationId: createSubscription
+      summary: Spot Create Event Subscription
+      description: Subscribe to event notifications for Spot resources.
+      tags:
+      - Subscriptions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+            examples:
+              CreatesubscriptionRequestExample:
+                summary: Default createSubscription request
+                x-microcks-default: true
+                value:
+                  subscription:
+                    resourceId: '500123'
+                    protocol: http
+                    endpoint: example_value
+                    eventType: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listSubscriptions
+      summary: Spot List Event Subscriptions
+      description: Get all event subscriptions.
+      tags:
+      - Subscriptions
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /events/subscription/{subscriptionId}:
+    get:
+      operationId: getSubscription
+      summary: Spot Get Event Subscription
+      description: Get details of a specific event subscription.
+      tags:
+      - Subscriptions
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateSubscription
+      summary: Spot Update Event Subscription
+      description: Update an existing event subscription.
+      tags:
+      - Subscriptions
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+            examples:
+              UpdatesubscriptionRequestExample:
+                summary: Default updateSubscription request
+                x-microcks-default: true
+                value:
+                  subscription:
+                    resourceId: '500123'
+                    protocol: http
+                    endpoint: example_value
+                    eventType: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteSubscription
+      summary: Spot Delete Event Subscription
+      description: Delete an event subscription.
+      tags:
+      - Subscriptions
+      parameters:
+      - name: subscriptionId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    SubscriptionRequest:
+      type: object
+      properties:
+        subscription:
+          type: object
+          properties:
+            resourceId:
+              type: string
+            protocol:
+              type: string
+              enum:
+              - http
+              - https
+              - email
+              - email-json
+              - aws-sns
+              - web
+            endpoint:
+              type: string
+            eventType:
+              type: string
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

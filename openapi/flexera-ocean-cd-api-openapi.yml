@@ -1,0 +1,147 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Ocean CD API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Ocean CD
+  description: Manage continuous delivery for Ocean clusters.
+paths:
+  /ocean/cd/cluster:
+    post:
+      operationId: createOceanCDCluster
+      summary: Spot Create Ocean Cd Cluster
+      description: Register a cluster with Ocean CD for continuous delivery.
+      tags:
+      - Ocean CD
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanCDClusterRequest'
+            examples:
+              CreateoceancdclusterRequestExample:
+                summary: Default createOceanCDCluster request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    kubernetesClusterId: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listOceanCDClusters
+      summary: Spot List Ocean Cd Clusters
+      description: List all clusters registered with Ocean CD.
+      tags:
+      - Ocean CD
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ocean/cd/cluster/{clusterId}:
+    get:
+      operationId: getOceanCDCluster
+      summary: Spot Get Ocean Cd Cluster
+      description: Get a cluster registered with Ocean CD.
+      tags:
+      - Ocean CD
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateOceanCDCluster
+      summary: Spot Update Ocean Cd Cluster
+      description: Update an Ocean CD cluster configuration.
+      tags:
+      - Ocean CD
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanCDClusterRequest'
+            examples:
+              UpdateoceancdclusterRequestExample:
+                summary: Default updateOceanCDCluster request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    kubernetesClusterId: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteOceanCDCluster
+      summary: Spot Delete Ocean Cd Cluster
+      description: Unregister a cluster from Ocean CD.
+      tags:
+      - Ocean CD
+      parameters:
+      - name: clusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    OceanCDClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            kubernetesClusterId:
+              type: string
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

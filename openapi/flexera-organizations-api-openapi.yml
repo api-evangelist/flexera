@@ -1,0 +1,86 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Organizations API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Organizations
+  description: Create and manage Spot organizations.
+paths:
+  /setup/organization:
+    post:
+      operationId: createOrganization
+      summary: Spot Create Organization
+      description: Create a new organization in Spot.
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+              examples:
+                Createorganization200Example:
+                  summary: Default createOrganization 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteOrganization
+      summary: Spot Delete Organization
+      description: Delete an existing organization.
+      tags:
+      - Organizations
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+    OrganizationResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Organization'
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

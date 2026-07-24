@@ -1,0 +1,150 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Savings Analysis API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Savings Analysis
+  description: Analyze potential and realized savings from cloud commitments.
+paths:
+  /eco/aws/analysis/savings:
+    get:
+      operationId: getSavingsAnalysisAWS
+      summary: Spot Get Savings Analysis (aws)
+      description: Retrieve a savings analysis report showing realized and potential savings from AWS commitment optimization.
+      tags:
+      - Savings Analysis
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        description: Start date for the analysis period.
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        description: End date for the analysis period.
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /eco/aws/analysis/commitment:
+    get:
+      operationId: getCommitmentAnalysisAWS
+      summary: Spot Get Commitment Analysis (aws)
+      description: Retrieve a commitment utilization analysis showing how effectively reserved instances and savings plans are being used.
+      tags:
+      - Savings Analysis
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /eco/azure/analysis/savings:
+    get:
+      operationId: getSavingsAnalysisAzure
+      summary: Spot Get Savings Analysis (azure)
+      description: Retrieve a savings analysis report for Azure commitment optimization.
+      tags:
+      - Savings Analysis
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /eco/gcp/analysis/savings:
+    get:
+      operationId: getSavingsAnalysisGCP
+      summary: Spot Get Savings Analysis (gcp)
+      description: Retrieve a savings analysis report for GCP commitment optimization.
+      tags:
+      - Savings Analysis
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

@@ -1,0 +1,52 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Audit API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Audit
+  description: Retrieve audit logs for actions performed within the organization.
+paths:
+  /audit/events:
+    get:
+      operationId: listAuditEvents
+      summary: Spot List Audit Events
+      description: Retrieve audit log events for the organization.
+      tags:
+      - Audit
+      parameters:
+      - name: fromDate
+        in: query
+        description: Start date for audit events.
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
+      - name: toDate
+        in: query
+        description: End date for audit events.
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

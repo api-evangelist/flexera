@@ -1,0 +1,181 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Elastigroup Azure API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Elastigroup Azure
+  description: Manage Elastigroup compute groups in Azure.
+paths:
+  /azure/compute/group:
+    post:
+      operationId: createElastigroupAzure
+      summary: Spot Create Elastigroup (azure)
+      description: Create a new Elastigroup in Azure.
+      tags:
+      - Elastigroup Azure
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAzureRequest'
+            examples:
+              CreateelastigroupazureRequestExample:
+                summary: Default createElastigroupAzure request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    region: example_value
+                    resourceGroupName: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listElastigroupsAzure
+      summary: Spot List Elastigroups (azure)
+      description: List all Elastigroups in Azure.
+      tags:
+      - Elastigroup Azure
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /azure/compute/group/{groupId}:
+    get:
+      operationId: getElastigroupAzure
+      summary: Spot Get Elastigroup (azure)
+      description: Get an existing Elastigroup in Azure.
+      tags:
+      - Elastigroup Azure
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateElastigroupAzure
+      summary: Spot Update Elastigroup (azure)
+      description: Update an existing Elastigroup in Azure.
+      tags:
+      - Elastigroup Azure
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAzureRequest'
+            examples:
+              UpdateelastigroupazureRequestExample:
+                summary: Default updateElastigroupAzure request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    region: example_value
+                    resourceGroupName: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteElastigroupAzure
+      summary: Spot Delete Elastigroup (azure)
+      description: Delete an existing Elastigroup in Azure.
+      tags:
+      - Elastigroup Azure
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ElastigroupAzureRequest:
+      type: object
+      properties:
+        group:
+          type: object
+          properties:
+            name:
+              type: string
+            region:
+              type: string
+            resourceGroupName:
+              type: string
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+            strategy:
+              type: object
+              properties:
+                spotPercentage:
+                  type: integer
+                fallbackToOd:
+                  type: boolean
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

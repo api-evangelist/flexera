@@ -1,0 +1,115 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Ocean Spark API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Ocean Spark
+  description: Manage Apache Spark clusters on Ocean.
+paths:
+  /ocean/spark/cluster:
+    post:
+      operationId: createOceanSparkCluster
+      summary: Spot Create Ocean Spark Cluster
+      description: Create a new Ocean for Apache Spark cluster.
+      tags:
+      - Ocean Spark
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanSparkClusterRequest'
+            examples:
+              CreateoceansparkclusterRequestExample:
+                summary: Default createOceanSparkCluster request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    oceanClusterId: '500123'
+                    config: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listOceanSparkClusters
+      summary: Spot List Ocean Spark Clusters
+      description: List all Ocean Spark clusters.
+      tags:
+      - Ocean Spark
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ocean/spark/cluster/{oceanSparkClusterId}:
+    get:
+      operationId: getOceanSparkCluster
+      summary: Spot Get Ocean Spark Cluster
+      description: Get an Ocean Spark cluster.
+      tags:
+      - Ocean Spark
+      parameters:
+      - name: oceanSparkClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteOceanSparkCluster
+      summary: Spot Delete Ocean Spark Cluster
+      description: Delete an Ocean Spark cluster.
+      tags:
+      - Ocean Spark
+      parameters:
+      - name: oceanSparkClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    OceanSparkClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            oceanClusterId:
+              type: string
+              description: The ID of the Ocean cluster to use.
+            config:
+              type: object
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

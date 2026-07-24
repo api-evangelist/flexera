@@ -1,0 +1,110 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Billing Engine Setup API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Billing Engine Setup
+  description: Set up and configure Billing Engine for cloud accounts.
+paths:
+  /billingEngine/setup:
+    post:
+      operationId: setupBillingEngine
+      summary: Spot Set up Billing Engine
+      description: Set up Billing Engine on a Spot account by linking it to a cloud provider billing account for cost data ingestion.
+      tags:
+      - Billing Engine Setup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingEngineSetupRequest'
+            examples:
+              SetupbillingengineRequestExample:
+                summary: Default setupBillingEngine request
+                x-microcks-default: true
+                value:
+                  billingEngine:
+                    cloudProvider: aws
+                    billingAccountId: '500123'
+                    bucketName: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /billingEngine/setup/validation:
+    post:
+      operationId: validateBillingEngineSetup
+      summary: Spot Validate Billing Engine Setup
+      description: Perform validation checks on a Billing Engine setup to ensure correct cloud provider credentials and billing access.
+      tags:
+      - Billing Engine Setup
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BillingEngineValidationRequest'
+            examples:
+              ValidatebillingenginesetupRequestExample:
+                summary: Default validateBillingEngineSetup request
+                x-microcks-default: true
+                value:
+                  billingEngine:
+                    cloudProvider: example_value
+                    billingAccountId: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    BillingEngineSetupRequest:
+      type: object
+      properties:
+        billingEngine:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+              enum:
+              - aws
+              - azure
+              - gcp
+            billingAccountId:
+              type: string
+              description: The cloud provider billing or payer account ID.
+            bucketName:
+              type: string
+              description: The S3 bucket or storage container for cost and usage reports.
+          example: example_value
+    BillingEngineValidationRequest:
+      type: object
+      properties:
+        billingEngine:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+            billingAccountId:
+              type: string
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

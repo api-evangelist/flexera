@@ -1,0 +1,200 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Virtual Node Groups API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Virtual Node Groups
+  description: Manage virtual node groups (launch specifications) within Ocean clusters.
+paths:
+  /ocean/aws/k8s/launchSpec:
+    post:
+      operationId: createVirtualNodeGroupAWS
+      summary: Spot Create Virtual Node Group (aws)
+      description: Create a virtual node group (launch specification) for an Ocean cluster.
+      tags:
+      - Virtual Node Groups
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualNodeGroupAWSRequest'
+            examples:
+              CreatevirtualnodegroupawsRequestExample:
+                summary: Default createVirtualNodeGroupAWS request
+                x-microcks-default: true
+                value:
+                  launchSpec:
+                    name: Example Title
+                    oceanId: '500123'
+                    imageId: '500123'
+                    instanceTypes:
+                    - example_value
+                    labels:
+                    - key: example_value
+                      value: example_value
+                    taints:
+                    - key: example_value
+                      value: example_value
+                      effect: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listVirtualNodeGroupsAWS
+      summary: Spot List Virtual Node Groups (aws)
+      description: List all virtual node groups for an Ocean cluster.
+      tags:
+      - Virtual Node Groups
+      parameters:
+      - name: oceanId
+        in: query
+        description: Ocean cluster ID to filter by.
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ocean/aws/k8s/launchSpec/{launchSpecId}:
+    get:
+      operationId: getVirtualNodeGroupAWS
+      summary: Spot Get Virtual Node Group (aws)
+      description: Get the configuration of a virtual node group.
+      tags:
+      - Virtual Node Groups
+      parameters:
+      - name: launchSpecId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateVirtualNodeGroupAWS
+      summary: Spot Update Virtual Node Group (aws)
+      description: Update a virtual node group.
+      tags:
+      - Virtual Node Groups
+      parameters:
+      - name: launchSpecId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VirtualNodeGroupAWSRequest'
+            examples:
+              UpdatevirtualnodegroupawsRequestExample:
+                summary: Default updateVirtualNodeGroupAWS request
+                x-microcks-default: true
+                value:
+                  launchSpec:
+                    name: Example Title
+                    oceanId: '500123'
+                    imageId: '500123'
+                    instanceTypes:
+                    - example_value
+                    labels:
+                    - key: example_value
+                      value: example_value
+                    taints:
+                    - key: example_value
+                      value: example_value
+                      effect: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteVirtualNodeGroupAWS
+      summary: Spot Delete Virtual Node Group (aws)
+      description: Delete a virtual node group.
+      tags:
+      - Virtual Node Groups
+      parameters:
+      - name: launchSpecId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    VirtualNodeGroupAWSRequest:
+      type: object
+      properties:
+        launchSpec:
+          type: object
+          properties:
+            name:
+              type: string
+            oceanId:
+              type: string
+            imageId:
+              type: string
+            instanceTypes:
+              type: array
+              items:
+                type: string
+            labels:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+            taints:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+                  effect:
+                    type: string
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

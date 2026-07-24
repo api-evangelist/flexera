@@ -1,0 +1,190 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Ocean GKE API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Ocean GKE
+  description: Manage Ocean clusters for Google Kubernetes Engine.
+paths:
+  /ocean/gke/cluster:
+    post:
+      operationId: createOceanClusterGKE
+      summary: Spot Create Ocean Cluster (gke)
+      description: Create a new Ocean cluster for Google Kubernetes Engine.
+      tags:
+      - Ocean GKE
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanGKEClusterRequest'
+            examples:
+              CreateoceanclustergkeRequestExample:
+                summary: Default createOceanClusterGKE request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    gke:
+                      clusterName: example_value
+                      masterLocation: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listOceanClustersGKE
+      summary: Spot List Ocean Clusters (gke)
+      description: List all Ocean GKE clusters.
+      tags:
+      - Ocean GKE
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ocean/gke/cluster/{oceanClusterId}:
+    get:
+      operationId: getOceanClusterGKE
+      summary: Spot Get Ocean Cluster (gke)
+      description: Get an Ocean GKE cluster.
+      tags:
+      - Ocean GKE
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateOceanClusterGKE
+      summary: Spot Update Ocean Cluster (gke)
+      description: Update an Ocean GKE cluster.
+      tags:
+      - Ocean GKE
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanGKEClusterRequest'
+            examples:
+              UpdateoceanclustergkeRequestExample:
+                summary: Default updateOceanClusterGKE request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    gke:
+                      clusterName: example_value
+                      masterLocation: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteOceanClusterGKE
+      summary: Spot Delete Ocean Cluster (gke)
+      description: Delete an Ocean GKE cluster.
+      tags:
+      - Ocean GKE
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    OceanGKEClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            controllerClusterId:
+              type: string
+            gke:
+              type: object
+              properties:
+                clusterName:
+                  type: string
+                masterLocation:
+                  type: string
+            autoScaler:
+              type: object
+              properties:
+                isEnabled:
+                  type: boolean
+                isAutoConfig:
+                  type: boolean
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

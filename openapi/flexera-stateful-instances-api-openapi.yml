@@ -1,0 +1,95 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Stateful Instances API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Stateful Instances
+  description: Manage stateful instances within Elastigroups.
+paths:
+  /aws/ec2/group/{groupId}/statefulInstance:
+    get:
+      operationId: listStatefulInstances
+      summary: Spot List Stateful Instances
+      description: List all stateful instances in an Elastigroup.
+      tags:
+      - Stateful Instances
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}/statefulInstance/{statefulInstanceId}:
+    put:
+      operationId: recycleStatefulInstance
+      summary: Spot Recycle Stateful Instance
+      description: Recycle a stateful instance, replacing it with a new one.
+      tags:
+      - Stateful Instances
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: statefulInstanceId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deallocateStatefulInstance
+      summary: Spot Deallocate Stateful Instance
+      description: Deallocate a stateful instance and its resources.
+      tags:
+      - Stateful Instances
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: statefulInstanceId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

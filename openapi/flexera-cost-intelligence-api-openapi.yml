@@ -1,0 +1,105 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Cost Intelligence API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Cost Intelligence
+  description: Access Cost Intelligence analytics for actionable cost insights and recommendations.
+paths:
+  /costIntelligence/setup:
+    post:
+      operationId: setupCostIntelligence
+      summary: Spot Set up Cost Intelligence
+      description: Set up Cost Intelligence on a Spot account to enable granular cost analytics and actionable optimization recommendations.
+      tags:
+      - Cost Intelligence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostIntelligenceSetupRequest'
+            examples:
+              SetupcostintelligenceRequestExample:
+                summary: Default setupCostIntelligence request
+                x-microcks-default: true
+                value:
+                  costIntelligence:
+                    cloudProvider: aws
+                    billingAccountId: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /costIntelligence/setup/validation:
+    post:
+      operationId: validateCostIntelligenceSetup
+      summary: Spot Validate Cost Intelligence Setup
+      description: Perform validation checks on a Cost Intelligence setup to ensure correct access and configuration.
+      tags:
+      - Cost Intelligence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CostIntelligenceValidationRequest'
+            examples:
+              ValidatecostintelligencesetupRequestExample:
+                summary: Default validateCostIntelligenceSetup request
+                x-microcks-default: true
+                value:
+                  costIntelligence:
+                    cloudProvider: example_value
+                    billingAccountId: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    CostIntelligenceValidationRequest:
+      type: object
+      properties:
+        costIntelligence:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+            billingAccountId:
+              type: string
+          example: example_value
+    CostIntelligenceSetupRequest:
+      type: object
+      properties:
+        costIntelligence:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+              enum:
+              - aws
+              - azure
+              - gcp
+            billingAccountId:
+              type: string
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

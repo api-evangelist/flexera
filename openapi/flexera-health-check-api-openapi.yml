@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Health Check API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Health Check
+  description: Check the health status of the Spot API.
+paths:
+  /healthCheck:
+    get:
+      operationId: healthCheck
+      summary: Spot Health Check
+      description: Check the health status of the Spot API.
+      tags:
+      - Health Check
+      responses:
+        '200':
+          description: API is healthy
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

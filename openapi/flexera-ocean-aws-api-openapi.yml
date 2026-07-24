@@ -1,0 +1,418 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Ocean AWS API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Ocean AWS
+  description: Manage Ocean clusters for AWS EKS.
+paths:
+  /ocean/aws/k8s/cluster:
+    post:
+      operationId: createOceanClusterAWS
+      summary: Spot Create Ocean Cluster (aws)
+      description: Create a new Ocean cluster for AWS EKS.
+      tags:
+      - Ocean AWS
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAWSClusterRequest'
+            examples:
+              CreateoceanclusterawsRequestExample:
+                summary: Default createOceanClusterAWS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                      cooldown: 10
+                      resourceLimits:
+                        maxMemoryGib: 10
+                        maxVCpu: 10
+                      down:
+                        maxScaleDownPercentage: 10
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                      utilizeCommitments: true
+                    compute:
+                      instanceTypes:
+                        whitelist: {}
+                        blacklist: {}
+                      subnetIds:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                        tags: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OceanClusterResponse'
+              examples:
+                Createoceanclusteraws200Example:
+                  summary: Default createOceanClusterAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listOceanClustersAWS
+      summary: Spot List Ocean Clusters (aws)
+      description: List all Ocean clusters for AWS in the account.
+      tags:
+      - Ocean AWS
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OceanClusterListResponse'
+              examples:
+                Listoceanclustersaws200Example:
+                  summary: Default listOceanClustersAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ocean/aws/k8s/cluster/{oceanClusterId}:
+    get:
+      operationId: getOceanClusterAWS
+      summary: Spot Get Ocean Cluster (aws)
+      description: Get the configuration of an Ocean cluster.
+      tags:
+      - Ocean AWS
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OceanClusterResponse'
+              examples:
+                Getoceanclusteraws200Example:
+                  summary: Default getOceanClusterAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateOceanClusterAWS
+      summary: Spot Update Ocean Cluster (aws)
+      description: Update an existing Ocean cluster configuration.
+      tags:
+      - Ocean AWS
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAWSClusterRequest'
+            examples:
+              UpdateoceanclusterawsRequestExample:
+                summary: Default updateOceanClusterAWS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+                      cooldown: 10
+                      resourceLimits:
+                        maxMemoryGib: 10
+                        maxVCpu: 10
+                      down:
+                        maxScaleDownPercentage: 10
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      spotPercentage: 10
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                      utilizeCommitments: true
+                    compute:
+                      instanceTypes:
+                        whitelist: {}
+                        blacklist: {}
+                      subnetIds:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                        tags: {}
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteOceanClusterAWS
+      summary: Spot Delete Ocean Cluster (aws)
+      description: Delete an Ocean cluster.
+      tags:
+      - Ocean AWS
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    OceanCluster:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+        controllerClusterId:
+          type: string
+          example: '500123'
+        region:
+          type: string
+          example: example_value
+        autoScaler:
+          type: object
+          example: example_value
+        capacity:
+          type: object
+          example: example_value
+        strategy:
+          type: object
+          example: example_value
+        compute:
+          type: object
+          example: example_value
+        createdAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    OceanClusterListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/OceanCluster'
+          example: example_value
+    OceanClusterResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/OceanCluster'
+          example: example_value
+    OceanAWSClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            controllerClusterId:
+              type: string
+              description: The Ocean controller cluster identifier.
+            region:
+              type: string
+            autoScaler:
+              type: object
+              properties:
+                isEnabled:
+                  type: boolean
+                isAutoConfig:
+                  type: boolean
+                cooldown:
+                  type: integer
+                resourceLimits:
+                  type: object
+                  properties:
+                    maxMemoryGib:
+                      type: integer
+                    maxVCpu:
+                      type: integer
+                down:
+                  type: object
+                  properties:
+                    maxScaleDownPercentage:
+                      type: integer
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+            strategy:
+              type: object
+              properties:
+                spotPercentage:
+                  type: integer
+                fallbackToOd:
+                  type: boolean
+                utilizeReservedInstances:
+                  type: boolean
+                utilizeCommitments:
+                  type: boolean
+            compute:
+              type: object
+              properties:
+                instanceTypes:
+                  type: object
+                  properties:
+                    whitelist:
+                      type: array
+                      items:
+                        type: string
+                    blacklist:
+                      type: array
+                      items:
+                        type: string
+                subnetIds:
+                  type: array
+                  items:
+                    type: string
+                launchSpecification:
+                  type: object
+                  properties:
+                    imageId:
+                      type: string
+                    securityGroupIds:
+                      type: array
+                      items:
+                        type: string
+                    keyPair:
+                      type: string
+                    tags:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          tagKey:
+                            type: string
+                          tagValue:
+                            type: string
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

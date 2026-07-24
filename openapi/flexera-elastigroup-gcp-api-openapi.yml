@@ -1,0 +1,177 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Elastigroup GCP API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Elastigroup GCP
+  description: Manage Elastigroup compute groups in GCP.
+paths:
+  /gcp/gce/group:
+    post:
+      operationId: createElastigroupGCP
+      summary: Spot Create Elastigroup (gcp)
+      description: Create a new Elastigroup in GCP.
+      tags:
+      - Elastigroup GCP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupGCPRequest'
+            examples:
+              CreateelastigroupgcpRequestExample:
+                summary: Default createElastigroupGCP request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      preemptiblePercentage: 10
+                      fallbackToOd: true
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listElastigroupsGCP
+      summary: Spot List Elastigroups (gcp)
+      description: List all Elastigroups in GCP.
+      tags:
+      - Elastigroup GCP
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /gcp/gce/group/{groupId}:
+    get:
+      operationId: getElastigroupGCP
+      summary: Spot Get Elastigroup (gcp)
+      description: Get an existing Elastigroup in GCP.
+      tags:
+      - Elastigroup GCP
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateElastigroupGCP
+      summary: Spot Update Elastigroup (gcp)
+      description: Update an existing Elastigroup in GCP.
+      tags:
+      - Elastigroup GCP
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupGCPRequest'
+            examples:
+              UpdateelastigroupgcpRequestExample:
+                summary: Default updateElastigroupGCP request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                    strategy:
+                      preemptiblePercentage: 10
+                      fallbackToOd: true
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteElastigroupGCP
+      summary: Spot Delete Elastigroup (gcp)
+      description: Delete an existing Elastigroup in GCP.
+      tags:
+      - Elastigroup GCP
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ElastigroupGCPRequest:
+      type: object
+      properties:
+        group:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+            strategy:
+              type: object
+              properties:
+                preemptiblePercentage:
+                  type: integer
+                fallbackToOd:
+                  type: boolean
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

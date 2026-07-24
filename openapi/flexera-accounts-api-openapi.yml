@@ -1,0 +1,207 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Accounts API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Accounts
+  description: Create, update, list, and delete Spot accounts within an organization.
+paths:
+  /setup/account:
+    post:
+      operationId: createAccount
+      summary: Spot Create Account
+      description: Create a new account within an organization.
+      tags:
+      - Accounts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccountRequest'
+            examples:
+              CreateaccountRequestExample:
+                summary: Default createAccount request
+                x-microcks-default: true
+                value:
+                  account:
+                    name: Example Title
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountResponse'
+              examples:
+                Createaccount200Example:
+                  summary: Default createAccount 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listAccounts
+      summary: Spot List Accounts
+      description: Get a list of Spot accounts in your organization. When used without parameters, the provided token must have Organization Admin permissions and the output will contain all the organization accounts.
+      tags:
+      - Accounts
+      parameters:
+      - name: cloudAccountId
+        in: query
+        description: Filter by cloud account ID.
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountListResponse'
+              examples:
+                Listaccounts200Example:
+                  summary: Default listAccounts 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /setup/account/{accountId}:
+    put:
+      operationId: updateAccount
+      summary: Spot Update Account
+      description: Update an existing account.
+      tags:
+      - Accounts
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAccountRequest'
+            examples:
+              UpdateaccountRequestExample:
+                summary: Default updateAccount request
+                x-microcks-default: true
+                value:
+                  account:
+                    name: Example Title
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteAccount
+      summary: Spot Delete Account
+      description: Delete an existing account.
+      tags:
+      - Accounts
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    AccountResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Account'
+          example: example_value
+    AccountListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Account'
+          example: example_value
+    UpdateAccountRequest:
+      type: object
+      properties:
+        account:
+          type: object
+          properties:
+            name:
+              type: string
+          example: example_value
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+        organizationId:
+          type: string
+          example: '500123'
+    CreateAccountRequest:
+      type: object
+      properties:
+        account:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the account.
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

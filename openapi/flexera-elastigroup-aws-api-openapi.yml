@@ -1,0 +1,548 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Elastigroup AWS API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Elastigroup AWS
+  description: Manage Elastigroup compute groups in AWS.
+paths:
+  /aws/ec2/group:
+    post:
+      operationId: createElastigroupAWS
+      summary: Spot Create Elastigroup (aws)
+      description: Create a new Elastigroup in AWS.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: accountId
+        in: query
+        description: The Spot account ID.
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAWSRequest'
+            examples:
+              CreateelastigroupawsRequestExample:
+                summary: Default createElastigroupAWS request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                      unit: instance
+                    strategy:
+                      risk: 10
+                      onDemandCount: 10
+                      availabilityVsCost: balanced
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                    compute:
+                      instanceTypes:
+                        ondemand: example_value
+                        spot: {}
+                      availabilityZones:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                    scheduling:
+                      tasks:
+                      - {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElastigroupResponse'
+              examples:
+                Createelastigroupaws200Example:
+                  summary: Default createElastigroupAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listElastigroupsAWS
+      summary: Spot List Elastigroups (aws)
+      description: List all Elastigroups in the specified account.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: accountId
+        in: query
+        description: The Spot account ID.
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElastigroupListResponse'
+              examples:
+                Listelastigroupsaws200Example:
+                  summary: Default listElastigroupsAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}:
+    get:
+      operationId: getElastigroupAWS
+      summary: Spot Get Elastigroup (aws)
+      description: Get the configuration of an existing Elastigroup.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElastigroupResponse'
+              examples:
+                Getelastigroupaws200Example:
+                  summary: Default getElastigroupAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateElastigroupAWS
+      summary: Spot Update Elastigroup (aws)
+      description: Update an existing Elastigroup configuration.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ElastigroupAWSRequest'
+            examples:
+              UpdateelastigroupawsRequestExample:
+                summary: Default updateElastigroupAWS request
+                x-microcks-default: true
+                value:
+                  group:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    capacity:
+                      target: 10
+                      minimum: 10
+                      maximum: 10
+                      unit: instance
+                    strategy:
+                      risk: 10
+                      onDemandCount: 10
+                      availabilityVsCost: balanced
+                      fallbackToOd: true
+                      utilizeReservedInstances: true
+                    compute:
+                      instanceTypes:
+                        ondemand: example_value
+                        spot: {}
+                      availabilityZones:
+                      - {}
+                      launchSpecification:
+                        imageId: '500123'
+                        securityGroupIds: {}
+                        keyPair: example_value
+                    scheduling:
+                      tasks:
+                      - {}
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteElastigroupAWS
+      summary: Spot Delete Elastigroup (aws)
+      description: Delete an existing Elastigroup.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}/status:
+    get:
+      operationId: getElastigroupStatusAWS
+      summary: Spot Get Elastigroup Status (aws)
+      description: Get the status of instances in an Elastigroup.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}/scale/up:
+    put:
+      operationId: scaleUpElastigroupAWS
+      summary: Spot Scale up Elastigroup (aws)
+      description: Scale up the number of instances in an Elastigroup.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: adjustment
+        in: query
+        description: Number of instances to add.
+        schema:
+          type: integer
+        example: 10
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}/scale/down:
+    put:
+      operationId: scaleDownElastigroupAWS
+      summary: Spot Scale Down Elastigroup (aws)
+      description: Scale down the number of instances in an Elastigroup.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: adjustment
+        in: query
+        description: Number of instances to remove.
+        schema:
+          type: integer
+        example: 10
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}/logs:
+    get:
+      operationId: getElastigroupLogs
+      summary: Spot Get Elastigroup Logs
+      description: Retrieve activity logs for an Elastigroup.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date-time
+        example: '2026-01-15T10:30:00Z'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}/costs:
+    get:
+      operationId: getElastigroupCosts
+      summary: Spot Get Elastigroup Costs
+      description: Retrieve cost information for an Elastigroup.
+      tags:
+      - Elastigroup AWS
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      - name: toDate
+        in: query
+        schema:
+          type: string
+          format: date
+        example: '2026-01-15'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    ElastigroupListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Elastigroup'
+          example: example_value
+    ElastigroupAWSRequest:
+      type: object
+      properties:
+        group:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            region:
+              type: string
+            capacity:
+              type: object
+              properties:
+                target:
+                  type: integer
+                minimum:
+                  type: integer
+                maximum:
+                  type: integer
+                unit:
+                  type: string
+                  enum:
+                  - instance
+                  - weight
+            strategy:
+              type: object
+              properties:
+                risk:
+                  type: integer
+                  description: Percentage of spot instances (0-100).
+                onDemandCount:
+                  type: integer
+                availabilityVsCost:
+                  type: string
+                  enum:
+                  - balanced
+                  - costOriented
+                  - availabilityOriented
+                  - cheapest
+                fallbackToOd:
+                  type: boolean
+                utilizeReservedInstances:
+                  type: boolean
+            compute:
+              type: object
+              properties:
+                instanceTypes:
+                  type: object
+                  properties:
+                    ondemand:
+                      type: string
+                    spot:
+                      type: array
+                      items:
+                        type: string
+                availabilityZones:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      subnetId:
+                        type: string
+                launchSpecification:
+                  type: object
+                  properties:
+                    imageId:
+                      type: string
+                    securityGroupIds:
+                      type: array
+                      items:
+                        type: string
+                    keyPair:
+                      type: string
+            scheduling:
+              type: object
+              properties:
+                tasks:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      isEnabled:
+                        type: boolean
+                      taskType:
+                        type: string
+                      cronExpression:
+                        type: string
+          example: example_value
+    Elastigroup:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+        description:
+          type: string
+          example: A sample description.
+        region:
+          type: string
+          example: example_value
+        capacity:
+          type: object
+          properties:
+            target:
+              type: integer
+            minimum:
+              type: integer
+            maximum:
+              type: integer
+          example: example_value
+        createdAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+    ElastigroupResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Elastigroup'
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

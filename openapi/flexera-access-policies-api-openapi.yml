@@ -1,0 +1,145 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Access Policies
+  description: Create, update, and manage access control policies for users and groups.
+paths:
+  /setup/access/policy:
+    post:
+      operationId: createAccessPolicy
+      summary: Spot Create Access Policy
+      description: Create a new access policy for the organization.
+      tags:
+      - Access Policies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessPolicyRequest'
+            examples:
+              CreateaccesspolicyRequestExample:
+                summary: Default createAccessPolicy request
+                x-microcks-default: true
+                value:
+                  policy:
+                    name: Example Title
+                    description: A sample description.
+                    permissions:
+                    - serviceId: '500123'
+                      actions: {}
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listAccessPolicies
+      summary: Spot List Access Policies
+      description: Get all access policies of the organization.
+      tags:
+      - Access Policies
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /setup/access/policy/{policyId}:
+    put:
+      operationId: updateAccessPolicy
+      summary: Spot Update Access Policy
+      description: Update an existing access policy.
+      tags:
+      - Access Policies
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessPolicyRequest'
+            examples:
+              UpdateaccesspolicyRequestExample:
+                summary: Default updateAccessPolicy request
+                x-microcks-default: true
+                value:
+                  policy:
+                    name: Example Title
+                    description: A sample description.
+                    permissions:
+                    - serviceId: '500123'
+                      actions: {}
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteAccessPolicy
+      summary: Spot Delete Access Policy
+      description: Delete an access policy.
+      tags:
+      - Access Policies
+      parameters:
+      - name: policyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    AccessPolicyRequest:
+      type: object
+      properties:
+        policy:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            permissions:
+              type: array
+              items:
+                type: object
+                properties:
+                  serviceId:
+                    type: string
+                  actions:
+                    type: array
+                    items:
+                      type: string
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

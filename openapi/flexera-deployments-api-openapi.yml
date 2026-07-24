@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Deployments API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Deployments
+  description: Manage rolling deployments for Elastigroups.
+paths:
+  /aws/ec2/group/{groupId}/roll:
+    post:
+      operationId: rollElastigroupAWS
+      summary: Spot Roll Elastigroup (aws)
+      description: Trigger a roll (rolling update) for an Elastigroup. Replaces existing instances with new ones according to the configured deployment strategy.
+      tags:
+      - Deployments
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RollRequest'
+            examples:
+              RollelastigroupawsRequestExample:
+                summary: Default rollElastigroupAWS request
+                x-microcks-default: true
+                value:
+                  batchSizePercentage: 10
+                  gracePeriod: 10
+                  healthCheckType: EC2
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listRollsAWS
+      summary: Spot List Rolls (aws)
+      description: List all rolls for an Elastigroup.
+      tags:
+      - Deployments
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/ec2/group/{groupId}/roll/{rollId}:
+    get:
+      operationId: getRollStatusAWS
+      summary: Spot Get Roll Status (aws)
+      description: Get the status of a specific roll.
+      tags:
+      - Deployments
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: rollId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: stopRollAWS
+      summary: Spot Stop Roll (aws)
+      description: Stop an in-progress roll.
+      tags:
+      - Deployments
+      parameters:
+      - name: groupId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: rollId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roll:
+                  type: object
+                  properties:
+                    status:
+                      type: string
+                      enum:
+                      - STOPPED
+            examples:
+              StoprollawsRequestExample:
+                summary: Default stopRollAWS request
+                x-microcks-default: true
+                value:
+                  roll:
+                    status: STOPPED
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    RollRequest:
+      type: object
+      properties:
+        batchSizePercentage:
+          type: integer
+          description: Percentage of instances to replace in each batch.
+          example: 10
+        gracePeriod:
+          type: integer
+          description: Grace period in seconds before checking health.
+          example: 10
+        healthCheckType:
+          type: string
+          enum:
+          - EC2
+          - ELB
+          - TARGET_GROUP
+          - NONE
+          example: EC2
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

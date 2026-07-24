@@ -1,0 +1,158 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Families API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Families
+  description: Manage account families for grouping and cost allocation.
+paths:
+  /billingEngine/family:
+    post:
+      operationId: createAccountFamily
+      summary: Spot Create Account Family
+      description: Create an account family for grouping related cloud accounts and enabling consolidated cost allocation.
+      tags:
+      - Families
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountFamilyRequest'
+            examples:
+              CreateaccountfamilyRequestExample:
+                summary: Default createAccountFamily request
+                x-microcks-default: true
+                value:
+                  family:
+                    name: Example Title
+                    description: A sample description.
+                    accountIds:
+                    - example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listAccountFamilies
+      summary: Spot List Account Families
+      description: List all account families configured in Billing Engine.
+      tags:
+      - Families
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /billingEngine/family/{familyId}:
+    get:
+      operationId: getAccountFamily
+      summary: Spot Get Account Family
+      description: Get details of a specific account family.
+      tags:
+      - Families
+      parameters:
+      - name: familyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateAccountFamily
+      summary: Spot Update Account Family
+      description: Update an existing account family.
+      tags:
+      - Families
+      parameters:
+      - name: familyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountFamilyRequest'
+            examples:
+              UpdateaccountfamilyRequestExample:
+                summary: Default updateAccountFamily request
+                x-microcks-default: true
+                value:
+                  family:
+                    name: Example Title
+                    description: A sample description.
+                    accountIds:
+                    - example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteAccountFamily
+      summary: Spot Delete Account Family
+      description: Delete an account family.
+      tags:
+      - Families
+      parameters:
+      - name: familyId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    AccountFamilyRequest:
+      type: object
+      properties:
+        family:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the account family.
+            description:
+              type: string
+              description: A description of the account family.
+            accountIds:
+              type: array
+              items:
+                type: string
+              description: List of account IDs to include in the family.
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

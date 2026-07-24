@@ -1,0 +1,159 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies EMR API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: EMR
+  description: Manage Amazon EMR clusters with Elastigroup.
+paths:
+  /aws/emr/mrScaler:
+    post:
+      operationId: createEMRCluster
+      summary: Spot Create Emr Cluster
+      description: Create a new Amazon EMR cluster managed by Elastigroup.
+      tags:
+      - EMR
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EMRClusterRequest'
+            examples:
+              CreateemrclusterRequestExample:
+                summary: Default createEMRCluster request
+                x-microcks-default: true
+                value:
+                  mrScaler:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    strategy: example_value
+                    compute: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listEMRClusters
+      summary: Spot List Emr Clusters
+      description: List all EMR clusters managed by Elastigroup.
+      tags:
+      - EMR
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /aws/emr/mrScaler/{mrScalerId}:
+    get:
+      operationId: getEMRCluster
+      summary: Spot Get Emr Cluster
+      description: Get details of an EMR cluster.
+      tags:
+      - EMR
+      parameters:
+      - name: mrScalerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateEMRCluster
+      summary: Spot Update Emr Cluster
+      description: Update an existing EMR cluster.
+      tags:
+      - EMR
+      parameters:
+      - name: mrScalerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EMRClusterRequest'
+            examples:
+              UpdateemrclusterRequestExample:
+                summary: Default updateEMRCluster request
+                x-microcks-default: true
+                value:
+                  mrScaler:
+                    name: Example Title
+                    description: A sample description.
+                    region: example_value
+                    strategy: example_value
+                    compute: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteEMRCluster
+      summary: Spot Delete Emr Cluster
+      description: Delete an EMR cluster.
+      tags:
+      - EMR
+      parameters:
+      - name: mrScalerId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    EMRClusterRequest:
+      type: object
+      properties:
+        mrScaler:
+          type: object
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+            region:
+              type: string
+            strategy:
+              type: object
+            compute:
+              type: object
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

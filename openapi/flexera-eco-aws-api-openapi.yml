@@ -1,0 +1,226 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Eco AWS API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Eco AWS
+  description: Manage Eco commitment optimization for AWS reserved instances and savings plans.
+paths:
+  /eco/aws/commitmentPlan:
+    get:
+      operationId: listCommitmentPlansAWS
+      summary: Spot List Commitment Plans (aws)
+      description: List all AWS commitment plans including reserved instances and savings plans managed by Eco.
+      tags:
+      - Eco AWS
+      parameters:
+      - name: accountId
+        in: query
+        description: The Spot account ID.
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentPlanListResponse'
+              examples:
+                Listcommitmentplansaws200Example:
+                  summary: Default listCommitmentPlansAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /eco/aws/commitmentPlan/{commitmentPlanId}:
+    get:
+      operationId: getCommitmentPlanAWS
+      summary: Spot Get Commitment Plan (aws)
+      description: Get details of a specific AWS commitment plan.
+      tags:
+      - Eco AWS
+      parameters:
+      - name: commitmentPlanId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommitmentPlanResponse'
+              examples:
+                Getcommitmentplanaws200Example:
+                  summary: Default getCommitmentPlanAWS 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /eco/aws/ri/unusedReservedInstances:
+    get:
+      operationId: getUnusedReservedInstancesAWS
+      summary: Spot Get Unused Reserved Instances (aws)
+      description: Retrieve a list of unused or underutilized AWS reserved instances to identify optimization opportunities.
+      tags:
+      - Eco AWS
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /eco/aws/ri/savingsPlans:
+    get:
+      operationId: listSavingsPlansAWS
+      summary: Spot List Savings Plans (aws)
+      description: List all AWS savings plans managed by Eco.
+      tags:
+      - Eco AWS
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /eco/aws/ri/reservedInstances:
+    get:
+      operationId: listReservedInstancesAWS
+      summary: Spot List Reserved Instances (aws)
+      description: List all AWS reserved instances managed by Eco.
+      tags:
+      - Eco AWS
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    CommitmentPlan:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the commitment plan.
+          example: abc123
+        type:
+          type: string
+          enum:
+          - reservedInstance
+          - savingsPlan
+          - committedUseDiscount
+          description: The type of commitment.
+          example: reservedInstance
+        provider:
+          type: string
+          enum:
+          - aws
+          - azure
+          - gcp
+          description: The cloud provider.
+          example: aws
+        status:
+          type: string
+          description: The current status of the commitment plan.
+          example: example_value
+        startDate:
+          type: string
+          format: date-time
+          description: The start date of the commitment.
+          example: '2026-01-15T10:30:00Z'
+        endDate:
+          type: string
+          format: date-time
+          description: The end date of the commitment.
+          example: '2026-01-15T10:30:00Z'
+        monthlySavings:
+          type: number
+          description: Estimated monthly savings from this commitment.
+          example: 42.5
+        utilizationPercentage:
+          type: number
+          description: Current utilization percentage of the commitment.
+          example: 42.5
+    CommitmentPlanListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/CommitmentPlan'
+          example: example_value
+    CommitmentPlanResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/CommitmentPlan'
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

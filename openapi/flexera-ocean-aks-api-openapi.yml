@@ -1,0 +1,177 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Ocean AKS API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Ocean AKS
+  description: Manage Ocean clusters for Azure Kubernetes Service.
+paths:
+  /ocean/azure/k8s/cluster:
+    post:
+      operationId: createOceanClusterAKS
+      summary: Spot Create Ocean Cluster (aks)
+      description: Create a new Ocean cluster for Azure Kubernetes Service.
+      tags:
+      - Ocean AKS
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAKSClusterRequest'
+            examples:
+              CreateoceanclusteraksRequestExample:
+                summary: Default createOceanClusterAKS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    aks:
+                      clusterName: example_value
+                      resourceGroupName: example_value
+                      region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: listOceanClustersAKS
+      summary: Spot List Ocean Clusters (aks)
+      description: List all Ocean AKS clusters.
+      tags:
+      - Ocean AKS
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /ocean/azure/k8s/cluster/{oceanClusterId}:
+    get:
+      operationId: getOceanClusterAKS
+      summary: Spot Get Ocean Cluster (aks)
+      description: Get an Ocean AKS cluster.
+      tags:
+      - Ocean AKS
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateOceanClusterAKS
+      summary: Spot Update Ocean Cluster (aks)
+      description: Update an Ocean AKS cluster.
+      tags:
+      - Ocean AKS
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OceanAKSClusterRequest'
+            examples:
+              UpdateoceanclusteraksRequestExample:
+                summary: Default updateOceanClusterAKS request
+                x-microcks-default: true
+                value:
+                  cluster:
+                    name: Example Title
+                    controllerClusterId: '500123'
+                    aks:
+                      clusterName: example_value
+                      resourceGroupName: example_value
+                      region: example_value
+                    autoScaler:
+                      isEnabled: true
+                      isAutoConfig: true
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteOceanClusterAKS
+      summary: Spot Delete Ocean Cluster (aks)
+      description: Delete an Ocean AKS cluster.
+      tags:
+      - Ocean AKS
+      parameters:
+      - name: oceanClusterId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    OceanAKSClusterRequest:
+      type: object
+      properties:
+        cluster:
+          type: object
+          properties:
+            name:
+              type: string
+            controllerClusterId:
+              type: string
+            aks:
+              type: object
+              properties:
+                clusterName:
+                  type: string
+                resourceGroupName:
+                  type: string
+                region:
+                  type: string
+            autoScaler:
+              type: object
+              properties:
+                isEnabled:
+                  type: boolean
+                isAutoConfig:
+                  type: boolean
+          example: example_value
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

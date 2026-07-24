@@ -1,0 +1,316 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Users API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Users
+  description: Create, get, update, and delete users. Manage user permissions and account assignments.
+paths:
+  /setup/user:
+    post:
+      operationId: createUser
+      summary: Spot Create User
+      description: Create a new user and link it to the creator's organization. If the role is a viewer, the user is also linked to the default account for the organization.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserRequest'
+            examples:
+              CreateuserRequestExample:
+                summary: Default createUser request
+                x-microcks-default: true
+                value:
+                  firstName: example_value
+                  lastName: example_value
+                  email: user@example.com
+                  role: admin
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                Createuser200Example:
+                  summary: Default createUser 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /setup/organization/{organizationId}/user:
+    get:
+      operationId: listOrganizationUsers
+      summary: Spot List Organization Users
+      description: Get all users in the organization, their details, and mapped accounts. Providing the optional account ID parameter will filter out all users not mapped to that account.
+      tags:
+      - Users
+      parameters:
+      - name: organizationId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+              examples:
+                Listorganizationusers200Example:
+                  summary: Default listOrganizationUsers 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /setup/user/{userId}:
+    get:
+      operationId: getUser
+      summary: Spot Get User Details
+      description: Get details of a specific user.
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                Getuser200Example:
+                  summary: Default getUser 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: updateUserPermissions
+      summary: Spot Update User Permissions
+      description: Update user permissions and role assignments.
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserPermissionsRequest'
+            examples:
+              UpdateuserpermissionsRequestExample:
+                summary: Default updateUserPermissions request
+                x-microcks-default: true
+                value:
+                  role: example_value
+                  accounts:
+                  - id: abc123
+                    role: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: deleteUser
+      summary: Spot Delete User
+      description: Delete a user from the organization.
+      tags:
+      - Users
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /setup/user/programmatic:
+    post:
+      operationId: createProgrammaticUser
+      summary: Spot Create Programmatic User
+      description: Create a programmatic user for API access.
+      tags:
+      - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProgrammaticUserRequest'
+            examples:
+              CreateprogrammaticuserRequestExample:
+                summary: Default createProgrammaticUser request
+                x-microcks-default: true
+                value:
+                  name: Example Title
+                  description: A sample description.
+                  accounts:
+                  - id: abc123
+                    role: example_value
+      responses:
+        '200':
+          description: Successful response
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: '500123'
+        username:
+          type: string
+          example: example_value
+        email:
+          type: string
+          example: user@example.com
+        type:
+          type: string
+          example: example_value
+        organizationId:
+          type: string
+          example: '500123'
+    CreateUserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: example_value
+        lastName:
+          type: string
+          example: example_value
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        role:
+          type: string
+          enum:
+          - admin
+          - viewer
+          - editor
+          example: admin
+    UpdateUserPermissionsRequest:
+      type: object
+      properties:
+        role:
+          type: string
+          example: example_value
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              role:
+                type: string
+          example: []
+    UserListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+          example: example_value
+    UserResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+          example: example_value
+    CreateProgrammaticUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the programmatic user.
+          example: Example Title
+        description:
+          type: string
+          example: A sample description.
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              role:
+                type: string
+          example: []
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.

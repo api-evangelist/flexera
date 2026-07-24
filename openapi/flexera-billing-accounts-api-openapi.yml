@@ -1,0 +1,94 @@
+openapi: 3.1.0
+info:
+  title: Spot Administration Access Policies Billing Accounts API
+  description: The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+  version: 2.0.0
+  contact:
+    name: Spot by Flexera
+    url: https://docs.spot.io/
+  termsOfService: https://spot.io/terms-of-use/
+servers:
+- url: https://api.spotinst.io
+  description: Spot Production API
+security:
+- bearerAuth: []
+tags:
+- name: Billing Accounts
+  description: Manage registered billing accounts and their configurations.
+paths:
+  /billingEngine/account:
+    get:
+      operationId: listBillingEngineAccounts
+      summary: Spot List Billing Engine Accounts
+      description: Get all accounts registered with Billing Engine, including their cloud provider type and configuration status.
+      tags:
+      - Billing Accounts
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+        example: '500123'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingAccountListResponse'
+              examples:
+                Listbillingengineaccounts200Example:
+                  summary: Default listBillingEngineAccounts 200 response
+                  x-microcks-default: true
+                  value:
+                    request: example_value
+                    response:
+                      items:
+                      - {}
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    BillingAccountListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BillingAccount'
+          example: example_value
+    BillingAccount:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: The Spot account identifier.
+          example: '500123'
+        cloudProvider:
+          type: string
+          enum:
+          - aws
+          - azure
+          - gcp
+          description: The cloud provider type.
+          example: aws
+        status:
+          type: string
+          description: The setup status of the billing account.
+          example: example_value
+        billingAccountId:
+          type: string
+          description: The cloud provider billing account identifier.
+          example: '500123'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Spot API uses Bearer Token Authentication. Include your API token in the Authorization header.
