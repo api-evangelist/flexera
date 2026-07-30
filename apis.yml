@@ -5,7 +5,20 @@ description: >-
   for compute workload management across spot, reserved, and on-demand instances, Ocean for Kubernetes and container
   infrastructure automation, and Eco for cloud commitment management. The Spot API enables programmatic control over all
   platform capabilities including administration, compute groups, Kubernetes clusters, and cost optimization.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: true
+  try_now: true
+  public: false
+  label: Freemium (free trial) · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/flexera.png
 url: https://raw.githubusercontent.com/api-evangelist/spot/refs/heads/main/apis.yml
 created: '2026-01-02'
 modified: '2026-05-19'
@@ -22,151 +35,1286 @@ tags:
   - Kubernetes
   - Spot Instances
 apis:
-  - aid: spot:administration-api
-    name: Spot Administration API
-    description: >-
-      The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud
-      credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic
-      control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
-    humanURL: https://docs.spot.io/api/
-    baseURL: https://api.spotinst.io
-    tags:
-      - Access Control
-      - Accounts
-      - Administration
-      - Cloud Credentials
-      - Organizations
-      - Users
-    properties:
-      - type: Documentation
-        url: https://docs.spot.io/api/
-      - type: OpenAPI
-        url: openapi/spot-administration-api-openapi.yml
-      - type: JSONSchema
-        url: json-schema/organization.json
-      - type: JSONSchema
-        url: json-schema/account.json
-      - type: JSONSchema
-        url: json-schema/user.json
-      - type: JSONSchema
-        url: json-schema/access-policy.json
-      - type: JSONSchema
-        url: json-schema/subscription.json
-      - type: JSONLD
-        url: json-ld/spot-context.jsonld
-      - type: JSONLD
-        url: json-ld/spot-administration-context.jsonld
-  - aid: spot:elastigroup-api
-    name: Spot Elastigroup API
-    description: >-
-      The Spot Elastigroup API enables programmatic management of Elastigroup compute groups across AWS, Azure, and GCP.
-      Elastigroup simplifies and automates cloud infrastructure for scale-out applications, continuously analyzing
-      resource usage and optimizing compute resources to ensure availability while leveraging the lowest-cost compute
-      options including spot instances, reserved instances, and on-demand capacity.
-    humanURL: https://docs.spot.io/api/
-    baseURL: https://api.spotinst.io
-    tags:
-      - Autoscaling
-      - AWS
-      - Azure
-      - Compute
-      - Elastigroup
-      - EMR
-      - GCP
-      - Spot Instances
-    properties:
-      - type: Documentation
-        url: https://docs.spot.io/api/
-      - type: OpenAPI
-        url: openapi/spot-elastigroup-api-openapi.yml
-      - type: JSONSchema
-        url: json-schema/elastigroup.json
-      - type: JSONLD
-        url: json-ld/spot-context.jsonld
-      - type: JSONLD
-        url: json-ld/spot-elastigroup-context.jsonld
-  - aid: spot:ocean-api
-    name: Spot Ocean API
-    description: >-
-      The Spot Ocean API provides programmatic management of Ocean Kubernetes clusters across AWS EKS, Azure AKS, GCP
-      GKE, and Amazon ECS. Ocean is a serverless Kubernetes infrastructure engine that automatically manages and
-      optimizes cloud infrastructure for containers, handling node provisioning, scaling, and cost optimization with
-      intelligent use of spot instances, reserved capacity, and on-demand resources.
-    humanURL: https://docs.spot.io/api/
-    baseURL: https://api.spotinst.io
-    tags:
-      - AKS
-      - Apache Spark
-      - Autoscaling
-      - Containers
-      - ECS
-      - EKS
-      - GKE
-      - Kubernetes
-      - Ocean
-    properties:
-      - type: Documentation
-        url: https://docs.spot.io/api/
-      - type: OpenAPI
-        url: openapi/spot-ocean-api-openapi.yml
-      - type: JSONSchema
-        url: json-schema/ocean-cluster.json
-      - type: JSONSchema
-        url: json-schema/virtual-node-group.json
-      - type: JSONLD
-        url: json-ld/spot-context.jsonld
-      - type: JSONLD
-        url: json-ld/spot-ocean-context.jsonld
-  - aid: spot:eco-api
-    name: Spot Eco API
-    description: >-
-      The Spot Eco API provides programmatic access to cloud commitment management and optimization across AWS, Azure,
-      and GCP. Eco automates the purchase, management, and optimization of reserved instances, savings plans, and
-      committed use discounts to maximize cloud cost savings while maintaining flexibility.
-    humanURL: https://docs.spot.io/api/
-    baseURL: https://api.spotinst.io
-    tags:
-      - AWS
-      - Azure
-      - Commitments
-      - Cost Optimization
-      - FinOps
-      - GCP
-      - Reserved Instances
-      - Savings Plans
-    properties:
-      - type: Documentation
-        url: https://docs.spot.io/api/
-      - type: OpenAPI
-        url: openapi/spot-eco-api-openapi.yml
-      - type: JSONLD
-        url: json-ld/spot-context.jsonld
-      - type: JSONLD
-        url: json-ld/spot-eco-context.jsonld
-  - aid: spot:billing-engine-api
-    name: Spot Billing Engine API
-    description: >-
-      The Spot Billing Engine API provides programmatic access to cloud billing management, cost allocation, and
-      invoicing capabilities. Billing Engine streamlines multi-cloud invoicing with intelligent cost allocation,
-      chargeback and showback reporting, and comprehensive billing analytics across AWS, Azure, and GCP accounts.
-    humanURL: https://docs.spot.io/api/
-    baseURL: https://api.spotinst.io
-    tags:
-      - Billing
-      - Chargeback
-      - Cost Allocation
-      - Cost Intelligence
-      - FinOps
-      - Invoicing
-    properties:
-      - type: Documentation
-        url: https://docs.spot.io/api/
-      - type: OpenAPI
-        url: openapi/spot-billing-engine-api-openapi.yml
-      - type: JSONLD
-        url: json-ld/spot-context.jsonld
-      - type: JSONLD
-        url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-access-policies-api
+  name: Spot Access Policies API
+  description: Create, update, and manage access control policies for users and groups.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Access Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-access-policies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-accounts-api
+  name: Spot Accounts API
+  description: Create, update, list, and delete Spot accounts within an organization.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-audit-api
+  name: Spot Audit API
+  description: Retrieve audit logs for actions performed within the organization.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Audit
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-audit-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-billing-accounts-api
+  name: Spot Billing Accounts API
+  description: Manage registered billing accounts and their configurations.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Billing Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-billing-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-billing-engine-setup-api
+  name: Spot Billing Engine Setup API
+  description: Set up and configure Billing Engine for cloud accounts.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Billing Engine Setup
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-billing-engine-setup-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-cloud-credentials-api
+  name: Spot Cloud Credentials API
+  description: Link and validate cloud provider credentials for AWS, Azure, and GCP accounts.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Cloud Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-cloud-credentials-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-cost-analysis-api
+  name: Spot Cost Analysis API
+  description: Retrieve cost analysis and spending data across cloud accounts.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Cost Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-cost-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-cost-intelligence-api
+  name: Spot Cost Intelligence API
+  description: Access Cost Intelligence analytics for actionable cost insights and recommendations.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Cost Intelligence
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-cost-intelligence-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-deployments-api
+  name: Spot Deployments API
+  description: Manage rolling deployments for Elastigroups.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Deployments
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-deployments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-eco-aws-api
+  name: Spot Eco AWS API
+  description: Manage Eco commitment optimization for AWS reserved instances and savings plans.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Eco AWS
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-eco-aws-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-eco-azure-api
+  name: Spot Eco Azure API
+  description: Manage Eco commitment optimization for Azure reserved instances.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Eco Azure
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-eco-azure-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-eco-gcp-api
+  name: Spot Eco GCP API
+  description: Manage Eco commitment optimization for GCP committed use discounts.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Eco GCP
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-eco-gcp-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-elastigroup-aws-api
+  name: Spot Elastigroup AWS API
+  description: Manage Elastigroup compute groups in AWS.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Elastigroup AWS
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-elastigroup-aws-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-elastigroup-azure-api
+  name: Spot Elastigroup Azure API
+  description: Manage Elastigroup compute groups in Azure.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Elastigroup Azure
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-elastigroup-azure-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-elastigroup-gcp-api
+  name: Spot Elastigroup GCP API
+  description: Manage Elastigroup compute groups in GCP.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Elastigroup GCP
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-elastigroup-gcp-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-emr-api
+  name: Spot EMR API
+  description: Manage Amazon EMR clusters with Elastigroup.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - EMR
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-emr-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-families-api
+  name: Spot Families API
+  description: Manage account families for grouping and cost allocation.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Families
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-families-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-health-check-api
+  name: Spot Health Check API
+  description: Check the health status of the Spot API.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Health Check
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-health-check-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-ocean-aks-api
+  name: Spot Ocean AKS API
+  description: Manage Ocean clusters for Azure Kubernetes Service.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Ocean AKS
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-ocean-aks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-ocean-aws-api
+  name: Spot Ocean AWS API
+  description: Manage Ocean clusters for AWS EKS.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Ocean AWS
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-ocean-aws-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-ocean-cd-api
+  name: Spot Ocean CD API
+  description: Manage continuous delivery for Ocean clusters.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Ocean CD
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-ocean-cd-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-ocean-ecs-api
+  name: Spot Ocean ECS API
+  description: Manage Ocean clusters for Amazon ECS.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Ocean ECS
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-ocean-ecs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-ocean-gke-api
+  name: Spot Ocean GKE API
+  description: Manage Ocean clusters for Google Kubernetes Engine.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Ocean GKE
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-ocean-gke-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-ocean-spark-api
+  name: Spot Ocean Spark API
+  description: Manage Apache Spark clusters on Ocean.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Ocean Spark
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-ocean-spark-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-organizations-api
+  name: Spot Organizations API
+  description: Create and manage Spot organizations.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-right-sizing-api
+  name: Spot Right Sizing API
+  description: Get right-sizing recommendations for Ocean workloads.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Right Sizing
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-right-sizing-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-rolls-api
+  name: Spot Rolls API
+  description: Manage rolling updates for Ocean clusters.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Rolls
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-rolls-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-savings-analysis-api
+  name: Spot Savings Analysis API
+  description: Analyze potential and realized savings from cloud commitments.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Savings Analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-savings-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-stateful-instances-api
+  name: Spot Stateful Instances API
+  description: Manage stateful instances within Elastigroups.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Stateful Instances
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-stateful-instances-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-subscriptions-api
+  name: Spot Subscriptions API
+  description: Manage event notification subscriptions for Spot resources.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-users-api
+  name: Spot Users API
+  description: Create, get, update, and delete users. Manage user permissions and account assignments.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
+- aid: flexera:flexera-virtual-node-groups-api
+  name: Spot Virtual Node Groups API
+  description: Manage virtual node groups (launch specifications) within Ocean clusters.
+  humanURL: https://docs.spot.io/api/
+  baseURL: https://api.spotinst.io
+  tags:
+  - Virtual Node Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/flexera-virtual-node-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.spot.io/api/
+  - type: JSONSchema
+    url: json-schema/organization.json
+  - type: JSONSchema
+    url: json-schema/account.json
+  - type: JSONSchema
+    url: json-schema/user.json
+  - type: JSONSchema
+    url: json-schema/access-policy.json
+  - type: JSONSchema
+    url: json-schema/subscription.json
+  - type: JSONLD
+    url: json-ld/spot-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-administration-context.jsonld
+  - type: JSONSchema
+    url: json-schema/elastigroup.json
+  - type: JSONLD
+    url: json-ld/spot-elastigroup-context.jsonld
+  - type: JSONSchema
+    url: json-schema/ocean-cluster.json
+  - type: JSONSchema
+    url: json-schema/virtual-node-group.json
+  - type: JSONLD
+    url: json-ld/spot-ocean-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-eco-context.jsonld
+  - type: JSONLD
+    url: json-ld/spot-billing-engine-context.jsonld
 common:
   - type: AgenticAccess
     url: agentic-access/flexera-agentic-access.yml
