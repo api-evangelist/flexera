@@ -1,0 +1,72 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/*.json ($ref links + id-reference fields)
+entities:
+- name: Location
+  id_field: id
+  apis: [devices]
+- name: Appliance
+  id_field: id
+  description: Intelligent Video Recorder appliance
+  apis: [devices]
+- name: Camera
+  id_field: id
+  apis: [devices, intelligence]
+- name: Zone
+  description: Named region within a camera view
+  apis: [devices]
+- name: SharedCameraSearch
+  id_field: token
+  apis: [devices]
+- name: HistoricalFootageJob
+  id_field: id
+  apis: [devices]
+- name: InterestList
+  description: License Plate Recognition interest list
+  apis: [intelligence]
+- name: Integration
+  id_field: integration_id
+  apis: [spot-connect]
+- name: IntegrationDevice
+  id_field: integration_device_id
+  external_id_field: device_external_id
+  apis: [spot-connect]
+- name: IntegrationEventType
+  id_field: integration_event_type_id
+  apis: [spot-connect]
+- name: IntegrationEvent
+  id_field: integration_event_id
+  apis: [spot-connect]
+relationships:
+- from: Camera
+  to: Location
+  type: belongs_to
+  via: location
+- from: Appliance
+  to: Location
+  type: belongs_to
+  via: location
+- from: Zone
+  to: Camera
+  type: belongs_to
+  via: camera_id
+- from: Integration
+  to: IntegrationDevice
+  type: has_many
+  via: integration_id
+- from: Integration
+  to: IntegrationEventType
+  type: has_many
+  via: integration_id
+- from: IntegrationDevice
+  to: Camera
+  type: has_many
+  via: camera links (up to 4)
+- from: IntegrationEvent
+  to: IntegrationDevice
+  type: belongs_to
+  via: integration_device_id | device_external_id
+- from: IntegrationEvent
+  to: IntegrationEventType
+  type: belongs_to
+  via: integration_event_type_id

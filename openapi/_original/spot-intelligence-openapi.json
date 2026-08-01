@@ -1,0 +1,1524 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Spot AI \u2014 Intelligence",
+    "version": "1.10.0",
+    "description": "Spot AI Developer API",
+    "contact": {
+      "name": "Spot AI",
+      "url": "https://developers.spot.ai/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://dev-api.spot.ai/"
+    }
+  ],
+  "paths": {
+    "/v1/cameras/{cameraId}/intelligence/{entity}/counting": {
+      "get": {
+        "operationId": "Counting",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCountsQueryResult"
+                },
+                "examples": {
+                  "Successful Response Example": {
+                    "value": {
+                      "bucket_counts": [
+                        {
+                          "bucket_ms": 1687320000000,
+                          "total_count": 4,
+                          "idle_count": 3,
+                          "left_count": 0,
+                          "right_count": 0
+                        }
+                      ],
+                      "entities": [
+                        {
+                          "object_id": "1687319780950|1",
+                          "first_ms": 1687320000116,
+                          "last_ms": 1687322686450,
+                          "idle_sum": 2686,
+                          "queue_num": 1,
+                          "crossed_left": null,
+                          "crossed_right": null
+                        },
+                        {
+                          "object_id": "1687322709401|1",
+                          "first_ms": 1687322709567,
+                          "last_ms": 1687322737567,
+                          "idle_sum": 27,
+                          "queue_num": 2,
+                          "crossed_left": null,
+                          "crossed_right": null
+                        },
+                        {
+                          "object_id": "1687322759950|1",
+                          "first_ms": 1687322760116,
+                          "last_ms": 1687322760116,
+                          "idle_sum": 0,
+                          "queue_num": 3,
+                          "crossed_left": null,
+                          "crossed_right": null
+                        },
+                        {
+                          "object_id": "1687322759950|2",
+                          "first_ms": 1687322771783,
+                          "last_ms": 1687323599783,
+                          "idle_sum": 828,
+                          "queue_num": 4,
+                          "crossed_left": null,
+                          "crossed_right": null
+                        }
+                      ],
+                      "total_count": 4
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days. \n      2) Bucket size cannot be larger than date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "The maximum date range is 30 days",
+                      "statusCode": 422,
+                      "name": "InvalidDateRangeError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Count events and summary for a camera",
+        "summary": "Count",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Id of the camera",
+            "in": "path",
+            "name": "cameraId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "description": "Type of entity to filter on (people, vehicles, or forklifts)",
+            "in": "path",
+            "name": "entity",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IntelligenceEntities"
+            }
+          },
+          {
+            "description": "RFC3339 date string indicating the start of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)",
+            "in": "query",
+            "name": "start_date",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "RFC3339 date string indicating the end of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)",
+            "in": "query",
+            "name": "end_date",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Time string indicating the beginning of the time range filter (HH:mm:ss)",
+            "in": "query",
+            "name": "start_time",
+            "required": false,
+            "schema": {
+              "default": "00:00:00",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Time string indicating the end of the time range filter (HH:mm:ss)",
+            "in": "query",
+            "name": "end_time",
+            "required": false,
+            "schema": {
+              "default": "23:59:59",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Minimum number of entities that must be present\nin a frame for it to be considered a presence event",
+            "in": "query",
+            "name": "threshold",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "description": "Array of numbers indicating which days of the week to include in the results",
+            "in": "query",
+            "name": "days_of_week",
+            "required": false,
+            "schema": {
+              "default": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          },
+          {
+            "description": "Size of the time buckets to group results by",
+            "in": "query",
+            "name": "bucket_size",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/BucketSize"
+            }
+          },
+          {
+            "in": "query",
+            "name": "presence_threshold_seconds",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "presence_filter_seconds",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/lpi": {
+      "post": {
+        "operationId": "CreateInterestList",
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InterestList"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 1,
+                      "name": "My Interest List",
+                      "type": "LPI",
+                      "items": [
+                        {
+                          "name": "ABC123",
+                          "notes": "Most common plate"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Create a Licence Plate Interest List",
+        "summary": "Create a Licence Plate Interest List",
+        "tags": [
+          "LPI"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pick_InterestList.Exclude_keyofInterestList.id-or-type__"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetInterestLists",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/InterestList"
+                  },
+                  "type": "array"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "name": "Frequent visitors",
+                        "type": "LPR",
+                        "items": [
+                          {
+                            "name": "ABC123",
+                            "notes": "Most common plate"
+                          },
+                          {
+                            "name": "DEF456",
+                            "notes": "Second most common plate"
+                          }
+                        ]
+                      },
+                      {
+                        "id": 2,
+                        "name": "Suspicious visitors",
+                        "type": "LPR",
+                        "items": [
+                          {
+                            "name": "GHI789",
+                            "notes": "Third most common plate"
+                          },
+                          {
+                            "name": "JKL012",
+                            "notes": "Fourth most common plate"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get all Licence Plate Interest Lists",
+        "summary": "Get all Licence Plate Interest Lists",
+        "tags": [
+          "LPI"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/v1/cameras/{cameraId}/intelligence/{entity}/idle": {
+      "get": {
+        "operationId": "Idle",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetIdleQueryResult"
+                },
+                "examples": {
+                  "Successful Response Example": {
+                    "value": {
+                      "bucket_counts": [
+                        {
+                          "bucket_ms": 1687320000000,
+                          "total_count": 4,
+                          "idle_count": 3
+                        }
+                      ],
+                      "idle_count": 3,
+                      "total_count": 4,
+                      "average_idle_time_seconds": 1180,
+                      "average_nonzero_idle_time_seconds": 1180,
+                      "entities": [
+                        {
+                          "object_id": "1687319780950|1",
+                          "first_ms": 1687320000116,
+                          "last_ms": 1687322686450,
+                          "idle_sum": 2686,
+                          "queue_num": 1
+                        },
+                        {
+                          "object_id": "1687322709401|1",
+                          "first_ms": 1687322709567,
+                          "last_ms": 1687322737567,
+                          "idle_sum": 27,
+                          "queue_num": 2
+                        },
+                        {
+                          "object_id": "1687322759950|1",
+                          "first_ms": 1687322760116,
+                          "last_ms": 1687322760116,
+                          "idle_sum": 0,
+                          "queue_num": 3
+                        },
+                        {
+                          "object_id": "1687322759950|2",
+                          "first_ms": 1687322771783,
+                          "last_ms": 1687323599783,
+                          "idle_sum": 828,
+                          "queue_num": 4
+                        }
+                      ],
+                      "max_idle_time_seconds": 2686
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days. \n      2) Bucket size cannot be larger than date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "The maximum date range is 30 days",
+                      "statusCode": 422,
+                      "name": "InvalidDateRangeError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Idling events and summary for a camera.",
+        "summary": "Idle",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Id of the camera",
+            "in": "path",
+            "name": "cameraId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "description": "Type of entity to filter on (people, vehicles, or forklifts)",
+            "in": "path",
+            "name": "entity",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IntelligenceEntities"
+            }
+          },
+          {
+            "description": "RFC3339 date string indicating the start of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)",
+            "in": "query",
+            "name": "start_date",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "RFC3339 date string indicating the end of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)",
+            "in": "query",
+            "name": "end_date",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Time string indicating the beginning of the time range filter (HH:mm:ss)",
+            "in": "query",
+            "name": "start_time",
+            "required": false,
+            "schema": {
+              "default": "00:00:00",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Time string indicating the end of the time range filter (HH:mm:ss)",
+            "in": "query",
+            "name": "end_time",
+            "required": false,
+            "schema": {
+              "default": "23:59:59",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Minimum number of entities that must be present\nin a frame for it to be considered a presence event",
+            "in": "query",
+            "name": "threshold",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "description": "Array of numbers indicating which days of the week to include in the results",
+            "in": "query",
+            "name": "days_of_week",
+            "required": false,
+            "schema": {
+              "default": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          },
+          {
+            "description": "Size of the time buckets to group results by",
+            "in": "query",
+            "name": "bucket_size",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/BucketSize"
+            }
+          },
+          {
+            "in": "query",
+            "name": "presence_threshold_seconds",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "presence_filter_seconds",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "zone_id",
+            "required": false,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/lpr/cameras/{camera_id}/report": {
+      "get": {
+        "operationId": "LprReport",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LprReport"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "plates": [
+                        {
+                          "first_seen": "2020-01-01T00:00:00.000Z",
+                          "last_seen": "2020-01-01T00:00:00.000Z",
+                          "plate": "plate",
+                          "type_id": 1,
+                          "visits": 1
+                        },
+                        {
+                          "first_seen": "2020-01-01T00:00:00.000Z",
+                          "last_seen": "2020-01-01T00:00:00.000Z",
+                          "plate": "plate1",
+                          "type_id": 2,
+                          "visits": 3
+                        }
+                      ],
+                      "summary": {
+                        "most_visits_by_plate": 6,
+                        "total_visits": 10,
+                        "unique_plates": 2
+                      },
+                      "timeseries": [
+                        {
+                          "date": "2023-01-01",
+                          "visits": 1
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days.\n      2) Invalid time format. Please use the 24-hour format (HH:mm).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "The maximum date range is 30 days",
+                      "statusCode": 422,
+                      "name": "InvalidDateRangeError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Get LPR report for a camera. Camera should be LPR enabled",
+        "summary": "LPR Report",
+        "tags": [
+          "LPR"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Id of the camera",
+            "in": "path",
+            "name": "camera_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "ISO 8601 date-time string (UTC) indicating the beginning of the date range filter",
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "ISO 8601 date-time string (UTC) indicating the end of the date range filter",
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Array of numbers indicating which days of the week to include in the results",
+            "in": "query",
+            "name": "days_of_week",
+            "required": false,
+            "schema": {
+              "default": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "description": "Array of strings indicating which plates to include in the results",
+            "in": "query",
+            "name": "plates",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/v1/cameras/{cameraId}/intelligence/{entity}/presence": {
+      "get": {
+        "operationId": "Presence",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPresenceQueryResult"
+                },
+                "examples": {
+                  "Successful Response Example": {
+                    "value": {
+                      "duration": 3600000,
+                      "duration_present": 3557551,
+                      "longest_presence": {
+                        "start": 1687320000116,
+                        "end": 1687322691450,
+                        "length_in_secs": 2691334
+                      },
+                      "longest_absence": {
+                        "start": 1687322691450,
+                        "end": 1687322709567,
+                        "length_in_secs": 18117
+                      },
+                      "buckets": [
+                        {
+                          "start_time": 1687320000000,
+                          "end_time": 1687323600000,
+                          "presence_sum": 3557551,
+                          "events": [
+                            {
+                              "start_ms": 1687322771783,
+                              "end_ms": 1687323600000
+                            },
+                            {
+                              "start_ms": 1687320000116,
+                              "end_ms": 1687322691450
+                            },
+                            {
+                              "start_ms": 1687322760116,
+                              "end_ms": 1687322765116
+                            },
+                            {
+                              "start_ms": 1687322709567,
+                              "end_ms": 1687322742567
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed. The error could be due to:\n      1) The maximum date range is 30 days. \n      2) Bucket size cannot be larger than date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "The maximum date range is 30 days",
+                      "statusCode": 422,
+                      "name": "InvalidDateRangeError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Presence events and summary for a camera.",
+        "summary": "Presence",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Id of the camera",
+            "in": "path",
+            "name": "cameraId",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Type of entity to filter on (people, vehicles, or forklifts)",
+            "in": "path",
+            "name": "entity",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IntelligenceEntities"
+            }
+          },
+          {
+            "description": "RFC3339 date string indicating the start of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)",
+            "in": "query",
+            "name": "start_date",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "RFC3339 date string indicating the end of the date range filter (see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6)",
+            "in": "query",
+            "name": "end_date",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Time string indicating the beginning of the time range filter (HH:mm:ss)",
+            "in": "query",
+            "name": "start_time",
+            "required": false,
+            "schema": {
+              "default": "00:00:00",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Time string indicating the end of the time range filter (HH:mm:ss)",
+            "in": "query",
+            "name": "end_time",
+            "required": false,
+            "schema": {
+              "default": "23:59:59",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Minimum number of entities that must be present\nin a frame for it to be considered a presence event",
+            "in": "query",
+            "name": "threshold",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "description": "Array of numbers indicating which days of the week to include in the results",
+            "in": "query",
+            "name": "days_of_week",
+            "required": false,
+            "schema": {
+              "default": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ],
+              "type": "array",
+              "items": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          },
+          {
+            "description": "Size of the time buckets to group results by",
+            "in": "query",
+            "name": "bucket_size",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/BucketSize"
+            }
+          },
+          {
+            "in": "query",
+            "name": "presence_threshold_seconds",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "presence_filter_seconds",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiErrorResponse": {
+        "properties": {
+          "data": {},
+          "statusCode": {
+            "type": "number",
+            "format": "double"
+          },
+          "message": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "name"
+        ],
+        "type": "object"
+      },
+      "BucketSize": {
+        "enum": [
+          "hour",
+          "day",
+          "week",
+          "month"
+        ],
+        "type": "string"
+      },
+      "GetCountsQueryResult": {
+        "properties": {
+          "total_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "bucket_counts": {
+            "items": {
+              "$ref": "#/components/schemas/IntelligenceCountBucketCount"
+            },
+            "type": "array"
+          },
+          "entities": {
+            "items": {
+              "$ref": "#/components/schemas/IntelligenceCountIdleEntity"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "total_count",
+          "bucket_counts",
+          "entities"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntelligenceCountBucketCount": {
+        "properties": {
+          "bucket_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "idle_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "total_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "left_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "right_count": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "bucket_ms",
+          "idle_count",
+          "total_count"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntelligenceCountIdleEntity": {
+        "properties": {
+          "object_id": {
+            "type": "string"
+          },
+          "first_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "last_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "idle_sum": {
+            "type": "number",
+            "format": "double"
+          },
+          "presence_duration": {
+            "type": "number",
+            "format": "double"
+          },
+          "queue_num": {
+            "type": "number",
+            "format": "double"
+          },
+          "crossed_left": {
+            "type": "boolean"
+          },
+          "crossed_right": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "object_id",
+          "first_ms",
+          "last_ms",
+          "idle_sum",
+          "presence_duration",
+          "queue_num"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntelligenceEntities": {
+        "enum": [
+          "people",
+          "vehicles",
+          "forklifts"
+        ],
+        "type": "string"
+      },
+      "ValidationError": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationErrorDetails"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "message",
+          "details"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ValidationErrorDetails": {
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "value": {}
+        },
+        "required": [
+          "field",
+          "message"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "InterestList": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "type": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "type",
+          "name",
+          "items"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Item": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Pick_InterestList.Exclude_keyofInterestList.id-or-type__": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "items"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "BaseIntelligenceIdleBucketCount": {
+        "properties": {
+          "bucket_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "idle_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "total_count": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "bucket_ms",
+          "idle_count",
+          "total_count"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "BaseIntelligenceIdleEntity": {
+        "properties": {
+          "object_id": {
+            "type": "string"
+          },
+          "first_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "last_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "idle_sum": {
+            "type": "number",
+            "format": "double"
+          },
+          "presence_duration": {
+            "type": "number",
+            "format": "double"
+          },
+          "queue_num": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "object_id",
+          "first_ms",
+          "last_ms",
+          "idle_sum",
+          "presence_duration",
+          "queue_num"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetIdleQueryResult": {
+        "properties": {
+          "total_count": {
+            "type": "number",
+            "format": "double"
+          },
+          "bucket_counts": {
+            "items": {
+              "$ref": "#/components/schemas/BaseIntelligenceIdleBucketCount"
+            },
+            "type": "array"
+          },
+          "entities": {
+            "items": {
+              "$ref": "#/components/schemas/BaseIntelligenceIdleEntity"
+            },
+            "type": "array"
+          },
+          "average_idle_time_seconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "average_nonzero_idle_time_seconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "max_idle_time_seconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "idle_count": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "total_count",
+          "bucket_counts",
+          "entities",
+          "average_idle_time_seconds",
+          "average_nonzero_idle_time_seconds",
+          "max_idle_time_seconds",
+          "idle_count"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "LprReport": {
+        "properties": {
+          "timeseries": {
+            "items": {
+              "$ref": "#/components/schemas/LprReportTimeseries"
+            },
+            "type": "array"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/LprReportSummary"
+          },
+          "plates": {
+            "items": {
+              "$ref": "#/components/schemas/LprReportPlate"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "timeseries",
+          "summary",
+          "plates"
+        ],
+        "type": "object"
+      },
+      "LprReportPlate": {
+        "properties": {
+          "visits": {
+            "type": "number",
+            "format": "double"
+          },
+          "last_seen": {
+            "type": "string"
+          },
+          "first_seen": {
+            "type": "string"
+          },
+          "type_id": {
+            "type": "number",
+            "format": "double"
+          },
+          "plate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "visits",
+          "last_seen",
+          "first_seen",
+          "plate"
+        ],
+        "type": "object"
+      },
+      "LprReportSummary": {
+        "properties": {
+          "most_visits_by_plate": {
+            "type": "number",
+            "format": "double"
+          },
+          "total_visits": {
+            "type": "number",
+            "format": "double"
+          },
+          "unique_plates": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "most_visits_by_plate",
+          "total_visits",
+          "unique_plates"
+        ],
+        "type": "object"
+      },
+      "LprReportTimeseries": {
+        "properties": {
+          "visits": {
+            "type": "number",
+            "format": "double"
+          },
+          "date": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "visits",
+          "date"
+        ],
+        "type": "object"
+      },
+      "BucketResult": {
+        "properties": {
+          "start_time": {
+            "type": "number",
+            "format": "double"
+          },
+          "end_time": {
+            "type": "number",
+            "format": "double"
+          },
+          "presence_sum": {
+            "type": "number",
+            "format": "double"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/SegmentResult"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "start_time",
+          "end_time",
+          "presence_sum",
+          "events"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetPresenceQueryResult": {
+        "properties": {
+          "duration": {
+            "type": "number",
+            "format": "double"
+          },
+          "duration_present": {
+            "type": "number",
+            "format": "double"
+          },
+          "longest_presence": {
+            "$ref": "#/components/schemas/IntelligenceSegment"
+          },
+          "longest_absence": {
+            "$ref": "#/components/schemas/IntelligenceSegment"
+          },
+          "buckets": {
+            "items": {
+              "$ref": "#/components/schemas/BucketResult"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "duration",
+          "duration_present",
+          "buckets"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntelligenceSegment": {
+        "properties": {
+          "length_in_secs": {
+            "type": "number",
+            "format": "double"
+          },
+          "start": {
+            "type": "number",
+            "format": "double"
+          },
+          "end": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "length_in_secs",
+          "start",
+          "end"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "SegmentResult": {
+        "properties": {
+          "start_ms": {
+            "type": "number",
+            "format": "double"
+          },
+          "end_ms": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "start_ms",
+          "end_ms"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "bearer_security": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

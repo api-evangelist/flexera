@@ -1,0 +1,2117 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Spot AI \u2014 Devices",
+    "version": "1.10.0",
+    "description": "Spot AI Developer API",
+    "contact": {
+      "name": "Spot AI",
+      "url": "https://developers.spot.ai/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://dev-api.spot.ai/"
+    }
+  ],
+  "paths": {
+    "/v1/cameras/{cameraId}/footage": {
+      "post": {
+        "operationId": "CreateHistoricalFootage",
+        "responses": {
+          "200": {
+            "description": "Redirected to existing job",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateHistoricalFootageOutput"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "redirectId": 2
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Job created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateHistoricalFootageOutput"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Camera or Organization not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "message"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "message": "Camera not found"
+                      },
+                      {
+                        "message": "Organization not found"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Another request is already in progress for the same time range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "ApiError",
+                      "statusCode": 409,
+                      "message": "Another request is already in progress for the same time range",
+                      "data": {
+                        "overlappingRequest": {
+                          "id": 1,
+                          "start": "2023-06-29T12:20:05.533Z",
+                          "end": "2023-06-30T12:20:05.533Z"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Start and End time for the request are invalid",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "message"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "message": "Invalid date format"
+                      },
+                      {
+                        "message": "Camera has no footage"
+                      },
+                      {
+                        "message": "Start time is before the earliest available footage segment"
+                      },
+                      {
+                        "message": "End time is in the future"
+                      },
+                      {
+                        "message": "Start is before End"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint allows you to trigger a background job to fetch and store historical footage for a camera.\nThe job will run asynchronously and the response will contain the id and status of the job.\nThe Id or redirectId returned can be used to query the status of the job.",
+        "summary": "Create historical footage job",
+        "tags": [
+          "Historical Footage",
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cameraId",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHistoricalFootageInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cameras/shared/search": {
+      "post": {
+        "operationId": "CreateSharedCameraSearch",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SharedCameraSearch"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "token": "5d09fd895fc6b94c468b36a6b0b8788e",
+                      "link": "https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e",
+                      "start": "2023-08-26T10:20:05.533Z",
+                      "end": "2023-08-26T12:20:05.533Z",
+                      "camera_ids": [
+                        1,
+                        2,
+                        3
+                      ],
+                      "expiry": "2023-08-29T12:20:05.533Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint creates a new shared camera search view. The view has a publicly accessible link that can be shared with anyone.\nThe link will expire after the expiry time. The expiry time is optional. If not provided, the link will expire after 1 week.",
+        "summary": "Create shared camera search view",
+        "tags": [
+          "Shared Search",
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSharedCameraSearchInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/embeds/live": {
+      "post": {
+        "operationId": "GenerateLiveEmbedUrl",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 403,
+                      "message": "You do not have permission to create embed tokens for this camera",
+                      "name": "AuthorizationError"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Camera not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 404,
+                      "message": "Camera not found",
+                      "name": "NotFoundError"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "Generates an embeddable URL for a live camera feed that can be used in an iframe.\n\nThis endpoint requires the `camera_share_create` permission on the specified camera.",
+        "summary": "Generate an embeddable URL for a live camera feed",
+        "tags": [
+          "Embeds"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "The request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "expires_in": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The number of seconds the token will be valid for. Defaults to 30 days (2592000 seconds).",
+                    "example": 3600
+                  },
+                  "camera_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The ID of the camera to generate the embed URL for"
+                  }
+                },
+                "required": [
+                  "camera_id"
+                ],
+                "type": "object",
+                "description": "The request body"
+              },
+              "examples": {
+                "camera_id": {
+                  "value": 42
+                },
+                "expires_in": {
+                  "value": 3600
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/embeds/vod": {
+      "post": {
+        "operationId": "GenerateVodEmbedUrl",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 403,
+                      "message": "You do not have permission to create embed tokens for this camera",
+                      "name": "AuthorizationError"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Camera not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 404,
+                      "message": "Camera not found",
+                      "name": "NotFoundError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Generates an embeddable URL for a VOD (Video on Demand) camera feed\nthat can be used in an iframe.\n\nThis endpoint requires the `clip_share_create` permission on the specified camera.",
+        "summary": "Generate an embeddable URL for a VOD camera feed",
+        "tags": [
+          "Embeds"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "The request body",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "expires_in": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The number of seconds the token will be valid for. Defaults to 30 days (2592000 seconds).",
+                    "example": 3600
+                  },
+                  "end": {
+                    "type": "string",
+                    "description": "The end time of the recording in ISO 8601 format",
+                    "example": "2023-01-01T01:00:00Z"
+                  },
+                  "start": {
+                    "type": "string",
+                    "description": "The start time of the recording in ISO 8601 format",
+                    "example": "2023-01-01T00:00:00Z"
+                  },
+                  "camera_id": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The ID of the camera to generate the embed URL for",
+                    "example": 42
+                  }
+                },
+                "required": [
+                  "end",
+                  "start",
+                  "camera_id"
+                ],
+                "type": "object",
+                "description": "The request body"
+              },
+              "examples": {
+                "camera_id": {
+                  "value": 42
+                },
+                "start": {
+                  "value": "2023-01-01T00:00:00Z"
+                },
+                "end": {
+                  "value": "2023-01-01T01:00:00Z"
+                },
+                "expires_in": {
+                  "value": 3600
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/appliances/{applianceId}": {
+      "get": {
+        "operationId": "GetAppliance",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Appliance"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 1,
+                      "serial": "sn7-123456",
+                      "last_online": "2025-12-16T10:30:00.000Z",
+                      "location_id": 1,
+                      "location_name": "Location 1",
+                      "license_sku": "LIC-IVR-A12-B34",
+                      "firmware_version": "1.0.0",
+                      "status": "online"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Appliance {applianceId} not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "message": "Appliance {applianceId} not found",
+                      "name": "NotFound"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns information about a single appliance.",
+        "summary": "Get appliance information",
+        "tags": [
+          "Appliances"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- Id of the appliance",
+            "in": "path",
+            "name": "applianceId",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/appliances": {
+      "get": {
+        "operationId": "GetAppliances",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAppliancesQueryResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "serial": "sn7-123456",
+                        "last_online": "2025-12-16T10:30:00.000Z",
+                        "location_id": 1,
+                        "location_name": "Location 1",
+                        "license_sku": "SKU-123456",
+                        "firmware_version": "1.0.0",
+                        "status": "online"
+                      },
+                      {
+                        "id": 2,
+                        "serial": "sn7-123457",
+                        "last_online": "2025-12-16T10:30:00.000Z",
+                        "location_id": 2,
+                        "location_name": "Location 2",
+                        "license_sku": "SKU-123457",
+                        "firmware_version": "1.0.0",
+                        "status": "online"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a paginated list of appliances for an org. Response contains a cursor for pagination.",
+        "summary": "Get a paginated list of appliances",
+        "tags": [
+          "Appliances"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- Cursor for pagination",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            }
+          },
+          {
+            "description": "- Number of appliances to return. Max 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "description": "- Location ids to filter by. When present, only returns appliances associated with the indicated locations.",
+            "in": "query",
+            "name": "location_ids",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/v1/cameras/{cameraId}": {
+      "get": {
+        "operationId": "GetCameraById",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Camera"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "id": 1,
+                      "name": "Camera 1",
+                      "status": "online",
+                      "location_id": 1,
+                      "location_name": "Location 1",
+                      "local_ip": "192.168.1.100",
+                      "last_online": "2023-06-29T12:20:05.533Z",
+                      "mac_address": "01:23:45:67:89:0A",
+                      "appliance_id": 42,
+                      "has_speakers": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Camera not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 404,
+                      "message": "Camera not found",
+                      "name": "QueryError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns information about a single camera.",
+        "summary": "Get camera information",
+        "tags": [
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- Id of the camera",
+            "in": "path",
+            "name": "cameraId",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/cameras/count": {
+      "get": {
+        "operationId": "GetCameraCount",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns the number of enabled cameras for an organization",
+        "summary": "Get camera count",
+        "tags": [
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/v1/cameras": {
+      "get": {
+        "operationId": "GetCameras",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCamerasForApiQueryResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "name": "Camera 1",
+                        "status": "online",
+                        "location_id": 1,
+                        "location_name": "Location 1",
+                        "local_ip": "192.168.1.100",
+                        "last_online": "2023-06-29T12:20:05.533Z",
+                        "mac_address": "01:23:45:67:89:0A",
+                        "appliance_id": 42,
+                        "has_speakers": true
+                      },
+                      {
+                        "id": 2,
+                        "name": "Camera 2",
+                        "status": "offline",
+                        "location_id": 1,
+                        "location_name": "Location 1",
+                        "local_ip": "192.168.1.101",
+                        "last_online": "2023-06-21T09:20:05.533Z",
+                        "mac_address": "01:23:45:67:89:0B",
+                        "appliance_id": 42,
+                        "has_speakers": false
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Max limit error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 400,
+                      "message": "Max limit error",
+                      "name": "InvalidLimitError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Paginated list of cameras for an org. Response contains a cursor for pagination.",
+        "summary": "Get a paginated list of cameras",
+        "tags": [
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- Cursor for pagination",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "default": "",
+              "type": "string"
+            }
+          },
+          {
+            "description": "- Number of cameras to return. Max 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "description": "- Location ids to filter by. When present, only returns cameras associated with the indicated locations.",
+            "in": "query",
+            "name": "location_ids",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "description": "- Appliance ids to filter by. When present, only returns cameras associated with the indicated appliances.",
+            "in": "query",
+            "name": "appliance_ids",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "description": "- Status to filter by (\"online\" or \"offline\"). When present, only returns cameras with the indicated status.",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/CameraStatus"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/cameras/{cameraId}/footage/{footageId}": {
+      "get": {
+        "operationId": "GetHistoricalFootage",
+        "responses": {
+          "200": {
+            "description": "Historical footage request found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetHistoricalFootage"
+                },
+                "examples": {
+                  "Request processing": {
+                    "value": {
+                      "cameraId": 1,
+                      "start": "2023-06-29T12:20:05.533Z",
+                      "end": "2023-06-30T12:20:05.533Z",
+                      "expiry": null,
+                      "id": 1,
+                      "progress": 20.1,
+                      "createdAt": "2023-06-29T13:20:05.533Z",
+                      "objectPath": null,
+                      "state": "PROCESSING",
+                      "stateDescription": "Job is processing",
+                      "updatedAt": "2023-06-29T13:20:05.533Z"
+                    }
+                  },
+                  "Request succeeded": {
+                    "value": {
+                      "cameraId": 1,
+                      "start": "2023-06-29T12:20:05.533Z",
+                      "end": "2023-06-30T12:20:05.533Z",
+                      "expiry": "2023-07-02T13:20:05.533Z",
+                      "id": 1,
+                      "progress": 100,
+                      "createdAt": "2023-06-29T13:20:05.533Z",
+                      "objectPath": "public/path/to/object",
+                      "state": "SUCCEEDED",
+                      "stateDescription": "Success",
+                      "updatedAt": "2023-07-01T13:20:05.533Z"
+                    }
+                  },
+                  "Request failed": {
+                    "value": {
+                      "cameraId": 1,
+                      "start": "2023-06-29T12:20:05.533Z",
+                      "end": "2023-06-30T12:20:05.533Z",
+                      "expiry": null,
+                      "id": 1,
+                      "progress": 75.21,
+                      "createdAt": "2023-06-29T13:20:05.533Z",
+                      "objectPath": null,
+                      "state": "FAILED",
+                      "stateDescription": "Job failed because the camera was offline",
+                      "updatedAt": "2023-07-01T13:20:05.533Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Footage request not found ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "message"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "message": "Camera not found"
+                      },
+                      {
+                        "message": "Footage request not found"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "410": {
+            "description": "Footage has expired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "name": "ApiError",
+                      "statusCode": 410,
+                      "message": "Footage has expired"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get details of a submitted historical footage request",
+        "tags": [
+          "Historical Footage",
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cameraId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          },
+          {
+            "in": "path",
+            "name": "footageId",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/cameras/live": {
+      "post": {
+        "operationId": "GetLiveUrl",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLiveUrlQueryResult"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a url to a live stream of the cameras",
+        "summary": "Get a url to a live stream of the cameras",
+        "tags": [
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetLiveUrlInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/locations": {
+      "get": {
+        "operationId": "GetLocations",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationListResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "locations": [
+                        {
+                          "id": 1,
+                          "name": "Main Warehouse"
+                        },
+                        {
+                          "id": 2,
+                          "name": "Store #2402"
+                        },
+                        {
+                          "id": 3,
+                          "name": "Store #119"
+                        }
+                      ],
+                      "prev": "eyAiaWQiOiA1MCwgImRpcmVjdGlvbiI6ICJwcmV2IiB9",
+                      "next": "eyAiaWQiOiAxMDEsICJkaXJlY3Rpb24iOiAibmV4dCIgfQ=="
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "Gets basic information (id and name) of locations the caller has access to.\n\nResponse data is paginated. The number of locations returned in any single\nresponse will never be greater than the `limit`. If there are more\nlocations that can be requested, the response body will contain a non-null\n`\"next\"` property. Use this `\"next\"` value to request the next page of data\nby submitting a subsequent request with the `cursor` query param set to\nthis value of `\"next\"`. To fetch all pages of data, continue making\nrequests until `\"next\"` is `null` in the response body.",
+        "summary": "Get locations",
+        "tags": [
+          "Locations"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "Cursor for pagination",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Number of locations to return in a single response. Default is\n`50`. Maximum allowed is `100`.",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/cameras/shared/search/{token}": {
+      "get": {
+        "operationId": "GetSharedCameraSearch",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SharedCameraSearch"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "token": "5d09fd895fc6b94c468b36a6b0b8788e",
+                      "link": "https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e",
+                      "start": "2023-08-26T10:20:05.533Z",
+                      "end": "2023-08-26T12:20:05.533Z",
+                      "camera_ids": [
+                        1,
+                        2,
+                        3
+                      ],
+                      "expiry": "2023-08-29T12:20:05.533Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint retrieves the shared camera search URL details.",
+        "summary": "Get shared camera search view details",
+        "tags": [
+          "Shared Search",
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "UpdateSharedCameraSearch",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SharedCameraSearch"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "token": "5d09fd895fc6b94c468b36a6b0b8788e",
+                      "link": "https://dashboard.spot.ai/o/org-name/s/search/5d09fd895fc6b94c468b36a6b0b8788e",
+                      "start": "2023-08-26T10:20:05.533Z",
+                      "end": "2023-08-26T12:20:05.533Z",
+                      "camera_ids": [
+                        1,
+                        2,
+                        3
+                      ],
+                      "expiry": "2023-08-29T12:20:05.533Z"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint updates an existing shared camera search view. It allows updating the start, end time and the expiry of the shared search.",
+        "summary": "Update shared camera search view details",
+        "tags": [
+          "Shared Search",
+          "Cameras"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pick_UpdateSharedCameraSearchInput.Exclude_keyofUpdateSharedCameraSearchInput.token__"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/cameras/{camera_id}/zones": {
+      "get": {
+        "operationId": "GetZones",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetZonesQueryResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "name": "Zone 1",
+                        "shape": [
+                          {
+                            "x": 30.953702290852863,
+                            "y": 81.95704029224537
+                          },
+                          {
+                            "x": 37.12036895751953,
+                            "y": 72.47556333188658
+                          }
+                        ],
+                        "cameraId": 1
+                      },
+                      {
+                        "id": 2,
+                        "name": "Zone 2",
+                        "shape": [
+                          {
+                            "x": 42.95370229085286,
+                            "y": 81.95704029224537
+                          },
+                          {
+                            "x": 47.12036895751953,
+                            "y": 72.47556333188658
+                          }
+                        ],
+                        "cameraId": 1
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns a list of zones for a camera",
+        "summary": "Get zones",
+        "tags": [
+          "Zones"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "camera_id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/audio/play": {
+      "post": {
+        "operationId": "PlayAudio",
+        "responses": {
+          "204": {
+            "description": "Audio successfully sent to device for playback"
+          },
+          "400": {
+            "description": "Camera not eligible for audio playback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 400,
+                      "name": "InvalidLimit",
+                      "data": {}
+                    }
+                  },
+                  "Example 2": {
+                    "value": {
+                      "statusCode": 400,
+                      "message": "Camera not associated with a speaker that can play the audio",
+                      "name": "BadRequest"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 403,
+                      "message": "You do not have permission to play audio, requires camera.manage_audio on the specified camera",
+                      "name": "AuthorizationError"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Camera not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 404,
+                      "message": "Camera not found",
+                      "name": "NotFoundError"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error playing audio",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "statusCode": 500,
+                      "message": "Failed to play audio",
+                      "name": "InternalServerError"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Plays an audio file through the speakers associated with the specified camera.\n\nThere are two ways that speakers can be associated with a camera:\n1. The camera is associated with a Bullhorn through an Integration.\n2. The camera has a built in speaker which has Two-Way audio enabled.\n\nIf no associated speakers are found, the audio will not be played (status code 400).\n\nSupported file formats include (but not limited to):\n- MP3\n- WAV\n- M4A\n- OGG\n- FLAC\n\nProcessing may take a moment depending on file size and system load.\n\nThis endpoint requires the `camera.manage_audio` permission on the specified camera.",
+        "summary": "Play audio through a camera",
+        "tags": [
+          "Audio"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cameraId": {
+                    "type": "string",
+                    "description": "The ID of the camera to play audio through"
+                  },
+                  "audio": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "The audio file to play (max size: 10MB)"
+                  }
+                },
+                "required": [
+                  "cameraId",
+                  "audio"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiErrorResponse": {
+        "properties": {
+          "data": {},
+          "statusCode": {
+            "type": "number",
+            "format": "double"
+          },
+          "message": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "name"
+        ],
+        "type": "object"
+      },
+      "CreateHistoricalFootageInput": {
+        "properties": {
+          "start": {
+            "type": "string",
+            "description": "The timestamp for the start of historical footage. Should be a valid ISO 8601 string",
+            "example": "2023-06-29T10:20:05.533Z"
+          },
+          "end": {
+            "type": "string",
+            "description": "The timestamp for the end of the historical footage. Should be a valid ISO 8601 string",
+            "example": "2023-06-29T12:20:05.533Z"
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateHistoricalFootageOutput": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "redirectId": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateSharedCameraSearchInput": {
+        "properties": {
+          "expiry_in_seconds": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The expiry time of the created Shared search view",
+            "example": 86400,
+            "maximum": 604800
+          },
+          "camera_ids": {
+            "items": {
+              "type": "number",
+              "format": "double"
+            },
+            "type": "array",
+            "description": "The list of cameras to be shown in the VOD view.",
+            "example": [
+              1,
+              2,
+              3
+            ],
+            "minItems": 1,
+            "maxItems": 16
+          },
+          "end": {
+            "type": "string",
+            "description": "The timestamp for the end of the VOD search view. Should be a valid ISO 8601 string",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "start": {
+            "type": "string",
+            "description": "The timestamp for the start of the VOD search view. Should be a valid ISO 8601 string",
+            "example": "2023-06-29T10:20:05.533Z"
+          }
+        },
+        "required": [
+          "camera_ids",
+          "end",
+          "start"
+        ],
+        "type": "object"
+      },
+      "SharedCameraSearch": {
+        "properties": {
+          "expiry": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp after which the link will expire",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "camera_ids": {
+            "items": {
+              "type": "number",
+              "format": "double"
+            },
+            "type": "array",
+            "description": "The list of cameras that are shown in the VOD view.",
+            "example": [
+              1,
+              2,
+              3
+            ]
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp for the end of the VOD search view",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp for the start of the VOD search view",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "link": {
+            "type": "string",
+            "description": "This is the link to the public page to view the share search VODs"
+          },
+          "token": {
+            "type": "string",
+            "description": "The token for the shared search"
+          }
+        },
+        "required": [
+          "expiry",
+          "camera_ids",
+          "end",
+          "start",
+          "link",
+          "token"
+        ],
+        "type": "object"
+      },
+      "Appliance": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double",
+            "description": "The id of the appliance",
+            "example": 1
+          },
+          "serial": {
+            "type": "string",
+            "description": "The serial number of the appliance",
+            "example": "sn7-123456"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ApplianceStatus",
+            "description": "The status of the appliance",
+            "example": "online"
+          },
+          "last_online": {
+            "type": "string",
+            "format": "date",
+            "nullable": true,
+            "description": "The last online timestamp of the appliance"
+          },
+          "location_id": {
+            "type": "number",
+            "format": "double",
+            "description": "The location id of the appliance",
+            "example": 1
+          },
+          "location_name": {
+            "type": "string",
+            "description": "The name of the location",
+            "example": "Main Location"
+          },
+          "license_sku": {
+            "type": "string",
+            "description": "The license sku of the appliance",
+            "example": "1234567890"
+          },
+          "firmware_version": {
+            "type": "string",
+            "nullable": true,
+            "description": "The firmware version of the appliance",
+            "example": "1.0.0"
+          }
+        },
+        "required": [
+          "id",
+          "serial",
+          "status",
+          "last_online",
+          "location_id",
+          "location_name",
+          "license_sku",
+          "firmware_version"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ApplianceStatus": {
+        "enum": [
+          "online",
+          "offline"
+        ],
+        "type": "string"
+      },
+      "GetAppliancesQueryResult": {
+        "properties": {
+          "prev": {
+            "type": "string",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "nullable": true
+          },
+          "appliances": {
+            "items": {
+              "$ref": "#/components/schemas/Appliance"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "prev",
+          "next",
+          "appliances"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Camera": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "name": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CameraStatus"
+          },
+          "location_id": {
+            "type": "number",
+            "format": "double"
+          },
+          "location_name": {
+            "type": "string"
+          },
+          "local_ip": {
+            "type": "string"
+          },
+          "last_online": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mac_address": {
+            "type": "string"
+          },
+          "appliance_id": {
+            "type": "number",
+            "format": "double"
+          },
+          "has_speakers": {
+            "type": "boolean",
+            "description": "Indicates whether the camera has speaker capabilities for audio playback.\nReturns true if the camera has either:\n- Built-in two-way audio enabled (ONVIF backchannel), or\n- A Bullhorn integration configured for remote speaker playback\n\nUse this field to determine if the camera is eligible for the /v1/audio/play endpoint.",
+            "example": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status",
+          "location_id",
+          "location_name",
+          "local_ip",
+          "last_online",
+          "mac_address",
+          "appliance_id",
+          "has_speakers"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CameraStatus": {
+        "enum": [
+          "offline",
+          "online"
+        ],
+        "type": "string"
+      },
+      "GetCamerasForApiQueryResult": {
+        "properties": {
+          "prev": {
+            "type": "string",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "nullable": true
+          },
+          "cameras": {
+            "items": {
+              "$ref": "#/components/schemas/Camera"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "prev",
+          "next",
+          "cameras"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetHistoricalFootage": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "start": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cameraId": {
+            "type": "number",
+            "format": "double"
+          },
+          "expiry": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "objectPath": {
+            "type": "string"
+          },
+          "progress": {
+            "type": "number",
+            "format": "double"
+          },
+          "state": {
+            "$ref": "#/components/schemas/historicalFootageState"
+          },
+          "stateDescription": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "start",
+          "end",
+          "cameraId",
+          "expiry",
+          "objectPath",
+          "progress",
+          "state",
+          "stateDescription",
+          "updatedAt"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "historicalFootageState": {
+        "description": "Not deprecating enums from kysely because they are used all over the place",
+        "enum": [
+          "FAILED",
+          "PROCESSING",
+          "QUEUED",
+          "STALLED",
+          "SUCCEEDED"
+        ],
+        "type": "string"
+      },
+      "GetLiveUrlInput": {
+        "properties": {
+          "camera_ids": {
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "type": "array",
+            "description": "Ids of the cameras to create live urls for",
+            "example": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "minItems": 1,
+            "maxItems": 4
+          }
+        },
+        "required": [
+          "camera_ids"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetLiveUrlQueryResult": {
+        "properties": {
+          "url": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Location": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the location",
+            "example": "My Location"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "LocationListResult": {
+        "properties": {
+          "prev": {
+            "type": "string",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "nullable": true
+          },
+          "locations": {
+            "items": {
+              "$ref": "#/components/schemas/Location"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "prev",
+          "next",
+          "locations"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ValidationError": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationErrorDetails"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "message",
+          "details"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ValidationErrorDetails": {
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "value": {}
+        },
+        "required": [
+          "field",
+          "message"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetZonesQueryResult": {
+        "properties": {
+          "zones": {
+            "items": {
+              "$ref": "#/components/schemas/Zone"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "zones"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Zone": {
+        "properties": {
+          "cameraId": {
+            "type": "number",
+            "format": "double",
+            "description": "The ID of the camera that the zone belongs to",
+            "example": 1
+          },
+          "shape": {
+            "$ref": "#/components/schemas/ZoneShape",
+            "description": "The shape of the zone, defined by an array of Cartesian points (x,y)"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the zone",
+            "example": "Front Door"
+          },
+          "id": {
+            "type": "number",
+            "format": "double",
+            "description": "The ID of the zone",
+            "example": 1
+          }
+        },
+        "required": [
+          "cameraId",
+          "shape",
+          "name",
+          "id"
+        ],
+        "type": "object"
+      },
+      "ZonePoint": {
+        "properties": {
+          "y": {
+            "type": "number",
+            "format": "double"
+          },
+          "x": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "required": [
+          "y",
+          "x"
+        ],
+        "type": "object"
+      },
+      "ZoneShape": {
+        "items": {
+          "$ref": "#/components/schemas/ZonePoint"
+        },
+        "type": "array"
+      },
+      "Pick_UpdateSharedCameraSearchInput.Exclude_keyofUpdateSharedCameraSearchInput.token__": {
+        "properties": {
+          "start": {
+            "type": "string",
+            "description": "The timestamp for the start of the VOD search view. Should be a valid ISO 8601 string",
+            "example": "2023-06-29T10:20:05.533Z"
+          },
+          "end": {
+            "type": "string",
+            "description": "The timestamp for the end of the VOD search view. Should be a valid ISO 8601 string",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "expiry_in_seconds": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The expiry time of the created Shared search view",
+            "example": 86400,
+            "maximum": 604800
+          }
+        },
+        "required": [
+          "start",
+          "end"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      }
+    },
+    "securitySchemes": {
+      "bearer_security": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

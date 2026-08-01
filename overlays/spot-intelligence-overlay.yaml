@@ -1,0 +1,17 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Spot AI — Intelligence
+  version: 1.0.0
+extends: openapi/spot-intelligence-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: spot
+    x-apievangelist-api: intelligence
+    x-apievangelist-auth: http-bearer
+- target: $.info
+  update:
+    x-apievangelist-notes: >-
+      Video-analytics surface: counting / idle / presence event summaries per
+      camera+entity, plus License Plate Recognition interest lists and LPR
+      reports. LPR operations require LPR-enabled cameras.

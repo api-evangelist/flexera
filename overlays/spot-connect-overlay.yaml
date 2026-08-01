@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Spot AI — Spot Connect (beta)
+  version: 1.0.0
+extends: openapi/spot-connect-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: spot
+    x-apievangelist-api: spot-connect
+    x-apievangelist-auth: http-bearer
+    x-apievangelist-status: beta
+- target: $.info
+  update:
+    x-apievangelist-notes: >-
+      Integrations platform linking external business events to camera footage.
+      Event ingestion resolves a device by integration_device_id, then
+      device_external_id (auto-creates), then a Device ID Template. Real-time
+      delivery is via RSA256-signed webhooks; async writes return 202 Accepted.

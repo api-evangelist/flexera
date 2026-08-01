@@ -1,7 +1,17 @@
 aid: spot
 name: Spot
-description: Spot is a company surfaced as a portfolio company of redpoint-ventures and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Spot AI is a physical-security video-AI platform that turns surveillance
+  cameras into AI agents which monitor spaces 24/7, detect suspicious activity,
+  and trigger automated responses across retail, manufacturing, construction,
+  healthcare, and education. The Spot AI Developer API is a JSON REST API on
+  https://dev-api.spot.ai/ (bearer API-key auth) with three surfaces: Devices
+  (locations, appliances, cameras, live/VOD embeds, historical footage, zones,
+  shared searches, audio playback), Intelligence (people/vehicle counting,
+  idle/presence analytics, and License Plate Recognition interest lists), and
+  Spot Connect (a beta integrations platform that links external business events
+  to camera footage via integrations, devices, event types, and events, with
+  signed RSA256 webhooks for real-time delivery).
 url: https://raw.githubusercontent.com/api-evangelist/spot/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,17 +19,251 @@ x-backed-by:
 - redpoint-ventures
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://cdn.prod.website-files.com/5fe2250e2f83cc02cbfefbcf/68ae36e3393364b50b65e143_Spot%20AI.png
 tags:
 - Company
-apis: []
+- Video
+- Physical Security
+- Surveillance
+- Computer Vision
+- Artificial Intelligence
+- Cameras
+- Analytics
+- License Plate Recognition
+- Webhooks
+- Integrations
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: spot:spot-analytics-api
+  name: Spot Analytics API
+  description: The Analytics API from Spot — 3 operation(s) for analytics.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-analytics-api-openapi.yml
+- aid: spot:spot-appliances-api
+  name: Spot Appliances API
+  description: The Appliances API from Spot — 2 operation(s) for appliances.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Appliances
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-appliances-api-openapi.yml
+- aid: spot:spot-audio-api
+  name: Spot Audio API
+  description: The Audio API from Spot — 1 operation(s) for audio.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Audio
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-audio-api-openapi.yml
+- aid: spot:spot-cameras-api
+  name: Spot Cameras API
+  description: The Cameras API from Spot — 8 operation(s) for cameras.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Cameras
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-cameras-api-openapi.yml
+- aid: spot:spot-embeds-api
+  name: Spot Embeds API
+  description: The Embeds API from Spot — 2 operation(s) for embeds.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Embeds
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-embeds-api-openapi.yml
+- aid: spot:spot-historical-footage-api
+  name: Spot Historical Footage API
+  description: The Historical Footage API from Spot — 2 operation(s) for historical footage.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Historical Footage
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-historical-footage-api-openapi.yml
+- aid: spot:spot-integration-devices-api
+  name: Spot Integration Devices API
+  description: The Integration Devices API from Spot — 3 operation(s) for integration devices.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Integration Devices
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-integration-devices-api-openapi.yml
+- aid: spot:spot-integration-event-types-api
+  name: Spot Integration Event Types API
+  description: The Integration Event Types API from Spot — 2 operation(s) for integration event types.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Integration Event Types
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-integration-event-types-api-openapi.yml
+- aid: spot:spot-integration-events-api
+  name: Spot Integration Events API
+  description: The Integration Events API from Spot — 3 operation(s) for integration events.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Integration Events
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-integration-events-api-openapi.yml
+- aid: spot:spot-integrations-api
+  name: Spot Integrations API
+  description: The Integrations API from Spot — 2 operation(s) for integrations.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-integrations-api-openapi.yml
+- aid: spot:spot-locations-api
+  name: Spot Locations API
+  description: The Locations API from Spot — 1 operation(s) for locations.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-locations-api-openapi.yml
+- aid: spot:spot-lpi-api
+  name: Spot LPI API
+  description: The LPI API from Spot — 1 operation(s) for lpi.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - LPI
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-lpi-api-openapi.yml
+- aid: spot:spot-lpr-api
+  name: Spot LPR API
+  description: The LPR API from Spot — 1 operation(s) for lpr.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - LPR
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-lpr-api-openapi.yml
+- aid: spot:spot-shared-search-api
+  name: Spot Shared Search API
+  description: The Shared Search API from Spot — 2 operation(s) for shared search.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Shared Search
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-shared-search-api-openapi.yml
+- aid: spot:spot-zones-api
+  name: Spot Zones API
+  description: The Zones API from Spot — 1 operation(s) for zones.
+  humanURL: https://developers.spot.ai/reference/introduction
+  baseURL: https://dev-api.spot.ai/
+  tags:
+  - Zones
+  properties:
+  - type: OpenAPI
+    url: openapi/spot-zones-api-openapi.yml
 common:
+- type: TrustCenter
+  url: security/spot-trust-center.yml
+- type: DomainSecurity
+  url: security/spot-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/spot-agentic-access.yml
+- type: Authentication
+  url: authentication/spot-authentication.yml
 - type: Website
   url: https://www.spot.ai/
+- type: DeveloperPortal
+  url: https://developers.spot.ai/
+- type: Documentation
+  url: https://developers.spot.ai/
+- type: APIReference
+  url: https://developers.spot.ai/reference/introduction
+- type: GettingStarted
+  url: https://developers.spot.ai/reference/authentication
+- type: Support
+  url: https://www.spot.ai/support
+- type: Blog
+  url: https://www.spot.ai/blog
+- type: Pricing
+  url: https://www.spot.ai/pricing
+- type: SignUp
+  url: https://dashboard.spot.ai/
+- type: Login
+  url: https://dashboard.spot.ai/
+- type: TermsOfService
+  url: https://www.spot.ai/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.spot.ai/privacy
+- type: GitHubOrganization
+  url: https://github.com/spotai
+- type: Security
+  url: https://www.spot.ai/security
+- type: Compliance
+  url: https://www.spot.ai/security
+- type: LLMsTxt
+  url: llms/spot-llms.txt
+- type: ErrorCatalog
+  url: errors/spot-problem-types.yml
+- type: Conventions
+  url: conventions/spot-conventions.yml
+- type: Lifecycle
+  url: lifecycle/spot-lifecycle.yml
+- type: Conformance
+  url: conformance/spot-conformance.yml
+- type: DataModel
+  url: data-model/spot-data-model.yml
+- type: Webhooks
+  url: asyncapi/spot-webhooks.yml
+- type: MCPServer
+  url: mcp/spot-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Overlay
+  url: overlays/spot-devices-overlay.yaml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

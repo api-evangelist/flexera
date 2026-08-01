@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.spot.ai/reference/introduction
+versioning:
+  scheme: uri-path
+  current: v1
+  spec_version: 1.10.0
+  detail: All operations live under /v1; the published OpenAPI info.version is 1.10.0.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  detail: No public deprecation policy or Sunset/Deprecation header support documented.
+sla:
+  url: null
+status_page: null
+notes: >-
+  Spot Connect is labeled beta. No public status page or SLA page was found
+  (status.spot.ai did not resolve). No StatusPage/Deprecation pointers wired.
+deprecated_operations: []

@@ -1,0 +1,14 @@
+generated: '2026-07-21'
+method: searched
+probe: true
+source: https://www.spot.ai/security
+url: https://www.spot.ai/security
+certifications:
+- SOC 2
+- HIPAA
+evidence:
+- source: https://www.spot.ai/security
+  keywords:
+  - soc 2
+  - soc2
+  - hipaa

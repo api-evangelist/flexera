@@ -1,0 +1,42 @@
+{
+  "provider": "spot",
+  "sources": [
+    "spot-analytics-api-openapi.yml",
+    "spot-appliances-api-openapi.yml",
+    "spot-audio-api-openapi.yml",
+    "spot-cameras-api-openapi.yml",
+    "spot-embeds-api-openapi.yml",
+    "spot-historical-footage-api-openapi.yml",
+    "spot-integration-devices-api-openapi.yml",
+    "spot-integration-event-types-api-openapi.yml",
+    "spot-integration-events-api-openapi.yml",
+    "spot-integrations-api-openapi.yml",
+    "spot-locations-api-openapi.yml",
+    "spot-lpi-api-openapi.yml",
+    "spot-lpr-api-openapi.yml",
+    "spot-shared-search-api-openapi.yml",
+    "spot-zones-api-openapi.yml"
+  ],
+  "outputs": [
+    "spot-analytics-api-openapi.yml",
+    "spot-appliances-api-openapi.yml",
+    "spot-audio-api-openapi.yml",
+    "spot-cameras-api-openapi.yml",
+    "spot-embeds-api-openapi.yml",
+    "spot-historical-footage-api-openapi.yml",
+    "spot-integration-devices-api-openapi.yml",
+    "spot-integration-event-types-api-openapi.yml",
+    "spot-integration-events-api-openapi.yml",
+    "spot-integrations-api-openapi.yml",
+    "spot-locations-api-openapi.yml",
+    "spot-lpi-api-openapi.yml",
+    "spot-lpr-api-openapi.yml",
+    "spot-shared-search-api-openapi.yml",
+    "spot-zones-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/*.json + conventions/spot-conventions.yml
+skills:
+- file: spot-camera-live-view.md
+  name: Browse the camera estate and open a live view
+  api: openapi/spot-devices-openapi.json
+  operations: [GetLocations, GetCameras, GetCameraById, GetLiveUrl, GenerateLiveEmbedUrl]
+- file: spot-connect-ingest-events.md
+  name: Stand up a Spot Connect integration and ingest business events
+  api: openapi/spot-connect-openapi.json
+  operations: [CreateIntegration, CreateIntegrationEventType, CreateIntegrationDevice, IntegrationEventIngestionWebhook, CreateIntegrationEvents, GetIntegrationEvents]
+- file: spot-lpr-interest-list.md
+  name: Monitor license plates with an LPR interest list
+  api: openapi/spot-intelligence-openapi.json
+  operations: [GetInterestLists, CreateInterestList, LprReport]

@@ -1,0 +1,41 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.spot.ai/reference/webhooks
+spec_type: Webhooks
+summary: >-
+  Spot AI delivers real-time events to consumer HTTP endpoints as signed POST
+  requests. Messages carry Spot-Webhook-Signature (raw RSA256 signature) and
+  Spot-Webhook-Meta (JSON: exp, iat, kid) headers. Verify against the per-org
+  JWKS. Consumers acknowledge with any 2xx; unacknowledged messages are retried
+  on exponential backoff up to 5 attempts.
+delivery:
+  transport: https
+  method: POST
+  signature: RSA256 (asymmetric)
+  signature_header: Spot-Webhook-Signature
+  meta_header: Spot-Webhook-Meta
+  jwks_url: https://jwks.spot.ai/webhooks/{org_id}/keys.json
+  replay_protection: Spot-Webhook-Meta.exp (epoch seconds)
+  retries: exponential backoff, max 5 attempts
+  ack: any 2xx status code
+events:
+- type: agent.event
+  description: >-
+    Fired by AI Agents; payload includes camera {id,name}, location
+    {id,name,timezone}, and agent {id,name,message}.
+  example_payload_fields:
+  - event_type
+  - timestamp
+  - webhook_id
+  - data.camera
+  - data.location
+  - data.agent
+integration_ingestion:
+  description: >-
+    Spot Connect also ingests inbound events from external systems (the reverse
+    direction) via POST /v1/integrations/{integration_id}/events
+    (IntegrationEventIngestionWebhook) and bulk import
+    (CreateIntegrationEvents).
+  operations:
+  - openapi/spot-connect-openapi.json#IntegrationEventIngestionWebhook
+  - openapi/spot-connect-openapi.json#CreateIntegrationEvents

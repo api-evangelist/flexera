@@ -1,0 +1,65 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/*.json (4xx/5xx responses)
+docs: https://developers.spot.ai/reference/response-codes
+format: custom
+envelope:
+  description: >-
+    Validation errors return a ValidationError object with `name`, `message`,
+    and a `details[]` array of {field, message, value}. Spot AI is NOT RFC 9457
+    problem+json; it uses conventional HTTP status codes with a JSON body.
+  schema_ref: "#/components/schemas/ValidationError"
+status_codes:
+- status: 200
+  title: OK
+  meaning: Success
+- status: 400
+  title: Bad Request
+  meaning: Request could not be processed
+- status: 401
+  title: Unauthorized
+  meaning: Missing or invalid API key
+- status: 403
+  title: Forbidden
+  meaning: API key does not have required permissions
+- status: 404
+  title: Not Found
+  meaning: Requested resource does not exist
+- status: 429
+  title: Too Many Requests
+  meaning: You have exceeded the API rate limit
+- status: '5xx'
+  title: Server Error
+  meaning: Spot AI was unable to process the request
+problems:
+- status: 422
+  title: Validation Failed
+  schema: ValidationError
+  observed_on:
+  - openapi/spot-devices-openapi.json#GetLocations
+  - openapi/spot-connect-openapi.json#CreateIntegration
+  - openapi/spot-intelligence-openapi.json#Counting
+- status: 409
+  title: Conflict
+  observed_on:
+  - openapi/spot-devices-openapi.json#CreateHistoricalFootage
+- status: 410
+  title: Gone
+  meaning: Historical footage no longer available
+  observed_on:
+  - openapi/spot-devices-openapi.json#GetHistoricalFootage
+- status: 403
+  title: Forbidden
+  observed_on:
+  - openapi/spot-devices-openapi.json#GenerateLiveEmbedUrl
+  - openapi/spot-devices-openapi.json#PlayAudio
+- status: 404
+  title: Not Found
+  observed_on:
+  - openapi/spot-devices-openapi.json#GetCameraById
+  - openapi/spot-devices-openapi.json#GetAppliance
+- status: 500
+  title: Internal Server Error
+  observed_on:
+  - openapi/spot-devices-openapi.json#GenerateLiveEmbedUrl
+  - openapi/spot-devices-openapi.json#PlayAudio

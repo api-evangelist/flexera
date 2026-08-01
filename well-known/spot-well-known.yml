@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: searched
+source: live probe of /.well-known/ paths (2026-07-21)
+note: >-
+  No /.well-known/ discovery documents are published on the Spot AI hosts. All
+  probed paths returned 404 (or the host was unreachable). Recorded as valid
+  negative results; no WellKnown/SecurityTxt pointer is wired.
+hosts:
+- host: https://dev-api.spot.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://www.spot.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://developers.spot.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404

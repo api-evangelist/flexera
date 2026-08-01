@@ -1,0 +1,18 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Spot AI — Devices
+  version: 1.0.0
+extends: openapi/spot-devices-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: spot
+    x-apievangelist-api: devices
+    x-apievangelist-auth: http-bearer
+    x-apievangelist-pagination: cursor
+- target: $.info
+  update:
+    x-apievangelist-notes: >-
+      Camera-estate management surface. Cursor pagination via `next`/`prev` with
+      a `limit` (default 50, max 100). Bearer API-key auth; several operations
+      require named per-camera permissions.

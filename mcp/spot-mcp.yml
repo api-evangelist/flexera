@@ -1,0 +1,140 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/*.json
+note: No official Spot AI MCP server was found. Candidate tool list derived one-per-operation from the
+  published OpenAPI; not an authoritative Spot AI server.
+server:
+  name: spot
+  transport: http
+  url: null
+tools:
+- name: create_integration
+  description: Create a new integration
+  source_operation: openapi/spot-connect-openapi.json#CreateIntegration
+- name: get_all_integrations
+  description: Get all integrations
+  source_operation: openapi/spot-connect-openapi.json#GetAllIntegrations
+- name: create_integration_device
+  description: Create integration device
+  source_operation: openapi/spot-connect-openapi.json#CreateIntegrationDevice
+- name: get_all_devices_for_integration
+  description: Get all devices for integration
+  source_operation: openapi/spot-connect-openapi.json#GetAllDevicesForIntegration
+- name: create_integration_events
+  description: Import Integration Events
+  source_operation: openapi/spot-connect-openapi.json#CreateIntegrationEvents
+- name: create_integration_event_type
+  description: Create integration event type
+  source_operation: openapi/spot-connect-openapi.json#CreateIntegrationEventType
+- name: get_all_event_types_for_integration
+  description: Get all event types for integration
+  source_operation: openapi/spot-connect-openapi.json#GetAllEventTypesForIntegration
+- name: delete_integration
+  description: Delete an existing integration
+  source_operation: openapi/spot-connect-openapi.json#DeleteIntegration
+- name: get_integration
+  description: Get integration information
+  source_operation: openapi/spot-connect-openapi.json#GetIntegration
+- name: update_integration
+  description: Update integration name
+  source_operation: openapi/spot-connect-openapi.json#UpdateIntegration
+- name: delete_integration_device
+  description: Delete an integration device
+  source_operation: openapi/spot-connect-openapi.json#DeleteIntegrationDevice
+- name: get_integration_device_by_id
+  description: Get integration device by id
+  source_operation: openapi/spot-connect-openapi.json#GetIntegrationDeviceById
+- name: update_integration_device_properties
+  description: Update integration device properties
+  source_operation: openapi/spot-connect-openapi.json#UpdateIntegrationDeviceProperties
+- name: delete_integration_event
+  description: Delete Integration Event
+  source_operation: openapi/spot-connect-openapi.json#DeleteIntegrationEvent
+- name: update_integration_event
+  description: Update Integration Event
+  source_operation: openapi/spot-connect-openapi.json#UpdateIntegrationEvent
+- name: delete_integration_event_type
+  description: Delete integration event type
+  source_operation: openapi/spot-connect-openapi.json#DeleteIntegrationEventType
+- name: get_integration_event_type_by_id
+  description: Get integration event type by id
+  source_operation: openapi/spot-connect-openapi.json#GetIntegrationEventTypeById
+- name: update_integration_event_type
+  description: Update integration event type name
+  source_operation: openapi/spot-connect-openapi.json#UpdateIntegrationEventType
+- name: get_integration_events
+  description: Get all integration events
+  source_operation: openapi/spot-connect-openapi.json#GetIntegrationEvents
+- name: integration_event_ingestion_webhook
+  description: Ingest Integration Event
+  source_operation: openapi/spot-connect-openapi.json#IntegrationEventIngestionWebhook
+- name: update_integration_device_cameras
+  description: Update integration device camera links
+  source_operation: openapi/spot-connect-openapi.json#UpdateIntegrationDeviceCameras
+- name: create_historical_footage
+  description: Create historical footage job
+  source_operation: openapi/spot-devices-openapi.json#CreateHistoricalFootage
+- name: create_shared_camera_search
+  description: Create shared camera search view
+  source_operation: openapi/spot-devices-openapi.json#CreateSharedCameraSearch
+- name: generate_live_embed_url
+  description: Generate an embeddable URL for a live camera feed
+  source_operation: openapi/spot-devices-openapi.json#GenerateLiveEmbedUrl
+- name: generate_vod_embed_url
+  description: Generate an embeddable URL for a VOD camera feed
+  source_operation: openapi/spot-devices-openapi.json#GenerateVodEmbedUrl
+- name: get_appliance
+  description: Get appliance information
+  source_operation: openapi/spot-devices-openapi.json#GetAppliance
+- name: get_appliances
+  description: Get a paginated list of appliances
+  source_operation: openapi/spot-devices-openapi.json#GetAppliances
+- name: get_camera_by_id
+  description: Get camera information
+  source_operation: openapi/spot-devices-openapi.json#GetCameraById
+- name: get_camera_count
+  description: Get camera count
+  source_operation: openapi/spot-devices-openapi.json#GetCameraCount
+- name: get_cameras
+  description: Get a paginated list of cameras
+  source_operation: openapi/spot-devices-openapi.json#GetCameras
+- name: get_historical_footage
+  description: Get details of a submitted historical footage request
+  source_operation: openapi/spot-devices-openapi.json#GetHistoricalFootage
+- name: get_live_url
+  description: Get a url to a live stream of the cameras
+  source_operation: openapi/spot-devices-openapi.json#GetLiveUrl
+- name: get_locations
+  description: Get locations
+  source_operation: openapi/spot-devices-openapi.json#GetLocations
+- name: get_shared_camera_search
+  description: Get shared camera search view details
+  source_operation: openapi/spot-devices-openapi.json#GetSharedCameraSearch
+- name: update_shared_camera_search
+  description: Update shared camera search view details
+  source_operation: openapi/spot-devices-openapi.json#UpdateSharedCameraSearch
+- name: get_zones
+  description: Get zones
+  source_operation: openapi/spot-devices-openapi.json#GetZones
+- name: play_audio
+  description: Play audio through a camera
+  source_operation: openapi/spot-devices-openapi.json#PlayAudio
+- name: counting
+  description: Count
+  source_operation: openapi/spot-intelligence-openapi.json#Counting
+- name: create_interest_list
+  description: Create a Licence Plate Interest List
+  source_operation: openapi/spot-intelligence-openapi.json#CreateInterestList
+- name: get_interest_lists
+  description: Get all Licence Plate Interest Lists
+  source_operation: openapi/spot-intelligence-openapi.json#GetInterestLists
+- name: idle
+  description: Idle
+  source_operation: openapi/spot-intelligence-openapi.json#Idle
+- name: lpr_report
+  description: LPR Report
+  source_operation: openapi/spot-intelligence-openapi.json#LprReport
+- name: presence
+  description: Presence
+  source_operation: openapi/spot-intelligence-openapi.json#Presence

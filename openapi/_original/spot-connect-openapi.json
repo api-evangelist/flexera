@@ -1,0 +1,2599 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Spot AI \u2014 Spot Connect (beta)",
+    "version": "1.10.0",
+    "description": "Spot AI Developer API",
+    "contact": {
+      "name": "Spot AI",
+      "url": "https://developers.spot.ai/"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://dev-api.spot.ai/"
+    }
+  ],
+  "paths": {
+    "/v1/integrations": {
+      "post": {
+        "operationId": "CreateIntegration",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration": {
+                        "id": 1,
+                        "name": "My Integration",
+                        "integration_type_id": 1,
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The responder function for a forbidden response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint creates a new integration. You may choose a canned\nintegration type or create a fully custom integration.\n\nCanned integrations will have a schema template to help you\ncreate event types and a specific visualization layer.\nYou will still be able to customize the event type schema however you see fit.",
+        "summary": "Create a new integration",
+        "tags": [
+          "Integrations"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "- The integration to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIntegrationInput",
+                "description": "- The integration to create"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetAllIntegrations",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationListResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integrations": [
+                        {
+                          "id": 1,
+                          "name": "My Integration",
+                          "integration_type_id": 1,
+                          "created": "2023-06-29T12:20:05.533Z",
+                          "updated": "2023-06-29T12:20:05.533Z"
+                        },
+                        {
+                          "id": 2,
+                          "name": "My Integration 2",
+                          "integration_type_id": 1,
+                          "created": "2023-06-29T12:20:05.533Z",
+                          "updated": "2023-06-29T12:20:05.533Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint returns details of all integrations that the caller can access within an organization.\nIntegrations that the caller does not have access to will not be included in the response.\nDetails include integration number, integration name, and integration type.",
+        "summary": "Get all integrations",
+        "tags": [
+          "Integrations"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/v1/integrations/{integration_id}/devices": {
+      "post": {
+        "operationId": "CreateIntegrationDevice",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationDeviceResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_device": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "Device 51",
+                        "external_id": "STORE-042:LANE-3",
+                        "camera_ids": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "tags": [
+                          "tag1",
+                          "tag2"
+                        ],
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint creates a new integration device. You can choose up to four\ncameras in the same location to tie to the integration device.\n\nWhenever there is an event from this integration device, you will\nautomatically see the footage from all attached cameras.",
+        "summary": "Create integration device",
+        "tags": [
+          "Integration Devices"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the device belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "- Integration device information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIntegrationDeviceInput",
+                "description": "- Integration device information"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetAllDevicesForIntegration",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationDeviceListResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_devices": [
+                        {
+                          "id": 51,
+                          "integration_id": 1,
+                          "name": "Device 51",
+                          "external_id": "STORE-042:LANE-3",
+                          "camera_ids": [
+                            1,
+                            2,
+                            3
+                          ],
+                          "tags": [
+                            "tag1",
+                            "tag2"
+                          ],
+                          "created": "2023-06-29T12:20:05.533Z",
+                          "updated": "2023-06-29T12:20:05.533Z"
+                        }
+                      ],
+                      "prev": "eyAiaWQiOiA1MCwgImRpcmVjdGlvbiI6ICJwcmV2IiB9",
+                      "next": "eyAiaWQiOiAxMDEsICJkaXJlY3Rpb24iOiAibmV4dCIgfQ=="
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint returns a paginated list of all devices in an integration\nthat the caller has access to, along with the cameras associated with each device.\nDevices that the caller does not have access to will not be included in the response.",
+        "summary": "Get all devices for integration",
+        "tags": [
+          "Integration Devices"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the devices belong to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- List of camera ids to filter by",
+            "in": "query",
+            "name": "camera_ids",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "description": "- List of tags to filter by",
+            "in": "query",
+            "name": "tags",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "description": "- Cursor for pagination",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "- Number of cameras to return. Max 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/integrations/{integration_id}/events/import": {
+      "post": {
+        "operationId": "CreateIntegrationEvents",
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint allows for importing a list of events.\n\nRequired parameters include timestamp, device ID, and the user-defined schema/metadata.\n\nFor single events forwarded through a webhook, use the Ingest Integration Event endpoint.",
+        "summary": "Import Integration Events",
+        "tags": [
+          "Integration Events"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the events belong to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateIntegrationEventsInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/integrations/{integration_id}/event-types": {
+      "post": {
+        "operationId": "CreateIntegrationEventType",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationEventTypeResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_event_type": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "POS Transaction",
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "store_id": {
+                              "type": "string"
+                            },
+                            "lane": {
+                              "type": "number"
+                            },
+                            "transaction_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "store_id",
+                            "lane"
+                          ]
+                        },
+                        "external_device_id_template": "{store_id}:{lane}",
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint creates a new integration event type.\n\nUsers will be able to define their own event schema by specifying\nkey-value pairs in json schema format conforming to Spot's meta-schema.",
+        "summary": "Create integration event type",
+        "tags": [
+          "Integration Event Types"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the event type belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "- Integration event type information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pick_IntegrationEventType.name-or-schema-or-duration-or-buffer-or-external_device_id_template_",
+                "description": "- Integration event type information"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "GetAllEventTypesForIntegration",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationEventTypeListResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_event_types": [
+                        {
+                          "id": 51,
+                          "integration_id": 1,
+                          "name": "POS Transaction",
+                          "schema": {
+                            "type": "object",
+                            "properties": {
+                              "store_id": {
+                                "type": "string"
+                              },
+                              "lane": {
+                                "type": "number"
+                              },
+                              "transaction_id": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "store_id",
+                              "lane"
+                            ]
+                          },
+                          "external_device_id_template": "{store_id}:{lane}",
+                          "created": "2023-06-29T12:20:05.533Z",
+                          "updated": "2023-06-29T12:20:05.533Z"
+                        }
+                      ],
+                      "prev": "eyAiaWQiOiA1MCwgImRpcmVjdGlvbiI6ICJwcmV2IiB9",
+                      "next": "eyAiaWQiOiAxMDEsICJkaXJlY3Rpb24iOiAibmV4dCIgfQ=="
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint returns a paginated list of all integration event types\nassociated with an integration that the caller has access to.\nEvent types that the caller does not have access to will not be included\nin the response.",
+        "summary": "Get all event types for integration",
+        "tags": [
+          "Integration Event Types"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the event types belong to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- Cursor for pagination",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "- Number of cameras to return. Max 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      }
+    },
+    "/v1/integrations/{integration_id}": {
+      "delete": {
+        "operationId": "DeleteIntegration",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration": {
+                        "id": 1,
+                        "name": "My Integration",
+                        "integration_type_id": 1,
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint can be used to delete an integration.\nAll associated data including integration devices, integration event types,\nand events will also be deleted",
+        "summary": "Delete an existing integration",
+        "tags": [
+          "Integrations"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- The ID of the integration to delete",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "get": {
+        "operationId": "GetIntegration",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration": {
+                        "id": 1,
+                        "name": "My Integration",
+                        "integration_type_id": 1,
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint returns full details of a specific integration.\n\nThe integration ID is required to return integration name and integration type.",
+        "summary": "Get integration information",
+        "tags": [
+          "Integrations"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateIntegration",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration": {
+                        "id": 1,
+                        "name": "My Integration",
+                        "integration_type_id": 1,
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint can be used to update an existing integration's name.",
+        "summary": "Update integration name",
+        "tags": [
+          "Integrations"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- The ID of the integration to update",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "- The integration to create",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateIntegrationInput",
+                "description": "- The integration to create"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/integrations/{integration_id}/devices/{integration_device_id}": {
+      "delete": {
+        "operationId": "DeleteIntegrationDevice",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationDeviceResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_device": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "Device 51",
+                        "external_id": "STORE-042:LANE-3",
+                        "camera_ids": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "tags": [
+                          "tag1",
+                          "tag2"
+                        ],
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:30:00.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint deletes an integration device. All integration events\nassociated with the integration device will also be deleted. Required\nparameters are integration ID and integration device ID.",
+        "summary": "Delete an integration device",
+        "tags": [
+          "Integration Devices"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration device",
+            "in": "path",
+            "name": "integration_device_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "get": {
+        "operationId": "GetIntegrationDeviceById",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationDeviceResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_device": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "Device 51",
+                        "external_id": "STORE-042:LANE-3",
+                        "camera_ids": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "tags": [
+                          "tag1",
+                          "tag2"
+                        ],
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint returns details of an integration device, which include\ndevice name, tags, integration ID, linked camera IDs, and audit stamps.",
+        "summary": "Get integration device by id",
+        "tags": [
+          "Integration Devices"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the device belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration device",
+            "in": "path",
+            "name": "integration_device_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateIntegrationDeviceProperties",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationDeviceResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_device": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "Device 51 - Updated",
+                        "external_id": "STORE-042:LANE-3",
+                        "camera_ids": [
+                          1,
+                          2,
+                          3
+                        ],
+                        "tags": [
+                          "tag1",
+                          "tag2"
+                        ],
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:30:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint can be used to update an existing integration device's name and tags.\n\nNote: The `external_id` field cannot be updated after device creation, as it serves\nas an immutable identifier for automatic device resolution during event ingestion.",
+        "summary": "Update integration device properties",
+        "tags": [
+          "Integration Devices"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the device belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration device",
+            "in": "path",
+            "name": "integration_device_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "- JSON object containing the updated integration device name",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partial_Pick_IntegrationDevice.tags-or-name__",
+                "description": "- JSON object containing the updated integration device name"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/integrations/{integration_id}/events/{integration_event_id}": {
+      "delete": {
+        "operationId": "DeleteIntegrationEvent",
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint deletes an existing integration event.",
+        "summary": "Delete Integration Event",
+        "tags": [
+          "Integration Events"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "integration_event_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateIntegrationEvent",
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint allows for updating the attributes, duration, and buffer of an event.\nWhen updating attributes, only updated values should be included. These will overwrite existing values.",
+        "summary": "Update Integration Event",
+        "tags": [
+          "Integration Events"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the event belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration event to update",
+            "in": "path",
+            "name": "integration_event_id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateIntegrationEventInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/integrations/{integration_id}/event-types/{integration_event_type_id}": {
+      "delete": {
+        "operationId": "DeleteIntegrationEventType",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationEventTypeResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_event_type": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "POS Transaction",
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "store_id": {
+                              "type": "string"
+                            },
+                            "lane": {
+                              "type": "number"
+                            },
+                            "transaction_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "store_id",
+                            "lane"
+                          ]
+                        },
+                        "external_device_id_template": "{store_id}:{lane}",
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "Deletes an integration event type. All events of that integration event type will also be deleted.",
+        "summary": "Delete integration event type",
+        "tags": [
+          "Integration Event Types"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the event type belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration event type",
+            "in": "path",
+            "name": "integration_event_type_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "get": {
+        "operationId": "GetIntegrationEventTypeById",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationEventTypeResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_event_type": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "POS Transaction",
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "store_id": {
+                              "type": "string"
+                            },
+                            "lane": {
+                              "type": "number"
+                            },
+                            "transaction_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "store_id",
+                            "lane"
+                          ]
+                        },
+                        "external_device_id_template": "{store_id}:{lane}",
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint returns details of an integration event type.\nDetails include integration event type name and integration event type schema.",
+        "summary": "Get integration event type by id",
+        "tags": [
+          "Integration Event Types"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the event type belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration event type",
+            "in": "path",
+            "name": "integration_event_type_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "UpdateIntegrationEventType",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationEventTypeResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_event_type": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "POS Transaction",
+                        "schema": {
+                          "type": "object",
+                          "properties": {
+                            "store_id": {
+                              "type": "string"
+                            },
+                            "lane": {
+                              "type": "number"
+                            },
+                            "transaction_id": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "store_id",
+                            "lane"
+                          ]
+                        },
+                        "external_device_id_template": "{store_id}:{lane}",
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:20:05.533Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint can be used to update properties of an integration event type.",
+        "summary": "Update integration event type name",
+        "tags": [
+          "Integration Event Types"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the event type belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration event type",
+            "in": "path",
+            "name": "integration_event_type_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "- JSON object containing the updated integration event type information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pick_IntegrationEventType.name-or-schema-or-duration-or-buffer-or-external_device_id_template_",
+                "description": "- JSON object containing the updated integration event type information"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/integrations/{integration_id}/events": {
+      "get": {
+        "operationId": "GetIntegrationEvents",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationEventListResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_events": [
+                        {
+                          "id": "b3b3b3b3-b3b3-b3b3-b3b3-b3b3b3b3b3b3",
+                          "integration_event_type_id": 1,
+                          "integration_id": 1,
+                          "integration_device_id": 1,
+                          "timestamp": "2023-06-29T12:20:05.533Z",
+                          "attributes": {
+                            "foo": "bar"
+                          },
+                          "created": "2023-06-29T12:20:05.533Z",
+                          "updated": "2023-06-29T12:20:05.533Z"
+                        },
+                        {
+                          "id": "c3c3c3c3-c3c3-c3c3-c3c3-c3c3c3c3c3c3",
+                          "integration_event_type_id": 2,
+                          "integration_id": 1,
+                          "integration_device_id": 1,
+                          "timestamp": "2023-06-29T12:20:05.533Z",
+                          "attributes": {
+                            "baz": "qux"
+                          },
+                          "created": "2023-06-29T12:20:05.533Z",
+                          "updated": "2023-06-29T12:20:05.533Z"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint retrieves a list of all integration events for an integration that the caller has access to,\nand allows filter criteria to support searching for specific events.\nEvents that the caller does not have access to will not be included in the response.",
+        "summary": "Get all integration events",
+        "tags": [
+          "Integration Events"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the events belong to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- List of integration event type ids to filter by",
+            "in": "query",
+            "name": "integrationEventTypeIds",
+            "required": false,
+            "schema": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "description": "- List of integration device ids to filter by",
+            "in": "query",
+            "name": "integrationDeviceIds",
+            "required": false,
+            "schema": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "description": "- List of camera ids to filter by",
+            "in": "query",
+            "name": "cameraIds",
+            "required": false,
+            "schema": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          },
+          {
+            "description": "- Start date to filter by",
+            "in": "query",
+            "name": "start",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          },
+          {
+            "description": "- End date to filter by",
+            "in": "query",
+            "name": "end",
+            "required": false,
+            "schema": {
+              "format": "date-time",
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "operationId": "IntegrationEventIngestionWebhook",
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint creates a new integration event. Required parameters include\ntimestamp and the user-defined schema/metadata (attributes).\n\n**Device Resolution:**\n\nDevice identification follows this precedence order:\n1. `integration_device_id` \u2014 if provided, used directly (highest precedence)\n2. `device_external_id` \u2014 if provided, looks up or auto-creates a device with that external ID\n3. **Device ID Template** \u2014 if configured on the event type, evaluates the template against\n   event attributes to derive an external ID, then looks up or auto-creates the device\n4. **Error** \u2014 if none of the above resolve a device, the request fails with 400 Bad Request\n\nThere is no fallback between these options. If you provide an invalid `integration_device_id`,\nthe request fails without trying `device_external_id` or templates.\n\nFor details on configuring Device ID Templates, see the\n[Automatic Device Creation](/reference/device-auto-creation) guide.\n\nThis endpoint should be used for events forwarded through a webhook. For\nbulk upload of events, use the Import Integration Events endpoint.",
+        "summary": "Ingest Integration Event",
+        "tags": [
+          "Integration Events"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the event belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IntegrationEventIngestionWebhookInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/integrations/{integration_id}/devices/{integration_device_id}/cameras": {
+      "put": {
+        "operationId": "UpdateIntegrationDeviceCameras",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntegrationDeviceResult"
+                },
+                "examples": {
+                  "Example 1": {
+                    "value": {
+                      "integration_device": {
+                        "id": 51,
+                        "integration_id": 1,
+                        "name": "Device 51 - Updated",
+                        "external_id": "STORE-042:LANE-3",
+                        "camera_ids": [
+                          1,
+                          2,
+                          4
+                        ],
+                        "tags": [
+                          "tag1",
+                          "tag2",
+                          "tag3"
+                        ],
+                        "created": "2023-06-29T12:20:05.533Z",
+                        "updated": "2023-06-29T12:30:00.000Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        },
+        "description": "This endpoint can be used to update the cameras associated with an\nintegration device. Up to four cameras in the same location may be\ntied to an integration device.\n\nNotes:\n1) Older events will reference the new cameras.\n2) If the updated cameras are in a different location, it may affect\nusers' access to the integration device.",
+        "summary": "Update integration device camera links",
+        "tags": [
+          "Integration Devices"
+        ],
+        "security": [
+          {
+            "bearer_security": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "- ID of the integration that the device belongs to",
+            "in": "path",
+            "name": "integration_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "- ID of the integration device",
+            "in": "path",
+            "name": "integration_device_id",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "- JSON object containing the updated integration device camera ids",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pick_IntegrationDevice.camera_ids_",
+                "description": "- JSON object containing the updated integration device camera ids"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateIntegrationInput": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the integration",
+            "example": "My Integration",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "integration_type": {
+            "$ref": "#/components/schemas/IntegrationTypeName",
+            "description": "The type of integration (default: custom)",
+            "example": "custom"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Integration": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the integration",
+            "example": "My Integration",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "integration_type_id": {
+            "type": "number",
+            "format": "double",
+            "description": "The type of integration (default: custom)",
+            "example": "custom"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this integration was created",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this integration was last updated",
+            "example": "2023-06-29T12:20:05.533Z"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "integration_type_id",
+          "created",
+          "updated"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationResult": {
+        "properties": {
+          "integration": {
+            "$ref": "#/components/schemas/Integration"
+          }
+        },
+        "required": [
+          "integration"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationTypeName": {
+        "enum": [
+          "custom",
+          "pos"
+        ],
+        "type": "string"
+      },
+      "ValidationError": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationErrorDetails"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "message",
+          "details"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ValidationErrorDetails": {
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "value": {}
+        },
+        "required": [
+          "field",
+          "message"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CreateIntegrationDeviceInput": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Pick_IntegrationDevice.name-or-camera_ids_"
+          },
+          {
+            "$ref": "#/components/schemas/Partial_Pick_IntegrationDevice.tags__"
+          }
+        ]
+      },
+      "IntegrationDevice": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "integration_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of the integration this device belongs to",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the integration device",
+            "example": "My Integration Device",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "camera_ids": {
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "type": "array",
+            "description": "The IDs of the cameras linked to this integration device",
+            "example": [
+              1,
+              2,
+              3
+            ],
+            "maxItems": 4
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "The tags associated with this integration device",
+            "example": [
+              "Tag1",
+              "Tag2"
+            ]
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this integration device was created",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this integration device was last updated",
+            "example": "2023-06-29T12:20:05.533Z"
+          }
+        },
+        "required": [
+          "id",
+          "integration_id",
+          "name",
+          "camera_ids",
+          "tags",
+          "created",
+          "updated"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationDeviceResult": {
+        "properties": {
+          "integration_device": {
+            "$ref": "#/components/schemas/IntegrationDevice"
+          }
+        },
+        "required": [
+          "integration_device"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Partial_Pick_IntegrationDevice.tags-or-external_id__": {
+        "properties": {
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "The tags associated with this integration device",
+            "example": [
+              "Tag1",
+              "Tag2"
+            ]
+          },
+          "external_id": {
+            "type": "string",
+            "description": "A vendor-provided identifier for this device (e.g., POS terminal ID, lane number).\nUsed for automatic device identification during event ingestion.\nMust be unique within the integration scope.\n\n**Immutable**: Cannot be changed after device creation. This ensures events\nusing `device_external_id` continue to resolve to the correct device.",
+            "example": "STORE-042:LANE-3",
+            "minLength": 1,
+            "maxLength": 255
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
+      },
+      "Pick_IntegrationDevice.name-or-camera_ids_": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the integration device",
+            "example": "My Integration Device",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "camera_ids": {
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "type": "array",
+            "description": "The IDs of the cameras linked to this integration device",
+            "example": [
+              1,
+              2,
+              3
+            ],
+            "maxItems": 4
+          }
+        },
+        "required": [
+          "name",
+          "camera_ids"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "Partial_Pick_IntegrationDevice.tags__": {
+        "properties": {
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "The tags associated with this integration device",
+            "example": [
+              "Tag1",
+              "Tag2"
+            ]
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
+      },
+      "CreateIntegrationEventsInput": {
+        "properties": {
+          "integration_events": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrationEventInput"
+            },
+            "type": "array",
+            "description": "The integration events to create",
+            "minItems": 1
+          }
+        },
+        "required": [
+          "integration_events"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ImportIntegrationEventInput": {
+        "description": "Input for bulk import of integration events.\nUnlike webhook ingestion, bulk import requires an existing device ID.",
+        "properties": {
+          "integration_event_type_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of this event's type",
+            "example": 1
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of this event",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's duration, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's buffer, in milliseconds",
+            "maximum": 120000
+          },
+          "attributes": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The attributes of this event",
+            "example": {
+              "foo": "bar"
+            }
+          },
+          "integration_device_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of the integration device that generated this event.\nRequired for bulk import (devices must exist).",
+            "example": 1
+          }
+        },
+        "required": [
+          "integration_event_type_id",
+          "timestamp",
+          "attributes",
+          "integration_device_id"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationEventInput": {
+        "properties": {
+          "integration_event_type_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of this event's type",
+            "example": 1
+          },
+          "integration_device_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of the integration device that generated this event",
+            "example": 1
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of this event",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's duration, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's buffer, in milliseconds",
+            "maximum": 120000
+          },
+          "attributes": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The attributes of this event",
+            "example": {
+              "foo": "bar"
+            }
+          }
+        },
+        "required": [
+          "integration_event_type_id",
+          "integration_device_id",
+          "timestamp",
+          "attributes"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationEventType": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "integration_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of the integration this event type is associated with",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the integration event type",
+            "example": "My Integration Event Type",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The default duration of the integration event type, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The default buffer of the integration event type, in milliseconds",
+            "maximum": 120000
+          },
+          "schema": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The schema of the integration event type, in JSON Schema format"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this integration event type was created",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this integration event type was last updated",
+            "example": "2023-06-29T12:20:05.533Z"
+          }
+        },
+        "required": [
+          "id",
+          "integration_id",
+          "name",
+          "schema",
+          "created",
+          "updated"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationEventTypeResult": {
+        "properties": {
+          "integration_event_type": {
+            "$ref": "#/components/schemas/IntegrationEventType"
+          }
+        },
+        "required": [
+          "integration_event_type"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Pick_IntegrationEventType.name-or-schema-or-duration-or-buffer-or-external_device_id_template_": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the integration event type",
+            "example": "My Integration Event Type",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "schema": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The schema of the integration event type, in JSON Schema format.\nDefines the structure of event attributes that will be validated on ingestion.",
+            "example": {
+              "type": "object",
+              "properties": {
+                "store_id": {
+                  "type": "string"
+                },
+                "lane": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "store_id",
+                "lane"
+              ]
+            }
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The default duration of the integration event type, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The default buffer of the integration event type, in milliseconds",
+            "maximum": 120000
+          },
+          "external_device_id_template": {
+            "type": "string",
+            "description": "A template string for generating external device IDs from event attributes.\nWhen set, Spot will automatically create or match devices based on the\nevaluated template value from each incoming event's attributes.\n\n**Template Syntax**: Use `{property_name}` to reference event attributes.\nNested properties are supported: `{metadata.store.id}`.\n\n**Requirements**:\n- Template must contain at least one variable\n- All referenced properties must be marked as `required` in the schema\n- Empty strings are not allowed\n\n**Example**: For a schema with required properties `store_id` and `lane`,\nthe template `{store_id}:{lane}` would generate device IDs like `\"STORE001:3\"`.\n\nWhen omitted, events must explicitly specify a device_id during ingestion.",
+            "example": "{store_id}:{lane}"
+          }
+        },
+        "required": [
+          "name",
+          "schema"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "Pick_IntegrationEventType.name-or-schema-or-duration-or-buffer_": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the integration event type",
+            "example": "My Integration Event Type",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "schema": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The schema of the integration event type, in JSON Schema format"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The default duration of the integration event type, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The default buffer of the integration event type, in milliseconds",
+            "maximum": 120000
+          }
+        },
+        "required": [
+          "name",
+          "schema"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "IntegrationDeviceListResult": {
+        "properties": {
+          "prev": {
+            "type": "string",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "nullable": true
+          },
+          "integration_devices": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrationDevice"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "prev",
+          "next",
+          "integration_devices"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationEventTypeListResult": {
+        "properties": {
+          "prev": {
+            "type": "string",
+            "nullable": true
+          },
+          "next": {
+            "type": "string",
+            "nullable": true
+          },
+          "integration_event_types": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrationEventType"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "prev",
+          "next",
+          "integration_event_types"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationListResult": {
+        "properties": {
+          "integrations": {
+            "items": {
+              "$ref": "#/components/schemas/Integration"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "integrations"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationEvent": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "integration_event_type_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of this event's type",
+            "example": 1
+          },
+          "integration_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of the integration this event is associated with",
+            "example": 1
+          },
+          "integration_device_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of the integration device that generated this event",
+            "example": 1
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of this event",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's duration, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's buffer, in milliseconds",
+            "maximum": 120000
+          },
+          "attributes": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The attributes of this event",
+            "example": {
+              "foo": "bar"
+            }
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this event was created",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The date this event was last updated",
+            "example": "2023-06-29T12:20:05.533Z"
+          }
+        },
+        "required": [
+          "id",
+          "integration_event_type_id",
+          "integration_id",
+          "integration_device_id",
+          "timestamp",
+          "attributes",
+          "created",
+          "updated"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationEventListResult": {
+        "properties": {
+          "integration_events": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrationEvent"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "integration_events"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "IntegrationEventIngestionWebhookInput": {
+        "properties": {
+          "integration_event_type_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of this event's type",
+            "example": 1
+          },
+          "integration_device_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of the integration device that generated this event",
+            "example": 1
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp of this event",
+            "example": "2023-06-29T12:20:05.533Z"
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's duration, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's buffer, in milliseconds",
+            "maximum": 120000
+          },
+          "attributes": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The attributes of this event",
+            "example": {
+              "foo": "bar"
+            }
+          }
+        },
+        "required": [
+          "integration_event_type_id",
+          "integration_device_id",
+          "timestamp",
+          "attributes"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "UpdateIntegrationInput": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The updated name of the integration",
+            "example": "My Integration",
+            "minLength": 1,
+            "maxLength": 40
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Pick_IntegrationDevice.camera_ids_": {
+        "properties": {
+          "camera_ids": {
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "type": "array",
+            "description": "The IDs of the cameras linked to this integration device",
+            "example": [
+              1,
+              2,
+              3
+            ],
+            "maxItems": 4
+          }
+        },
+        "required": [
+          "camera_ids"
+        ],
+        "type": "object",
+        "description": "From T, pick a set of properties whose keys are in the union K"
+      },
+      "Partial_Pick_IntegrationDevice.tags-or-name__": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the integration device",
+            "example": "My Integration Device",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "description": "The tags associated with this integration device",
+            "example": [
+              "Tag1",
+              "Tag2"
+            ]
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
+      },
+      "UpdateIntegrationEventInput": {
+        "properties": {
+          "integration_event_type_id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The ID of this event's type",
+            "example": 1
+          },
+          "attributes": {
+            "additionalProperties": false,
+            "type": "object",
+            "description": "The attributes of this event",
+            "example": {
+              "foo": "bar"
+            }
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's duration, in milliseconds",
+            "maximum": 600000
+          },
+          "buffer": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The event's buffer, in milliseconds",
+            "maximum": 120000
+          }
+        },
+        "required": [
+          "integration_event_type_id",
+          "attributes"
+        ],
+        "type": "object",
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "bearer_security": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  }
+}

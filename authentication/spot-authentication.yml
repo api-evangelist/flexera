@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/spot-connect-openapi.json, openapi/spot-devices-openapi.json, openapi/spot-intelligence-openapi.json
+docs: https://developers.spot.ai/reference/authentication
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+notes: >-
+  Spot AI uses a bearer API key. An organization admin generates an API key on
+  the API settings page of the Spot dashboard (Create New Key -> name it ->
+  optional expiration, defaults to 1 year -> Generate Key). The key is shown
+  only once at creation. Keys are authorized by role (Owner recommended for full
+  access) with an optional resource scope. The key is sent as an HTTP bearer
+  token. Individual operations further require named permissions (e.g.
+  camera_share_create, clip_share_create, camera.manage_audio).
+schemes:
+- name: bearer_security
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/spot-connect-openapi.json
+  - openapi/spot-devices-openapi.json
+  - openapi/spot-intelligence-openapi.json
