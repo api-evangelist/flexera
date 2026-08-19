@@ -1,0 +1,229 @@
+{
+  "item": [
+    {
+      "id": "0fb5d9e7-c617-43d8-b0be-aff1e669b89f",
+      "name": "Billing Engine Setup",
+      "description": {
+        "content": "Set up and configure Billing Engine for cloud accounts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a911a963-4663-41fe-a33d-a5ff9015367a",
+          "name": "Spot Set up Billing Engine",
+          "request": {
+            "name": "Spot Set up Billing Engine",
+            "description": {
+              "content": "Set up Billing Engine on a Spot account by linking it to a cloud provider billing account for cost data ingestion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "billingEngine",
+                "setup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billingEngine\": {\n    \"cloudProvider\": \"<string>\",\n    \"billingAccountId\": \"<string>\",\n    \"bucketName\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92af236c-77e2-404a-88ff-5ce3dc13da37",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billingEngine",
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"billingEngine\": {\n    \"cloudProvider\": \"aws\",\n    \"billingAccountId\": \"500123\",\n    \"bucketName\": \"example_value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fd4d335-673d-4d19-9ac8-09fa6bd76bed",
+          "name": "Spot Validate Billing Engine Setup",
+          "request": {
+            "name": "Spot Validate Billing Engine Setup",
+            "description": {
+              "content": "Perform validation checks on a Billing Engine setup to ensure correct cloud provider credentials and billing access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "billingEngine",
+                "setup",
+                "validation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billingEngine\": {\n    \"cloudProvider\": \"<string>\",\n    \"billingAccountId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92230e77-bfd3-411f-b090-70ae307e2405",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billingEngine",
+                    "setup",
+                    "validation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"billingEngine\": {\n    \"cloudProvider\": \"example_value\",\n    \"billingAccountId\": \"500123\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1ee1ecb3-676d-44f1-b961-b5730676bb40",
+    "name": "Spot Administration Access Policies Billing Engine Setup API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

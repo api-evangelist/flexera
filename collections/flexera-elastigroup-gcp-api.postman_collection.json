@@ -1,0 +1,501 @@
+{
+  "item": [
+    {
+      "id": "b2749468-13c4-4be9-b5cb-a1b5e5121a90",
+      "name": "Elastigroup GCP",
+      "description": {
+        "content": "Manage Elastigroup compute groups in GCP.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0c9cafe5-c9d8-4ac0-b302-fd3fafeca238",
+          "name": "Spot Create Elastigroup (gcp)",
+          "request": {
+            "name": "Spot Create Elastigroup (gcp)",
+            "description": {
+              "content": "Create a new Elastigroup in GCP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "gce",
+                "group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    },\n    \"strategy\": {\n      \"preemptiblePercentage\": \"<integer>\",\n      \"fallbackToOd\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3bbd44e9-8f25-4c4d-9baf-91d275df9f87",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "gce",
+                    "group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": {\n    \"name\": \"Example Title\",\n    \"description\": \"A sample description.\",\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    },\n    \"strategy\": {\n      \"preemptiblePercentage\": 10,\n      \"fallbackToOd\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0dac0008-fa98-4d82-9921-a3ecd131a8d1",
+          "name": "Spot List Elastigroups (gcp)",
+          "request": {
+            "name": "Spot List Elastigroups (gcp)",
+            "description": {
+              "content": "List all Elastigroups in GCP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "gce",
+                "group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "841f2395-f0c6-4f16-9434-5af59c23ae8d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "gce",
+                    "group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bac4343f-dfb4-42a3-b381-8b81ffd2a527",
+          "name": "Spot Get Elastigroup (gcp)",
+          "request": {
+            "name": "Spot Get Elastigroup (gcp)",
+            "description": {
+              "content": "Get an existing Elastigroup in GCP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "gce",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e5c6d065-cd36-4ed1-aa29-d33e52bbdc2b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "gce",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f8331cf-b6a0-4bcf-90d4-51014b693999",
+          "name": "Spot Update Elastigroup (gcp)",
+          "request": {
+            "name": "Spot Update Elastigroup (gcp)",
+            "description": {
+              "content": "Update an existing Elastigroup in GCP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "gce",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    },\n    \"strategy\": {\n      \"preemptiblePercentage\": \"<integer>\",\n      \"fallbackToOd\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4394f55c-71e0-4a0e-bacc-3086abc42dfc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "gce",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": {\n    \"name\": \"Example Title\",\n    \"description\": \"A sample description.\",\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    },\n    \"strategy\": {\n      \"preemptiblePercentage\": 10,\n      \"fallbackToOd\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e86c3d69-819c-4aac-b985-db546f605ea3",
+          "name": "Spot Delete Elastigroup (gcp)",
+          "request": {
+            "name": "Spot Delete Elastigroup (gcp)",
+            "description": {
+              "content": "Delete an existing Elastigroup in GCP.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "gcp",
+                "gce",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e24851d6-dd57-4ea1-8c2d-2fc9d075421e",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "gcp",
+                    "gce",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5131ee4-76d0-4a97-81b9-e681272695f1",
+    "name": "Spot Administration Access Policies Elastigroup GCP API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

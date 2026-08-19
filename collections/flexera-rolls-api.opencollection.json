@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Rolls API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rolls",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Cluster Rolls (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all rolls for an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Initiate Cluster Roll (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate a roll (rolling replacement) of nodes in an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Get Roll Details (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll/:rollId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "rollId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the details and status of a specific roll."
+        },
+        {
+          "info": {
+            "name": "Spot Update Roll (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/roll/:rollId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "rollId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stop or modify a running roll."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

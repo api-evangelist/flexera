@@ -1,0 +1,137 @@
+{
+  "item": [
+    {
+      "id": "40ec04f4-29ab-44f1-982e-eba3420d1a53",
+      "name": "Right Sizing",
+      "description": {
+        "content": "Get right-sizing recommendations for Ocean workloads.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "90f3faa1-5eb9-4f48-b187-bbaf6ad0cd2f",
+          "name": "Spot Get Right-sizing Suggestions",
+          "request": {
+            "name": "Spot Get Right-sizing Suggestions",
+            "description": {
+              "content": "Get right-sizing recommendations for workloads running in an Ocean cluster. Returns CPU and memory recommendations based on actual usage.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "aws",
+                "k8s",
+                "cluster",
+                ":oceanClusterId",
+                "rightSizing",
+                "suggestion"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "oceanClusterId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb44c079-3d2d-4540-b9ba-5cfb59d491ec",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "aws",
+                    "k8s",
+                    "cluster",
+                    ":oceanClusterId",
+                    "rightSizing",
+                    "suggestion"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "oceanClusterId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "55bd3a92-4b68-43c8-8ba2-5039cb286822",
+    "name": "Spot Administration Access Policies Right Sizing API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

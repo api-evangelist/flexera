@@ -1,0 +1,455 @@
+{
+  "item": [
+    {
+      "id": "d26f4c1c-425f-4c8b-921d-f66a8e6c5473",
+      "name": "Savings Analysis",
+      "description": {
+        "content": "Analyze potential and realized savings from cloud commitments.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c71b1a56-80b0-428f-958a-266188cf4325",
+          "name": "Spot Get Savings Analysis (aws)",
+          "request": {
+            "name": "Spot Get Savings Analysis (aws)",
+            "description": {
+              "content": "Retrieve a savings analysis report showing realized and potential savings from AWS commitment optimization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eco",
+                "aws",
+                "analysis",
+                "savings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "Start date for the analysis period."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "End date for the analysis period."
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84223686-9f81-465d-8d3e-b75f6a873f94",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eco",
+                    "aws",
+                    "analysis",
+                    "savings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2026-01-15"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2026-01-15"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e0849e1-fa3e-46c1-9008-24ee0cfed2e7",
+          "name": "Spot Get Commitment Analysis (aws)",
+          "request": {
+            "name": "Spot Get Commitment Analysis (aws)",
+            "description": {
+              "content": "Retrieve a commitment utilization analysis showing how effectively reserved instances and savings plans are being used.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eco",
+                "aws",
+                "analysis",
+                "commitment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1e5d41b8-f364-4ee1-80d7-87f2db934b57",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eco",
+                    "aws",
+                    "analysis",
+                    "commitment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2026-01-15"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2026-01-15"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b4015163-3b43-453b-8a28-510e710ba7a6",
+          "name": "Spot Get Savings Analysis (azure)",
+          "request": {
+            "name": "Spot Get Savings Analysis (azure)",
+            "description": {
+              "content": "Retrieve a savings analysis report for Azure commitment optimization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eco",
+                "azure",
+                "analysis",
+                "savings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33e70d16-a07e-47c0-967e-26aa052d61f1",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eco",
+                    "azure",
+                    "analysis",
+                    "savings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2026-01-15"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2026-01-15"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "89b227c9-fd39-44f6-a20d-5d6d9802b748",
+          "name": "Spot Get Savings Analysis (gcp)",
+          "request": {
+            "name": "Spot Get Savings Analysis (gcp)",
+            "description": {
+              "content": "Retrieve a savings analysis report for GCP commitment optimization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eco",
+                "gcp",
+                "analysis",
+                "savings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3c846aa7-a6dd-4980-a95f-97ee576b4b3f",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eco",
+                    "gcp",
+                    "analysis",
+                    "savings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2026-01-15"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2026-01-15"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dfeaf391-e2eb-4578-8dc4-2b6abb613f66",
+    "name": "Spot Administration Access Policies Savings Analysis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

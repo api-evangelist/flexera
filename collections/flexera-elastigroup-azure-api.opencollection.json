@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Elastigroup Azure API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Elastigroup Azure",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Elastigroups (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/azure/compute/group"
+          },
+          "docs": "List all Elastigroups in Azure."
+        },
+        {
+          "info": {
+            "name": "Spot Create Elastigroup (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/azure/compute/group",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Elastigroup in Azure."
+        },
+        {
+          "info": {
+            "name": "Spot Get Elastigroup (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/azure/compute/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an existing Elastigroup in Azure."
+        },
+        {
+          "info": {
+            "name": "Spot Update Elastigroup (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/azure/compute/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Elastigroup in Azure."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Elastigroup (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/azure/compute/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Elastigroup in Azure."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

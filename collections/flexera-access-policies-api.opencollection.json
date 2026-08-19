@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Access Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Access Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/access/policy"
+          },
+          "docs": "Get all access policies of the organization."
+        },
+        {
+          "info": {
+            "name": "Spot Create Access Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/access/policy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new access policy for the organization."
+        },
+        {
+          "info": {
+            "name": "Spot Update Access Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/setup/access/policy/:policyId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing access policy."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Access Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/setup/access/policy/:policyId",
+            "params": [
+              {
+                "name": "policyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an access policy."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

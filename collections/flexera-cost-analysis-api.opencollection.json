@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Cost Analysis API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cost Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Get Cost Analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/billingEngine/cost",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "Start date for the cost analysis period."
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "End date for the cost analysis period."
+              },
+              {
+                "name": "groupBy",
+                "value": "account",
+                "type": "query",
+                "description": "Dimension to group costs by."
+              }
+            ]
+          },
+          "docs": "Retrieve cost analysis data across registered cloud accounts, including breakdowns by service, account, and time period."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

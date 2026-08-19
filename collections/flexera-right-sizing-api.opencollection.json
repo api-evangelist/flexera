@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Right Sizing API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Right Sizing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Get Right-sizing Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/cluster/:oceanClusterId/rightSizing/suggestion",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get right-sizing recommendations for workloads running in an Ocean cluster. Returns CPU and memory recommendations based on actual usage."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

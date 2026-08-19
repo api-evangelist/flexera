@@ -1,0 +1,511 @@
+{
+  "item": [
+    {
+      "id": "2e6bde36-6b44-45a0-8793-c0e069e73ef1",
+      "name": "Ocean ECS",
+      "description": {
+        "content": "Manage Ocean clusters for Amazon ECS.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "873355eb-163d-41fb-89a0-2f80f8b6aaed",
+          "name": "Spot Create Ocean Cluster (ecs)",
+          "request": {
+            "name": "Spot Create Ocean Cluster (ecs)",
+            "description": {
+              "content": "Create a new Ocean cluster for Amazon ECS.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "aws",
+                "ecs",
+                "cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster\": {\n    \"name\": \"<string>\",\n    \"clusterName\": \"<string>\",\n    \"region\": \"<string>\",\n    \"autoScaler\": {\n      \"isEnabled\": \"<boolean>\",\n      \"isAutoConfig\": \"<boolean>\"\n    },\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"subnetIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "81c030d0-e481-4301-bf58-34623e761384",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "aws",
+                    "ecs",
+                    "cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster\": {\n    \"name\": \"Example Title\",\n    \"clusterName\": \"example_value\",\n    \"region\": \"example_value\",\n    \"autoScaler\": {\n      \"isEnabled\": true,\n      \"isAutoConfig\": true\n    },\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"whitelist\": {}\n      },\n      \"subnetIds\": [\n        {}\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0469b92a-c344-4c69-bd2c-0acd2f5e722e",
+          "name": "Spot List Ocean Clusters (ecs)",
+          "request": {
+            "name": "Spot List Ocean Clusters (ecs)",
+            "description": {
+              "content": "List all Ocean ECS clusters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "aws",
+                "ecs",
+                "cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "72f5b4de-5a45-4ea3-9576-1d38067d0fd4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "aws",
+                    "ecs",
+                    "cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a85e97f3-97c8-46f1-84cd-23bb9ba5ac4e",
+          "name": "Spot Get Ocean Cluster (ecs)",
+          "request": {
+            "name": "Spot Get Ocean Cluster (ecs)",
+            "description": {
+              "content": "Get an Ocean ECS cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "aws",
+                "ecs",
+                "cluster",
+                ":oceanClusterId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "oceanClusterId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0fb07624-2824-46f7-9b39-cd220c0189d4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "aws",
+                    "ecs",
+                    "cluster",
+                    ":oceanClusterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "oceanClusterId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55efddfc-d55a-4a18-9bb8-72548fb511ec",
+          "name": "Spot Update Ocean Cluster (ecs)",
+          "request": {
+            "name": "Spot Update Ocean Cluster (ecs)",
+            "description": {
+              "content": "Update an Ocean ECS cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "aws",
+                "ecs",
+                "cluster",
+                ":oceanClusterId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "oceanClusterId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster\": {\n    \"name\": \"<string>\",\n    \"clusterName\": \"<string>\",\n    \"region\": \"<string>\",\n    \"autoScaler\": {\n      \"isEnabled\": \"<boolean>\",\n      \"isAutoConfig\": \"<boolean>\"\n    },\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"whitelist\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"subnetIds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d1cbb81-f1f3-463b-9d5e-14d0539049fa",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "aws",
+                    "ecs",
+                    "cluster",
+                    ":oceanClusterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "oceanClusterId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster\": {\n    \"name\": \"Example Title\",\n    \"clusterName\": \"example_value\",\n    \"region\": \"example_value\",\n    \"autoScaler\": {\n      \"isEnabled\": true,\n      \"isAutoConfig\": true\n    },\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"whitelist\": {}\n      },\n      \"subnetIds\": [\n        {}\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "17b7819b-4442-4cdb-863a-9712d1c73a6c",
+          "name": "Spot Delete Ocean Cluster (ecs)",
+          "request": {
+            "name": "Spot Delete Ocean Cluster (ecs)",
+            "description": {
+              "content": "Delete an Ocean ECS cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "aws",
+                "ecs",
+                "cluster",
+                ":oceanClusterId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "oceanClusterId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "302f42b0-5450-4d08-a11a-b4870d3e2585",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "aws",
+                    "ecs",
+                    "cluster",
+                    ":oceanClusterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "oceanClusterId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "93ba8f67-52d2-43d0-9d0e-bfc5a54fc50a",
+    "name": "Spot Administration Access Policies Ocean ECS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

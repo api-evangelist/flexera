@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Ocean AKS API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ocean AKS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Clusters (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster"
+          },
+          "docs": "List all Ocean AKS clusters."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean cluster for Azure Kubernetes Service."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Ocean AKS cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Ocean AKS cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cluster (aks)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/azure/k8s/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean AKS cluster."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

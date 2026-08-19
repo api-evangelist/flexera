@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Families API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Families",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Account Families",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/billingEngine/family"
+          },
+          "docs": "List all account families configured in Billing Engine."
+        },
+        {
+          "info": {
+            "name": "Spot Create Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/billingEngine/family",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an account family for grouping related cloud accounts and enabling consolidated cost allocation."
+        },
+        {
+          "info": {
+            "name": "Spot Get Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/billingEngine/family/:familyId",
+            "params": [
+              {
+                "name": "familyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a specific account family."
+        },
+        {
+          "info": {
+            "name": "Spot Update Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/billingEngine/family/:familyId",
+            "params": [
+              {
+                "name": "familyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing account family."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Account Family",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/billingEngine/family/:familyId",
+            "params": [
+              {
+                "name": "familyId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an account family."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

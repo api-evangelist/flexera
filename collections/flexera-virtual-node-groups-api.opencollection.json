@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Virtual Node Groups API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Virtual Node Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Virtual Node Groups (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec",
+            "params": [
+              {
+                "name": "oceanId",
+                "value": "500123",
+                "type": "query",
+                "description": "Ocean cluster ID to filter by."
+              }
+            ]
+          },
+          "docs": "List all virtual node groups for an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Create Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a virtual node group (launch specification) for an Ocean cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Get Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec/:launchSpecId",
+            "params": [
+              {
+                "name": "launchSpecId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the configuration of a virtual node group."
+        },
+        {
+          "info": {
+            "name": "Spot Update Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec/:launchSpecId",
+            "params": [
+              {
+                "name": "launchSpecId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a virtual node group."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Virtual Node Group (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/aws/k8s/launchSpec/:launchSpecId",
+            "params": [
+              {
+                "name": "launchSpecId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a virtual node group."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Stateful Instances API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stateful Instances",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Stateful Instances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/statefulInstance",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all stateful instances in an Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Recycle Stateful Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/statefulInstance/:statefulInstanceId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "statefulInstanceId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Recycle a stateful instance, replacing it with a new one."
+        },
+        {
+          "info": {
+            "name": "Spot Deallocate Stateful Instance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/statefulInstance/:statefulInstanceId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "statefulInstanceId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deallocate a stateful instance and its resources."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

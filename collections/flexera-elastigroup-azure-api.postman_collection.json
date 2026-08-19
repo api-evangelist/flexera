@@ -1,0 +1,501 @@
+{
+  "item": [
+    {
+      "id": "8bb637ed-4028-4d6f-b2b8-da920f198610",
+      "name": "Elastigroup Azure",
+      "description": {
+        "content": "Manage Elastigroup compute groups in Azure.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d78fe1ff-3123-4db6-aebf-c089ceed5455",
+          "name": "Spot Create Elastigroup (azure)",
+          "request": {
+            "name": "Spot Create Elastigroup (azure)",
+            "description": {
+              "content": "Create a new Elastigroup in Azure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "azure",
+                "compute",
+                "group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group\": {\n    \"name\": \"<string>\",\n    \"region\": \"<string>\",\n    \"resourceGroupName\": \"<string>\",\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    },\n    \"strategy\": {\n      \"spotPercentage\": \"<integer>\",\n      \"fallbackToOd\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92cfb44e-8eaf-4d52-b58b-f7ae45c87879",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "azure",
+                    "compute",
+                    "group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": {\n    \"name\": \"Example Title\",\n    \"region\": \"example_value\",\n    \"resourceGroupName\": \"example_value\",\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    },\n    \"strategy\": {\n      \"spotPercentage\": 10,\n      \"fallbackToOd\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "264be6d7-1e82-43eb-b813-619393e26f52",
+          "name": "Spot List Elastigroups (azure)",
+          "request": {
+            "name": "Spot List Elastigroups (azure)",
+            "description": {
+              "content": "List all Elastigroups in Azure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "azure",
+                "compute",
+                "group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f14948a-2d00-4460-8adc-87ee88a49485",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "azure",
+                    "compute",
+                    "group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6c88a7f-8637-426a-9b74-4744fc71ff62",
+          "name": "Spot Get Elastigroup (azure)",
+          "request": {
+            "name": "Spot Get Elastigroup (azure)",
+            "description": {
+              "content": "Get an existing Elastigroup in Azure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "azure",
+                "compute",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d218f83a-d287-482e-acb4-76f1742455ae",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "azure",
+                    "compute",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b7ec0392-5d52-4990-b6a5-4cc8932e23d9",
+          "name": "Spot Update Elastigroup (azure)",
+          "request": {
+            "name": "Spot Update Elastigroup (azure)",
+            "description": {
+              "content": "Update an existing Elastigroup in Azure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "azure",
+                "compute",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group\": {\n    \"name\": \"<string>\",\n    \"region\": \"<string>\",\n    \"resourceGroupName\": \"<string>\",\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    },\n    \"strategy\": {\n      \"spotPercentage\": \"<integer>\",\n      \"fallbackToOd\": \"<boolean>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "df98157c-c44e-4874-bea4-7451bd592a16",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "azure",
+                    "compute",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": {\n    \"name\": \"Example Title\",\n    \"region\": \"example_value\",\n    \"resourceGroupName\": \"example_value\",\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    },\n    \"strategy\": {\n      \"spotPercentage\": 10,\n      \"fallbackToOd\": true\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ef78640-c62c-40bb-9225-e7f74fa87d7e",
+          "name": "Spot Delete Elastigroup (azure)",
+          "request": {
+            "name": "Spot Delete Elastigroup (azure)",
+            "description": {
+              "content": "Delete an existing Elastigroup in Azure.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "azure",
+                "compute",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ebd28788-6947-42aa-b89c-09f69713eff8",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "azure",
+                    "compute",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "88df2e7e-0e2a-4cd1-87a9-78f6316f9740",
+    "name": "Spot Administration Access Policies Elastigroup Azure API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

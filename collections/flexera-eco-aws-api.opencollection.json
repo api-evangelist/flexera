@@ -1,0 +1,120 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Eco AWS API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Eco AWS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Commitment Plans (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/commitmentPlan",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query",
+                "description": "The Spot account ID."
+              }
+            ]
+          },
+          "docs": "List all AWS commitment plans including reserved instances and savings plans managed by Eco."
+        },
+        {
+          "info": {
+            "name": "Spot Get Commitment Plan (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/commitmentPlan/:commitmentPlanId",
+            "params": [
+              {
+                "name": "commitmentPlanId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get details of a specific AWS commitment plan."
+        },
+        {
+          "info": {
+            "name": "Spot Get Unused Reserved Instances (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/ri/unusedReservedInstances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a list of unused or underutilized AWS reserved instances to identify optimization opportunities."
+        },
+        {
+          "info": {
+            "name": "Spot List Savings Plans (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/ri/savingsPlans",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all AWS savings plans managed by Eco."
+        },
+        {
+          "info": {
+            "name": "Spot List Reserved Instances (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/ri/reservedInstances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all AWS reserved instances managed by Eco."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

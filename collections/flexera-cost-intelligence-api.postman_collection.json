@@ -1,0 +1,229 @@
+{
+  "item": [
+    {
+      "id": "e027b6cb-c40f-45e0-aec0-d5237149d8fd",
+      "name": "Cost Intelligence",
+      "description": {
+        "content": "Access Cost Intelligence analytics for actionable cost insights and recommendations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a97fb541-5af6-4c77-aa69-0ccee390e1ba",
+          "name": "Spot Set up Cost Intelligence",
+          "request": {
+            "name": "Spot Set up Cost Intelligence",
+            "description": {
+              "content": "Set up Cost Intelligence on a Spot account to enable granular cost analytics and actionable optimization recommendations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "costIntelligence",
+                "setup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"costIntelligence\": {\n    \"cloudProvider\": \"<string>\",\n    \"billingAccountId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "63fa8e6f-7350-4014-aa21-6fd74caf61b6",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "costIntelligence",
+                    "setup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"costIntelligence\": {\n    \"cloudProvider\": \"aws\",\n    \"billingAccountId\": \"500123\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a71536ab-e1d5-4c77-b305-ba4c229ddfea",
+          "name": "Spot Validate Cost Intelligence Setup",
+          "request": {
+            "name": "Spot Validate Cost Intelligence Setup",
+            "description": {
+              "content": "Perform validation checks on a Cost Intelligence setup to ensure correct access and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "costIntelligence",
+                "setup",
+                "validation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"costIntelligence\": {\n    \"cloudProvider\": \"<string>\",\n    \"billingAccountId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bd62cff2-37a8-4399-8fc8-9d309c4160bd",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "costIntelligence",
+                    "setup",
+                    "validation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"costIntelligence\": {\n    \"cloudProvider\": \"example_value\",\n    \"billingAccountId\": \"500123\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a461748c-4993-4515-bc0b-ca455bd30368",
+    "name": "Spot Administration Access Policies Cost Intelligence API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

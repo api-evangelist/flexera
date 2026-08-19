@@ -1,0 +1,411 @@
+{
+  "item": [
+    {
+      "id": "80f1ed94-afba-4f93-8fb4-04bb0d6e555e",
+      "name": "Access Policies",
+      "description": {
+        "content": "Create, update, and manage access control policies for users and groups.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "25c812d7-dbdb-426a-824d-fd75791d732e",
+          "name": "Spot Create Access Policy",
+          "request": {
+            "name": "Spot Create Access Policy",
+            "description": {
+              "content": "Create a new access policy for the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "setup",
+                "access",
+                "policy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"permissions\": [\n      {\n        \"serviceId\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"serviceId\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ea90a80a-d0e5-4c27-9436-3c8b1f087c82",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup",
+                    "access",
+                    "policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy\": {\n    \"name\": \"Example Title\",\n    \"description\": \"A sample description.\",\n    \"permissions\": [\n      {\n        \"serviceId\": \"500123\",\n        \"actions\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "721c7a2b-e85d-4e5f-b070-563a2f7c51ad",
+          "name": "Spot List Access Policies",
+          "request": {
+            "name": "Spot List Access Policies",
+            "description": {
+              "content": "Get all access policies of the organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "setup",
+                "access",
+                "policy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "49e715d0-be47-40d7-83ee-c643da6efc2e",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup",
+                    "access",
+                    "policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a70bbdc3-e7e9-4b4c-bae5-460fb4a3a0a7",
+          "name": "Spot Update Access Policy",
+          "request": {
+            "name": "Spot Update Access Policy",
+            "description": {
+              "content": "Update an existing access policy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "setup",
+                "access",
+                "policy",
+                ":policyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policyId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policy\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"permissions\": [\n      {\n        \"serviceId\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"serviceId\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "285b33d8-a9d0-45ea-a9be-facafa60f175",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup",
+                    "access",
+                    "policy",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policy\": {\n    \"name\": \"Example Title\",\n    \"description\": \"A sample description.\",\n    \"permissions\": [\n      {\n        \"serviceId\": \"500123\",\n        \"actions\": {}\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "365b53d9-d55b-48be-a570-205a9f09675c",
+          "name": "Spot Delete Access Policy",
+          "request": {
+            "name": "Spot Delete Access Policy",
+            "description": {
+              "content": "Delete an access policy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "setup",
+                "access",
+                "policy",
+                ":policyId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "policyId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "815c477b-2f72-421a-96a9-480ca1d1a7cc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "setup",
+                    "access",
+                    "policy",
+                    ":policyId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "policyId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "cfe12102-905c-4bf1-9d8a-8fcad74a225d",
+    "name": "Spot Administration Access Policies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

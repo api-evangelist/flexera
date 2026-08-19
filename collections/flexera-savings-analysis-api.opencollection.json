@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Savings Analysis API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Savings Analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Get Savings Analysis (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/analysis/savings",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "Start date for the analysis period."
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query",
+                "description": "End date for the analysis period."
+              }
+            ]
+          },
+          "docs": "Retrieve a savings analysis report showing realized and potential savings from AWS commitment optimization."
+        },
+        {
+          "info": {
+            "name": "Spot Get Commitment Analysis (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/aws/analysis/commitment",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a commitment utilization analysis showing how effectively reserved instances and savings plans are being used."
+        },
+        {
+          "info": {
+            "name": "Spot Get Savings Analysis (azure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/azure/analysis/savings",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a savings analysis report for Azure commitment optimization."
+        },
+        {
+          "info": {
+            "name": "Spot Get Savings Analysis (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/gcp/analysis/savings",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve a savings analysis report for GCP commitment optimization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

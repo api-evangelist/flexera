@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Accounts API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/account",
+            "params": [
+              {
+                "name": "cloudAccountId",
+                "value": "500123",
+                "type": "query",
+                "description": "Filter by cloud account ID."
+              }
+            ]
+          },
+          "docs": "Get a list of Spot accounts in your organization. When used without parameters, the provided token must have Organization Admin permissions and the output will contain all the organization accounts."
+        },
+        {
+          "info": {
+            "name": "Spot Create Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new account within an organization."
+        },
+        {
+          "info": {
+            "name": "Spot Update Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/setup/account/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing account."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/setup/account/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

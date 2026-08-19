@@ -1,0 +1,1125 @@
+{
+  "item": [
+    {
+      "id": "90cbc150-8b1c-476f-9999-7eeedea879fd",
+      "name": "Elastigroup AWS",
+      "description": {
+        "content": "Manage Elastigroup compute groups in AWS.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0e55ae4f-216b-491e-9ba4-ca02e65fc1e4",
+          "name": "Spot Create Elastigroup (aws)",
+          "request": {
+            "name": "Spot Create Elastigroup (aws)",
+            "description": {
+              "content": "Create a new Elastigroup in AWS.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>",
+                  "description": "The Spot account ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"region\": \"<string>\",\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\",\n      \"unit\": \"<string>\"\n    },\n    \"strategy\": {\n      \"risk\": \"<integer>\",\n      \"onDemandCount\": \"<integer>\",\n      \"availabilityVsCost\": \"<string>\",\n      \"fallbackToOd\": \"<boolean>\",\n      \"utilizeReservedInstances\": \"<boolean>\"\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"ondemand\": \"<string>\",\n        \"spot\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"availabilityZones\": [\n        {\n          \"name\": \"<string>\",\n          \"subnetId\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"subnetId\": \"<string>\"\n        }\n      ],\n      \"launchSpecification\": {\n        \"imageId\": \"<string>\",\n        \"securityGroupIds\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"keyPair\": \"<string>\"\n      }\n    },\n    \"scheduling\": {\n      \"tasks\": [\n        {\n          \"isEnabled\": \"<boolean>\",\n          \"taskType\": \"<string>\",\n          \"cronExpression\": \"<string>\"\n        },\n        {\n          \"isEnabled\": \"<boolean>\",\n          \"taskType\": \"<string>\",\n          \"cronExpression\": \"<string>\"\n        }\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cd55c3ee-564d-42a3-912c-66e0cf247e80",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": {\n    \"name\": \"Example Title\",\n    \"description\": \"A sample description.\",\n    \"region\": \"example_value\",\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10,\n      \"unit\": \"instance\"\n    },\n    \"strategy\": {\n      \"risk\": 10,\n      \"onDemandCount\": 10,\n      \"availabilityVsCost\": \"balanced\",\n      \"fallbackToOd\": true,\n      \"utilizeReservedInstances\": true\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"ondemand\": \"example_value\",\n        \"spot\": {}\n      },\n      \"availabilityZones\": [\n        {}\n      ],\n      \"launchSpecification\": {\n        \"imageId\": \"500123\",\n        \"securityGroupIds\": {},\n        \"keyPair\": \"example_value\"\n      }\n    },\n    \"scheduling\": {\n      \"tasks\": [\n        {}\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request\": \"example_value\",\n  \"response\": {\n    \"items\": [\n      {}\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "540546b2-b76c-4573-8c87-257282d5a0c0",
+          "name": "Spot List Elastigroups (aws)",
+          "request": {
+            "name": "Spot List Elastigroups (aws)",
+            "description": {
+              "content": "List all Elastigroups in the specified account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>",
+                  "description": "The Spot account ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3513f996-226e-4abe-8c89-c50eaa96dca9",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request\": \"example_value\",\n  \"response\": {\n    \"items\": [\n      {}\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d08f2279-a61b-4194-b443-b87d5e55226b",
+          "name": "Spot Get Elastigroup (aws)",
+          "request": {
+            "name": "Spot Get Elastigroup (aws)",
+            "description": {
+              "content": "Get the configuration of an existing Elastigroup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b2971591-f23c-4d10-a6bc-2e75e06fedbf",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request\": \"example_value\",\n  \"response\": {\n    \"items\": [\n      {}\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80d891ba-8503-4136-b12c-0d3a7522dba5",
+          "name": "Spot Update Elastigroup (aws)",
+          "request": {
+            "name": "Spot Update Elastigroup (aws)",
+            "description": {
+              "content": "Update an existing Elastigroup configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"group\": {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"region\": \"<string>\",\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\",\n      \"unit\": \"<string>\"\n    },\n    \"strategy\": {\n      \"risk\": \"<integer>\",\n      \"onDemandCount\": \"<integer>\",\n      \"availabilityVsCost\": \"<string>\",\n      \"fallbackToOd\": \"<boolean>\",\n      \"utilizeReservedInstances\": \"<boolean>\"\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"ondemand\": \"<string>\",\n        \"spot\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      \"availabilityZones\": [\n        {\n          \"name\": \"<string>\",\n          \"subnetId\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"subnetId\": \"<string>\"\n        }\n      ],\n      \"launchSpecification\": {\n        \"imageId\": \"<string>\",\n        \"securityGroupIds\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"keyPair\": \"<string>\"\n      }\n    },\n    \"scheduling\": {\n      \"tasks\": [\n        {\n          \"isEnabled\": \"<boolean>\",\n          \"taskType\": \"<string>\",\n          \"cronExpression\": \"<string>\"\n        },\n        {\n          \"isEnabled\": \"<boolean>\",\n          \"taskType\": \"<string>\",\n          \"cronExpression\": \"<string>\"\n        }\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3b7dba15-c370-48db-9aa1-d98220a7a000",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"group\": {\n    \"name\": \"Example Title\",\n    \"description\": \"A sample description.\",\n    \"region\": \"example_value\",\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10,\n      \"unit\": \"instance\"\n    },\n    \"strategy\": {\n      \"risk\": 10,\n      \"onDemandCount\": 10,\n      \"availabilityVsCost\": \"balanced\",\n      \"fallbackToOd\": true,\n      \"utilizeReservedInstances\": true\n    },\n    \"compute\": {\n      \"instanceTypes\": {\n        \"ondemand\": \"example_value\",\n        \"spot\": {}\n      },\n      \"availabilityZones\": [\n        {}\n      ],\n      \"launchSpecification\": {\n        \"imageId\": \"500123\",\n        \"securityGroupIds\": {},\n        \"keyPair\": \"example_value\"\n      }\n    },\n    \"scheduling\": {\n      \"tasks\": [\n        {}\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84cfc6fc-611a-4754-ad76-e252dd09c6f3",
+          "name": "Spot Delete Elastigroup (aws)",
+          "request": {
+            "name": "Spot Delete Elastigroup (aws)",
+            "description": {
+              "content": "Delete an existing Elastigroup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b3b3bfd1-3167-47ed-895a-261550247ea6",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "466904cb-a152-458c-88e8-4514479845cf",
+          "name": "Spot Get Elastigroup Status (aws)",
+          "request": {
+            "name": "Spot Get Elastigroup Status (aws)",
+            "description": {
+              "content": "Get the status of instances in an Elastigroup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eca68496-3f97-42bb-9e37-cfd39d7f83b7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d6dff0e6-98d6-47fb-97e7-15d756b20bda",
+          "name": "Spot Scale up Elastigroup (aws)",
+          "request": {
+            "name": "Spot Scale up Elastigroup (aws)",
+            "description": {
+              "content": "Scale up the number of instances in an Elastigroup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId",
+                "scale",
+                "up"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "adjustment",
+                  "value": "<integer>",
+                  "description": "Number of instances to add."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "436cc8a8-50c9-419c-a420-df728a4b1654",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId",
+                    "scale",
+                    "up"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "adjustment",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11e7608c-e513-478d-b81c-afedb2e58b6e",
+          "name": "Spot Scale Down Elastigroup (aws)",
+          "request": {
+            "name": "Spot Scale Down Elastigroup (aws)",
+            "description": {
+              "content": "Scale down the number of instances in an Elastigroup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId",
+                "scale",
+                "down"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "adjustment",
+                  "value": "<integer>",
+                  "description": "Number of instances to remove."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a66456bc-841e-4859-84e0-462a80b4496d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId",
+                    "scale",
+                    "down"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "adjustment",
+                      "value": "10"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2bf7b3d4-657d-42a4-b0b1-32bbe0218fe1",
+          "name": "Spot Get Elastigroup Logs",
+          "request": {
+            "name": "Spot Get Elastigroup Logs",
+            "description": {
+              "content": "Retrieve activity logs for an Elastigroup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<dateTime>"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ef64254-b094-4a44-a015-efbcd8488b6c",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "2026-01-15T10:30:00Z"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2026-01-15T10:30:00Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fa71f58-b018-4dfb-84ba-74f6171d1053",
+          "name": "Spot Get Elastigroup Costs",
+          "request": {
+            "name": "Spot Get Elastigroup Costs",
+            "description": {
+              "content": "Retrieve cost information for an Elastigroup.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "aws",
+                "ec2",
+                "group",
+                ":groupId",
+                "costs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "groupId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fdce216d-600d-4da7-b84f-1dde08142249",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "aws",
+                    "ec2",
+                    "group",
+                    ":groupId",
+                    "costs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromDate",
+                      "value": "2026-01-15"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2026-01-15"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "groupId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "72ad361f-4e59-49a5-bece-c68e4bd3e94d",
+    "name": "Spot Administration Access Policies Elastigroup AWS API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

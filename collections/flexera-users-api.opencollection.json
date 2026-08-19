@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Users API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Create User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user and link it to the creator's organization. If the role is a viewer, the user is also linked to the default account for the organization."
+        },
+        {
+          "info": {
+            "name": "Spot List Organization Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/organization/:organizationId/user",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all users in the organization, their details, and mapped accounts. Providing the optional account ID parameter will filter out all users not mapped to that account."
+        },
+        {
+          "info": {
+            "name": "Spot Get User Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/setup/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a specific user."
+        },
+        {
+          "info": {
+            "name": "Spot Update User Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/setup/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update user permissions and role assignments."
+        },
+        {
+          "info": {
+            "name": "Spot Delete User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/setup/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a user from the organization."
+        },
+        {
+          "info": {
+            "name": "Spot Create Programmatic User",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/setup/user/programmatic",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a programmatic user for API access."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

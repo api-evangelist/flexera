@@ -1,0 +1,501 @@
+{
+  "item": [
+    {
+      "id": "6f61043b-b7a8-4db6-abbd-8e6a51862706",
+      "name": "Ocean GKE",
+      "description": {
+        "content": "Manage Ocean clusters for Google Kubernetes Engine.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b59b3381-84d1-4a80-8744-4fb731f590a8",
+          "name": "Spot Create Ocean Cluster (gke)",
+          "request": {
+            "name": "Spot Create Ocean Cluster (gke)",
+            "description": {
+              "content": "Create a new Ocean cluster for Google Kubernetes Engine.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "gke",
+                "cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster\": {\n    \"name\": \"<string>\",\n    \"controllerClusterId\": \"<string>\",\n    \"gke\": {\n      \"clusterName\": \"<string>\",\n      \"masterLocation\": \"<string>\"\n    },\n    \"autoScaler\": {\n      \"isEnabled\": \"<boolean>\",\n      \"isAutoConfig\": \"<boolean>\"\n    },\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "19116421-eb8a-41fa-8f3c-af23f3a8b3f8",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "gke",
+                    "cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster\": {\n    \"name\": \"Example Title\",\n    \"controllerClusterId\": \"500123\",\n    \"gke\": {\n      \"clusterName\": \"example_value\",\n      \"masterLocation\": \"example_value\"\n    },\n    \"autoScaler\": {\n      \"isEnabled\": true,\n      \"isAutoConfig\": true\n    },\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e883ae2-708c-4e99-b9f1-3c20ff23c763",
+          "name": "Spot List Ocean Clusters (gke)",
+          "request": {
+            "name": "Spot List Ocean Clusters (gke)",
+            "description": {
+              "content": "List all Ocean GKE clusters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "gke",
+                "cluster"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "944d99da-8fd7-4823-929f-2b61f18efbf4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "gke",
+                    "cluster"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "157a5f59-39fc-41c8-b74d-31a5e852fe85",
+          "name": "Spot Get Ocean Cluster (gke)",
+          "request": {
+            "name": "Spot Get Ocean Cluster (gke)",
+            "description": {
+              "content": "Get an Ocean GKE cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "gke",
+                "cluster",
+                ":oceanClusterId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "oceanClusterId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "96d6a8e1-0124-446c-82ed-65227858fc60",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "gke",
+                    "cluster",
+                    ":oceanClusterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "oceanClusterId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c290e571-5dd3-4ad6-b1e5-2065317f7332",
+          "name": "Spot Update Ocean Cluster (gke)",
+          "request": {
+            "name": "Spot Update Ocean Cluster (gke)",
+            "description": {
+              "content": "Update an Ocean GKE cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "gke",
+                "cluster",
+                ":oceanClusterId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "oceanClusterId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cluster\": {\n    \"name\": \"<string>\",\n    \"controllerClusterId\": \"<string>\",\n    \"gke\": {\n      \"clusterName\": \"<string>\",\n      \"masterLocation\": \"<string>\"\n    },\n    \"autoScaler\": {\n      \"isEnabled\": \"<boolean>\",\n      \"isAutoConfig\": \"<boolean>\"\n    },\n    \"capacity\": {\n      \"target\": \"<integer>\",\n      \"minimum\": \"<integer>\",\n      \"maximum\": \"<integer>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "00b4beee-c4ac-40e1-96a6-4992407c1f96",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "gke",
+                    "cluster",
+                    ":oceanClusterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "oceanClusterId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cluster\": {\n    \"name\": \"Example Title\",\n    \"controllerClusterId\": \"500123\",\n    \"gke\": {\n      \"clusterName\": \"example_value\",\n      \"masterLocation\": \"example_value\"\n    },\n    \"autoScaler\": {\n      \"isEnabled\": true,\n      \"isAutoConfig\": true\n    },\n    \"capacity\": {\n      \"target\": 10,\n      \"minimum\": 10,\n      \"maximum\": 10\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0c2100e6-5bff-436f-a0e5-1bcaa36d1c21",
+          "name": "Spot Delete Ocean Cluster (gke)",
+          "request": {
+            "name": "Spot Delete Ocean Cluster (gke)",
+            "description": {
+              "content": "Delete an Ocean GKE cluster.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "ocean",
+                "gke",
+                "cluster",
+                ":oceanClusterId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "oceanClusterId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1c7c4e02-d8e0-4e15-bf40-e7be87f58b00",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "ocean",
+                    "gke",
+                    "cluster",
+                    ":oceanClusterId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "oceanClusterId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "33bcd7e7-ff4c-4486-a143-fc46acab6bda",
+    "name": "Spot Administration Access Policies Ocean GKE API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

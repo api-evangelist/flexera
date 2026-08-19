@@ -1,0 +1,266 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Elastigroup AWS API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Elastigroup AWS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Elastigroups (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query",
+                "description": "The Spot account ID."
+              }
+            ]
+          },
+          "docs": "List all Elastigroups in the specified account."
+        },
+        {
+          "info": {
+            "name": "Spot Create Elastigroup (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/aws/ec2/group",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query",
+                "description": "The Spot account ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Elastigroup in AWS."
+        },
+        {
+          "info": {
+            "name": "Spot Get Elastigroup (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the configuration of an existing Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Update Elastigroup (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Elastigroup configuration."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Elastigroup (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete an existing Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Get Elastigroup Status (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/status",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get the status of instances in an Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Scale up Elastigroup (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/scale/up",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "adjustment",
+                "value": "10",
+                "type": "query",
+                "description": "Number of instances to add."
+              }
+            ]
+          },
+          "docs": "Scale up the number of instances in an Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Scale Down Elastigroup (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/scale/down",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "adjustment",
+                "value": "10",
+                "type": "query",
+                "description": "Number of instances to remove."
+              }
+            ]
+          },
+          "docs": "Scale down the number of instances in an Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Get Elastigroup Logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/logs",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15T10:30:00Z",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15T10:30:00Z",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve activity logs for an Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Get Elastigroup Costs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/costs",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "fromDate",
+                "value": "2026-01-15",
+                "type": "query"
+              },
+              {
+                "name": "toDate",
+                "value": "2026-01-15",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve cost information for an Elastigroup."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

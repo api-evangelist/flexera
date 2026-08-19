@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Deployments API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Rolls (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/roll",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all rolls for an Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Roll Elastigroup (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/roll",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Trigger a roll (rolling update) for an Elastigroup. Replaces existing instances with new ones according to the configured deployment strategy."
+        },
+        {
+          "info": {
+            "name": "Spot Get Roll Status (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/roll/:rollId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "rollId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get the status of a specific roll."
+        },
+        {
+          "info": {
+            "name": "Spot Stop Roll (aws)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/aws/ec2/group/:groupId/roll/:rollId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              },
+              {
+                "name": "rollId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Stop an in-progress roll."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

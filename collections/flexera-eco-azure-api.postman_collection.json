@@ -1,0 +1,124 @@
+{
+  "item": [
+    {
+      "id": "a0aa52bf-dbfa-4f81-bcb1-71a59d4c4d0d",
+      "name": "Eco Azure",
+      "description": {
+        "content": "Manage Eco commitment optimization for Azure reserved instances.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "90392057-415e-4f59-8453-78299b30bc22",
+          "name": "Spot List Commitment Plans (azure)",
+          "request": {
+            "name": "Spot List Commitment Plans (azure)",
+            "description": {
+              "content": "List all Azure reserved instance commitment plans managed by Eco.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "eco",
+                "azure",
+                "commitmentPlan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "405c3265-fa81-4852-9e38-de95f950fb16",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "eco",
+                    "azure",
+                    "commitmentPlan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "de17806c-33d0-460d-9ed7-977a62619a9e",
+    "name": "Spot Administration Access Policies Eco Azure API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

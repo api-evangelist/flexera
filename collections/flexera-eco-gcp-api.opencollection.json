@@ -1,0 +1,42 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Eco GCP API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Eco GCP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Commitment Plans (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/eco/gcp/commitmentPlan",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "500123",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all GCP committed use discount plans managed by Eco."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

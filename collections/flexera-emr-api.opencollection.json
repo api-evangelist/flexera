@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies EMR API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EMR",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Emr Clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/emr/mrScaler"
+          },
+          "docs": "List all EMR clusters managed by Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Create Emr Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/aws/emr/mrScaler",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Amazon EMR cluster managed by Elastigroup."
+        },
+        {
+          "info": {
+            "name": "Spot Get Emr Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/aws/emr/mrScaler/:mrScalerId",
+            "params": [
+              {
+                "name": "mrScalerId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of an EMR cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Update Emr Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/aws/emr/mrScaler/:mrScalerId",
+            "params": [
+              {
+                "name": "mrScalerId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing EMR cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Emr Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/aws/emr/mrScaler/:mrScalerId",
+            "params": [
+              {
+                "name": "mrScalerId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an EMR cluster."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

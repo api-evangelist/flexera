@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Ocean GKE API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ocean GKE",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Clusters (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/gke/cluster"
+          },
+          "docs": "List all Ocean GKE clusters."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/gke/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean cluster for Google Kubernetes Engine."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/gke/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Ocean GKE cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/gke/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Ocean GKE cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cluster (gke)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/gke/cluster/:oceanClusterId",
+            "params": [
+              {
+                "name": "oceanClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean GKE cluster."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

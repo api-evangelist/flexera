@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Elastigroup GCP API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Elastigroup GCP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Elastigroups (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/gcp/gce/group"
+          },
+          "docs": "List all Elastigroups in GCP."
+        },
+        {
+          "info": {
+            "name": "Spot Create Elastigroup (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/gcp/gce/group",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Elastigroup in GCP."
+        },
+        {
+          "info": {
+            "name": "Spot Get Elastigroup (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/gcp/gce/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an existing Elastigroup in GCP."
+        },
+        {
+          "info": {
+            "name": "Spot Update Elastigroup (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/gcp/gce/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing Elastigroup in GCP."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Elastigroup (gcp)",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/gcp/gce/group/:groupId",
+            "params": [
+              {
+                "name": "groupId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an existing Elastigroup in GCP."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

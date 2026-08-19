@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Ocean CD API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ocean CD",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Cd Clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/cd/cluster"
+          },
+          "docs": "List all clusters registered with Ocean CD."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/cd/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a cluster with Ocean CD for continuous delivery."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/cd/cluster/:clusterId",
+            "params": [
+              {
+                "name": "clusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a cluster registered with Ocean CD."
+        },
+        {
+          "info": {
+            "name": "Spot Update Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/ocean/cd/cluster/:clusterId",
+            "params": [
+              {
+                "name": "clusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Ocean CD cluster configuration."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Cd Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/cd/cluster/:clusterId",
+            "params": [
+              {
+                "name": "clusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unregister a cluster from Ocean CD."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

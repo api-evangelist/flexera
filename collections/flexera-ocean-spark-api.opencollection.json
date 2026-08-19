@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Ocean Spark API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ocean Spark",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Ocean Spark Clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/spark/cluster"
+          },
+          "docs": "List all Ocean Spark clusters."
+        },
+        {
+          "info": {
+            "name": "Spot Create Ocean Spark Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/ocean/spark/cluster",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Ocean for Apache Spark cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Get Ocean Spark Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/ocean/spark/cluster/:oceanSparkClusterId",
+            "params": [
+              {
+                "name": "oceanSparkClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get an Ocean Spark cluster."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Ocean Spark Cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/ocean/spark/cluster/:oceanSparkClusterId",
+            "params": [
+              {
+                "name": "oceanSparkClusterId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Ocean Spark cluster."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

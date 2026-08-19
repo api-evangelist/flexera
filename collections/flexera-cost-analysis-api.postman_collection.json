@@ -1,0 +1,152 @@
+{
+  "item": [
+    {
+      "id": "d08590e1-0b42-4d56-84f7-06b2369880d6",
+      "name": "Cost Analysis",
+      "description": {
+        "content": "Retrieve cost analysis and spending data across cloud accounts.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2871c720-1d9c-4418-892a-0f63e10a7b18",
+          "name": "Spot Get Cost Analysis",
+          "request": {
+            "name": "Spot Get Cost Analysis",
+            "description": {
+              "content": "Retrieve cost analysis data across registered cloud accounts, including breakdowns by service, account, and time period.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "billingEngine",
+                "cost"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "accountId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fromDate",
+                  "value": "<date>",
+                  "description": "Start date for the cost analysis period."
+                },
+                {
+                  "disabled": false,
+                  "key": "toDate",
+                  "value": "<date>",
+                  "description": "End date for the cost analysis period."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupBy",
+                  "value": "<string>",
+                  "description": "Dimension to group costs by."
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1bdb143-153d-4eff-b52a-96941767ad0f",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "billingEngine",
+                    "cost"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "accountId",
+                      "value": "500123"
+                    },
+                    {
+                      "key": "fromDate",
+                      "value": "2026-01-15"
+                    },
+                    {
+                      "key": "toDate",
+                      "value": "2026-01-15"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "account"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.spotinst.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bedf663b-c148-492d-a65d-374c3d30e5c3",
+    "name": "Spot Administration Access Policies Cost Analysis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.\n\nContact Support:\n Name: Spot by Flexera",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Cost Intelligence API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cost Intelligence",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Set up Cost Intelligence",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/costIntelligence/setup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set up Cost Intelligence on a Spot account to enable granular cost analytics and actionable optimization recommendations."
+        },
+        {
+          "info": {
+            "name": "Spot Validate Cost Intelligence Setup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/costIntelligence/setup/validation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform validation checks on a Cost Intelligence setup to ensure correct access and configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

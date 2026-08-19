@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Billing Engine Setup API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing Engine Setup",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot Set up Billing Engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/billingEngine/setup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set up Billing Engine on a Spot account by linking it to a cloud provider billing account for cost data ingestion."
+        },
+        {
+          "info": {
+            "name": "Spot Validate Billing Engine Setup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/billingEngine/setup/validation",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform validation checks on a Billing Engine setup to ensure correct cloud provider credentials and billing access."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

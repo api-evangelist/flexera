@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Spot Administration Access Policies Subscriptions API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Spot List Event Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/events/subscription"
+          },
+          "docs": "Get all event subscriptions."
+        },
+        {
+          "info": {
+            "name": "Spot Create Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.spotinst.io/events/subscription",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to event notifications for Spot resources."
+        },
+        {
+          "info": {
+            "name": "Spot Get Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.spotinst.io/events/subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a specific event subscription."
+        },
+        {
+          "info": {
+            "name": "Spot Update Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.spotinst.io/events/subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "500123",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing event subscription."
+        },
+        {
+          "info": {
+            "name": "Spot Delete Event Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.spotinst.io/events/subscription/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "500123",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an event subscription."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
