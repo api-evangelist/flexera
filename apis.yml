@@ -1348,6 +1348,9 @@ apis:
   - type: JSONLD
     url: json-ld/spot-billing-engine-context.jsonld
 common:
+  - type: CapabilityMap
+    url: capabilities/flexera-capability-edges.yml
+    name: Spot by Flexera Business Capability Map
   - type: AgenticAccess
     url: agentic-access/flexera-agentic-access.yml
   - type: VulnerabilityDisclosure

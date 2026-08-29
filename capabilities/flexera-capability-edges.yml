@@ -1,0 +1,199 @@
+slug: flexera
+provider: Spot by Flexera
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 20
+edges:
+- tag: Access Policies
+  spec_file: flexera-access-policies-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: 'POST /setup/access/policy createAccessPolicy ''Spot Create Access Policy''; description:
+    ''enables programmatic control over user permissions'''
+  reason: CRUD over access policies governing user permissions is squarely Identity & Access Management.
+- tag: Elastigroup AWS
+  spec_file: flexera-elastigroup-aws-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: PUT /aws/ec2/group/{groupId}/scale/up  scaleUpElastigroupAWS  Spot Scale up Elastigroup (aws)
+  reason: Create/update/delete and scale AWS EC2 compute groups is direct management of cloud compute
+    infrastructure.
+- tag: Elastigroup Azure
+  spec_file: flexera-elastigroup-azure-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /azure/compute/group  createElastigroupAzure  Spot Create Elastigroup (azure)
+  reason: Lifecycle management of Azure compute groups is cloud compute infrastructure management.
+- tag: Elastigroup GCP
+  spec_file: flexera-elastigroup-gcp-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /gcp/gce/group  createElastigroupGCP  Spot Create Elastigroup (gcp)
+  reason: Lifecycle management of GCP GCE instance groups is cloud compute infrastructure management.
+- tag: Ocean AKS
+  spec_file: flexera-ocean-aks-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /ocean/azure/k8s/cluster  createOceanClusterAKS  Spot Create Ocean Cluster (aks)
+  reason: CRUD over Azure Kubernetes (AKS) clusters is provisioning and stewardship of container/cloud
+    infrastructure.
+- tag: Cost Analysis
+  spec_file: flexera-cost-analysis-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.8
+  evidence: GET /billingEngine/cost getCostAnalysis 'Spot Get Cost Analysis'
+  reason: Cloud cost analysis is IT Financial Management — IT spend visibility and cost optimisation,
+    the core value proposition of this cloud optimisation platform.
+- tag: EMR
+  spec_file: flexera-emr-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /aws/emr/mrScaler  createEMRCluster  Spot Create Emr Cluster
+  reason: CRUD over AWS EMR (managed big-data compute) clusters is provisioning and managing cloud compute
+    infrastructure.
+- tag: Ocean AWS
+  spec_file: flexera-ocean-aws-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /ocean/aws/k8s/cluster createOceanClusterAWS 'Spot Create Ocean Cluster (aws)'
+  reason: Operations are CRUD over Kubernetes clusters on AWS — provisioning and stewardship of cloud
+    compute/container infrastructure, i.e. IT Infrastructure Management. No commercial or industry capability
+    is implicated.
+- tag: Ocean ECS
+  spec_file: flexera-ocean-ecs-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /ocean/aws/ecs/cluster createOceanClusterECS 'Spot Create Ocean Cluster (ecs)'
+  reason: Container (ECS) cluster lifecycle management — cloud compute infrastructure provisioning and
+    stewardship.
+- tag: Ocean GKE
+  spec_file: flexera-ocean-gke-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: GET /ocean/gke/cluster listOceanClustersGKE 'Spot List Ocean Clusters (gke)'
+  reason: Google Kubernetes Engine cluster lifecycle CRUD — cloud/container infrastructure management.
+- tag: Virtual Node Groups
+  spec_file: flexera-virtual-node-groups-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /ocean/aws/k8s/launchSpec  createVirtualNodeGroupAWS  Spot Create Virtual Node Group
+    (aws)
+  reason: Operations create/update/delete Kubernetes virtual node groups (launch specs) on AWS — cloud
+    compute infrastructure provisioning and configuration, i.e. IT Infrastructure Management. Title mentioning
+    Access Policies is unreliable.
+- tag: Eco AWS
+  spec_file: flexera-eco-aws-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.78
+  evidence: GET /eco/aws/ri/savingsPlans  listSavingsPlansAWS  Spot List Savings Plans (aws)
+  reason: Commitment plans, reserved instances and savings plans, including unused RI detection, are cloud
+    spend commitment and cost-optimisation management — IT financial management.
+- tag: Ocean Spark
+  spec_file: flexera-ocean-spark-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: POST /ocean/spark/cluster createOceanSparkCluster 'Spot Create Ocean Spark Cluster'
+  reason: Provisioning and deletion of Spark compute clusters is cloud infrastructure management; it manages
+    the compute substrate rather than data/analytics content itself.
+- tag: Savings Analysis
+  spec_file: flexera-savings-analysis-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.75
+  evidence: GET /eco/aws/analysis/savings getSavingsAnalysisAWS 'Spot Get Savings Analysis (aws)' ...
+    GET /eco/aws/analysis/commitment 'Spot Get Commitment Analysis'
+  reason: Read-only analysis of cloud savings and commitment coverage across AWS/Azure/GCP — IT spend
+    visibility and cost optimisation, i.e. IT Financial Management.
+- tag: Users
+  spec_file: flexera-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: PUT /setup/user/{userId} updateUserPermissions 'Spot Update User Permissions'; POST /setup/user/programmatic
+    'Spot Create Programmatic User'
+  reason: Creation, permission update and deletion of platform users and programmatic (service) identities
+    — identity and access management. Not HR employee records.
+- tag: Billing Accounts
+  spec_file: flexera-billing-accounts-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.7
+  evidence: GET /billingEngine/account listBillingEngineAccounts; schemas BillingAccount, BillingAccountListResponse
+  reason: Cloud billing account listing within a cloud cost-management platform; supports IT spend/chargeback
+    visibility. Read-only listing keeps confidence moderate.
+- tag: Cloud Credentials
+  spec_file: flexera-cloud-credentials-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: 'POST /setup/credentials/aws setAWSCloudCredentials; description: ''cloud provider credential
+    linking for AWS, Azure, and GCP'''
+  reason: Storage and linking of cloud provider credentials is credential/access management. Could alternatively
+    be seen as infrastructure plumbing, so moderate confidence.
+- tag: Eco Azure
+  spec_file: flexera-eco-azure-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.7
+  evidence: GET /eco/azure/commitmentPlan  listCommitmentPlansAzure  Spot List Commitment Plans (azure)
+  reason: Azure cloud commitment plan listing supports cloud spend commitment management (IT cost optimisation).
+    Single read-only endpoint, so slightly lower confidence.
+- tag: Eco GCP
+  spec_file: flexera-eco-gcp-api-openapi.yml
+  capability_id: BC-600.80
+  capability_id_l1: BC-600
+  capability_name: IT Financial Management
+  confidence: 0.7
+  evidence: GET /eco/gcp/commitmentPlan  listCommitmentPlansGCP  Spot List Commitment Plans (gcp)
+  reason: GCP commitment plan listing supports cloud spend commitment management (IT cost optimisation).
+    Single read-only endpoint limits confidence.
+- tag: Stateful Instances
+  spec_file: flexera-stateful-instances-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: PUT /aws/ec2/group/{groupId}/statefulInstance/{statefulInstanceId} recycleStatefulInstance
+    'Spot Recycle Stateful Instance'
+  reason: List, recycle and deallocate EC2 compute instances within a group — direct management of cloud
+    compute infrastructure resources.
