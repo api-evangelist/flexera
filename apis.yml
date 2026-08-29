@@ -5,6 +5,18 @@ description: >-
   for compute workload management across spot, reserved, and on-demand instances, Ocean for Kubernetes and container
   infrastructure automation, and Eco for cloud commitment management. The Spot API enables programmatic control over all
   platform capabilities including administration, compute groups, Kubernetes clusters, and cost optimization.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
