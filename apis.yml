@@ -1067,7 +1067,7 @@ apis:
   humanURL: https://docs.spot.io/api/
   baseURL: https://api.spotinst.io
   tags:
-  - Rightsizing
+  - Right Sizing
   tags_raw:
   - Right Sizing
   properties:
