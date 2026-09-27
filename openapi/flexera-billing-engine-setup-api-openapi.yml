@@ -73,6 +73,17 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    BillingEngineValidationRequest:
+      type: object
+      properties:
+        billingEngine:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+            billingAccountId:
+              type: string
+          example: example_value
     BillingEngineSetupRequest:
       type: object
       properties:
@@ -91,17 +102,6 @@ components:
             bucketName:
               type: string
               description: The S3 bucket or storage container for cost and usage reports.
-          example: example_value
-    BillingEngineValidationRequest:
-      type: object
-      properties:
-        billingEngine:
-          type: object
-          properties:
-            cloudProvider:
-              type: string
-            billingAccountId:
-              type: string
           example: example_value
   securitySchemes:
     bearerAuth:

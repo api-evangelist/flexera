@@ -56,6 +56,15 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    Organization:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: Example Title
     OrganizationResponse:
       type: object
       properties:
@@ -70,15 +79,6 @@ components:
               items:
                 $ref: '#/components/schemas/Organization'
           example: example_value
-    Organization:
-      type: object
-      properties:
-        id:
-          type: string
-          example: abc123
-        name:
-          type: string
-          example: Example Title
   securitySchemes:
     bearerAuth:
       type: http

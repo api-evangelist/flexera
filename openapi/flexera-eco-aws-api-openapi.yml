@@ -146,7 +146,7 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    CommitmentPlanListResponse:
+    CommitmentPlanResponse:
       type: object
       properties:
         request:
@@ -160,7 +160,7 @@ components:
               items:
                 $ref: '#/components/schemas/CommitmentPlan'
           example: example_value
-    CommitmentPlanResponse:
+    CommitmentPlanListResponse:
       type: object
       properties:
         request:

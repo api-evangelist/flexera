@@ -207,6 +207,24 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: '500123'
+        username:
+          type: string
+          example: example_value
+        email:
+          type: string
+          example: user@example.com
+        type:
+          type: string
+          example: example_value
+        organizationId:
+          type: string
+          example: '500123'
     UpdateUserPermissionsRequest:
       type: object
       properties:
@@ -223,40 +241,6 @@ components:
               role:
                 type: string
           example: []
-    CreateProgrammaticUserRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the programmatic user.
-          example: Example Title
-        description:
-          type: string
-          example: A sample description.
-        accounts:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              role:
-                type: string
-          example: []
-    UserListResponse:
-      type: object
-      properties:
-        request:
-          type: object
-          example: example_value
-        response:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
-          example: example_value
     CreateUserRequest:
       type: object
       properties:
@@ -277,6 +261,40 @@ components:
           - viewer
           - editor
           example: admin
+    UserListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+          example: example_value
+    CreateProgrammaticUserRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the programmatic user.
+          example: Example Title
+        description:
+          type: string
+          example: A sample description.
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              role:
+                type: string
+          example: []
     UserResponse:
       type: object
       properties:
@@ -291,24 +309,6 @@ components:
               items:
                 $ref: '#/components/schemas/User'
           example: example_value
-    User:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: '500123'
-        username:
-          type: string
-          example: example_value
-        email:
-          type: string
-          example: user@example.com
-        type:
-          type: string
-          example: example_value
-        organizationId:
-          type: string
-          example: '500123'
   securitySchemes:
     bearerAuth:
       type: http

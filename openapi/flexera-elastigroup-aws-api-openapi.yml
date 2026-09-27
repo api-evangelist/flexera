@@ -388,53 +388,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    Elastigroup:
-      type: object
-      properties:
-        id:
-          type: string
-          example: abc123
-        name:
-          type: string
-          example: Example Title
-        description:
-          type: string
-          example: A sample description.
-        region:
-          type: string
-          example: example_value
-        capacity:
-          type: object
-          properties:
-            target:
-              type: integer
-            minimum:
-              type: integer
-            maximum:
-              type: integer
-          example: example_value
-        createdAt:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-        updatedAt:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-    ElastigroupListResponse:
-      type: object
-      properties:
-        request:
-          type: object
-          example: example_value
-        response:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/Elastigroup'
-          example: example_value
     ElastigroupAWSRequest:
       type: object
       properties:
@@ -527,7 +480,54 @@ components:
                       cronExpression:
                         type: string
           example: example_value
+    Elastigroup:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+        description:
+          type: string
+          example: A sample description.
+        region:
+          type: string
+          example: example_value
+        capacity:
+          type: object
+          properties:
+            target:
+              type: integer
+            minimum:
+              type: integer
+            maximum:
+              type: integer
+          example: example_value
+        createdAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
     ElastigroupResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Elastigroup'
+          example: example_value
+    ElastigroupListResponse:
       type: object
       properties:
         request:
