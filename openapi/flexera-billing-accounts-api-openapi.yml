@@ -50,20 +50,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    BillingAccountListResponse:
-      type: object
-      properties:
-        request:
-          type: object
-          example: example_value
-        response:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/BillingAccount'
-          example: example_value
     BillingAccount:
       type: object
       properties:
@@ -87,6 +73,20 @@ components:
           type: string
           description: The cloud provider billing account identifier.
           example: '500123'
+    BillingAccountListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/BillingAccount'
+          example: example_value
   securitySchemes:
     bearerAuth:
       type: http

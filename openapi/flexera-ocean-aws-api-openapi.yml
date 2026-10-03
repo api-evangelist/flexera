@@ -255,7 +255,7 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    OceanClusterResponse:
+    OceanClusterListResponse:
       type: object
       properties:
         request:
@@ -269,6 +269,41 @@ components:
               items:
                 $ref: '#/components/schemas/OceanCluster'
           example: example_value
+    OceanCluster:
+      type: object
+      properties:
+        id:
+          type: string
+          example: abc123
+        name:
+          type: string
+          example: Example Title
+        controllerClusterId:
+          type: string
+          example: '500123'
+        region:
+          type: string
+          example: example_value
+        autoScaler:
+          type: object
+          example: example_value
+        capacity:
+          type: object
+          example: example_value
+        strategy:
+          type: object
+          example: example_value
+        compute:
+          type: object
+          example: example_value
+        createdAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2026-01-15T10:30:00Z'
     OceanAWSClusterRequest:
       type: object
       properties:
@@ -362,42 +397,7 @@ components:
                           tagValue:
                             type: string
           example: example_value
-    OceanCluster:
-      type: object
-      properties:
-        id:
-          type: string
-          example: abc123
-        name:
-          type: string
-          example: Example Title
-        controllerClusterId:
-          type: string
-          example: '500123'
-        region:
-          type: string
-          example: example_value
-        autoScaler:
-          type: object
-          example: example_value
-        capacity:
-          type: object
-          example: example_value
-        strategy:
-          type: object
-          example: example_value
-        compute:
-          type: object
-          example: example_value
-        createdAt:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-        updatedAt:
-          type: string
-          format: date-time
-          example: '2026-01-15T10:30:00Z'
-    OceanClusterListResponse:
+    OceanClusterResponse:
       type: object
       properties:
         request:

@@ -72,6 +72,17 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    CostIntelligenceValidationRequest:
+      type: object
+      properties:
+        costIntelligence:
+          type: object
+          properties:
+            cloudProvider:
+              type: string
+            billingAccountId:
+              type: string
+          example: example_value
     CostIntelligenceSetupRequest:
       type: object
       properties:
@@ -84,17 +95,6 @@ components:
               - aws
               - azure
               - gcp
-            billingAccountId:
-              type: string
-          example: example_value
-    CostIntelligenceValidationRequest:
-      type: object
-      properties:
-        costIntelligence:
-          type: object
-          properties:
-            cloudProvider:
-              type: string
             billingAccountId:
               type: string
           example: example_value

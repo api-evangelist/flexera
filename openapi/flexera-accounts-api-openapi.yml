@@ -141,7 +141,7 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    CreateAccountRequest:
+    UpdateAccountRequest:
       type: object
       properties:
         account:
@@ -149,7 +149,6 @@ components:
           properties:
             name:
               type: string
-              description: Name of the account.
           example: example_value
     Account:
       type: object
@@ -163,14 +162,19 @@ components:
         organizationId:
           type: string
           example: '500123'
-    UpdateAccountRequest:
+    AccountResponse:
       type: object
       properties:
-        account:
+        request:
+          type: object
+          example: example_value
+        response:
           type: object
           properties:
-            name:
-              type: string
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Account'
           example: example_value
     AccountListResponse:
       type: object
@@ -186,19 +190,15 @@ components:
               items:
                 $ref: '#/components/schemas/Account'
           example: example_value
-    AccountResponse:
+    CreateAccountRequest:
       type: object
       properties:
-        request:
-          type: object
-          example: example_value
-        response:
+        account:
           type: object
           properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/Account'
+            name:
+              type: string
+              description: Name of the account.
           example: example_value
   securitySchemes:
     bearerAuth:

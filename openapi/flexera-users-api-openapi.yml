@@ -207,74 +207,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    User:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: '500123'
-        username:
-          type: string
-          example: example_value
-        email:
-          type: string
-          example: user@example.com
-        type:
-          type: string
-          example: example_value
-        organizationId:
-          type: string
-          example: '500123'
-    UpdateUserPermissionsRequest:
-      type: object
-      properties:
-        role:
-          type: string
-          example: example_value
-        accounts:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              role:
-                type: string
-          example: []
-    CreateUserRequest:
-      type: object
-      properties:
-        firstName:
-          type: string
-          example: example_value
-        lastName:
-          type: string
-          example: example_value
-        email:
-          type: string
-          format: email
-          example: user@example.com
-        role:
-          type: string
-          enum:
-          - admin
-          - viewer
-          - editor
-          example: admin
-    UserListResponse:
-      type: object
-      properties:
-        request:
-          type: object
-          example: example_value
-        response:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
-          example: example_value
     CreateProgrammaticUserRequest:
       type: object
       properties:
@@ -295,7 +227,75 @@ components:
               role:
                 type: string
           example: []
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: '500123'
+        username:
+          type: string
+          example: example_value
+        email:
+          type: string
+          example: user@example.com
+        type:
+          type: string
+          example: example_value
+        organizationId:
+          type: string
+          example: '500123'
+    CreateUserRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: example_value
+        lastName:
+          type: string
+          example: example_value
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        role:
+          type: string
+          enum:
+          - admin
+          - viewer
+          - editor
+          example: admin
     UserResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+          example: example_value
+    UpdateUserPermissionsRequest:
+      type: object
+      properties:
+        role:
+          type: string
+          example: example_value
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              role:
+                type: string
+          example: []
+    UserListResponse:
       type: object
       properties:
         request:

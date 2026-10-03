@@ -388,6 +388,20 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    ElastigroupListResponse:
+      type: object
+      properties:
+        request:
+          type: object
+          example: example_value
+        response:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/Elastigroup'
+          example: example_value
     ElastigroupAWSRequest:
       type: object
       properties:
@@ -514,20 +528,6 @@ components:
           format: date-time
           example: '2026-01-15T10:30:00Z'
     ElastigroupResponse:
-      type: object
-      properties:
-        request:
-          type: object
-          example: example_value
-        response:
-          type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/Elastigroup'
-          example: example_value
-    ElastigroupListResponse:
       type: object
       properties:
         request:
