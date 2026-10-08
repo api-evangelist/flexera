@@ -1349,6 +1349,12 @@ apis:
   - type: JSONLD
     url: json-ld/spot-billing-engine-context.jsonld
 common:
+  - type: Plans
+    url: plans/flexera-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/flexera-rate-limits.yml
+  - type: FinOps
+    url: finops/flexera-finops.yml
   - type: CapabilityMap
     url: capabilities/flexera-capability-edges.yml
     name: Spot by Flexera Business Capability Map
