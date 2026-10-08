@@ -118,3 +118,48 @@ plans:
       - name: Contractual SLA
       - name: Multi-Product Bundle
 maintainers: []
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - compute
+  - money
+  - negotiated
+  - period
+  plans:
+  - name: Free Trial / Free Tier
+    access: freemium
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - month
+  - name: Production (Savings-Share)
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - compute
+    - money
+    periods:
+    - month
+  - name: Enterprise (Flexera One)
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - period
+    periods:
+    - year
+  - name: Contact Sales
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - year
