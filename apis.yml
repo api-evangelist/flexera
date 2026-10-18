@@ -666,6 +666,8 @@ apis:
   humanURL: https://docs.spot.io/api/
   baseURL: https://api.spotinst.io
   tags:
+  - Electronic Health Records
+  tags_raw:
   - EMR
   properties:
   - type: OpenAPI
