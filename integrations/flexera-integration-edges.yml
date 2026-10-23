@@ -3,6 +3,9 @@ method: searched
 checked:
 - opentofu/integrations/opentofu-integration-edges.yml
 - terraform/integrations/terraform-integration-edges.yml
+- https://landscape.cd.foundation/data/full.json
+- https://plugins.jenkins.io/api/plugin/
+- https://plugins.jenkins.io/api/plugins
 source:
 - opentofu/integrations/opentofu-integration-edges.yml
 - terraform/integrations/terraform-integration-edges.yml
@@ -46,3 +49,22 @@ edges:
   badges:
   - Verified publisher (Terraform partner tier)
   - Verified publisher (GitHub domain-verified organization)
+- partner_name: Jenkins (own)
+  partner: jenkins
+  partner_match: mirror
+  mirror_match: register
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://plugins.jenkins.io/spotinst/
+  mirror_of: jenkins/integrations/jenkins-integration-edges.yml
+  apps:
+  - Spotinst (spotinst)
+  listing_count: 1
+  category: Jenkins plugin
+  signal_note: 'publisher side of the all/jenkins listing; vendor-control: spotinst: maintainer account ''spotinst''
+    is the GitHub organization on all/flexera''s apis.yml'
+  detected: '2026-10-22'
+  detected_by: sweep-jenkins-cd-foundation-plugins.py
