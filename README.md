@@ -1,4 +1,4 @@
-# Spot (spot)
+# Spot by Flexera
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,186 +66,259 @@
 
 Spot by Flexera provides cloud infrastructure automation and optimization solutions. The platform includes Elastigroup for compute workload management across spot, reserved, and on-demand instances, Ocean for Kubernetes and container infrastructure automation, and Eco for cloud commitment management. The Spot API enables programmatic control over all platform capabilities including administration, compute groups, Kubernetes clusters, and cost optimization.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/spot/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/spot/refs/heads/main/apis.yml)
+**Areas:** Auto-Scaling · Cloud Infrastructure · Containers · Cost Optimization · FinOps · Kubernetes · Spot Instances
 
-## Scope
+## Spot by Flexera on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Spot by Flexera is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/flexera/](https://apis.io/providers/flexera/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (32)
 
-- Autoscaling
-- Cloud Infrastructure
-- Containers
-- Cost Optimization
-- FinOps
-- Kubernetes
-- Spot Instances
+- [Spot Access Policies API](https://apis.io/apis/flexera/flexera-access-policies-api/) — Create, update, and manage access control policies for users and groups.
+- [Spot Accounts API](https://apis.io/apis/flexera/flexera-accounts-api/) — Create, update, list, and delete Spot accounts within an organization.
+- [Spot Audit API](https://apis.io/apis/flexera/flexera-audit-api/) — Retrieve audit logs for actions performed within the organization.
+- [Spot Billing Accounts API](https://apis.io/apis/flexera/flexera-billing-accounts-api/) — Manage registered billing accounts and their configurations.
+- [Spot Billing Engine Setup API](https://apis.io/apis/flexera/flexera-billing-engine-setup-api/) — Set up and configure Billing Engine for cloud accounts.
+- [Spot Cloud Credentials API](https://apis.io/apis/flexera/flexera-cloud-credentials-api/) — Link and validate cloud provider credentials for AWS, Azure, and GCP accounts.
+- [Spot Cost Analysis API](https://apis.io/apis/flexera/flexera-cost-analysis-api/) — Retrieve cost analysis and spending data across cloud accounts.
+- [Spot Cost Intelligence API](https://apis.io/apis/flexera/flexera-cost-intelligence-api/) — Access Cost Intelligence analytics for actionable cost insights and recommendations.
+- [Spot Deployments API](https://apis.io/apis/flexera/flexera-deployments-api/) — Manage rolling deployments for Elastigroups.
+- [Spot Eco AWS API](https://apis.io/apis/flexera/flexera-eco-aws-api/) — Manage Eco commitment optimization for AWS reserved instances and savings plans.
+- [Spot Eco Azure API](https://apis.io/apis/flexera/flexera-eco-azure-api/) — Manage Eco commitment optimization for Azure reserved instances.
+- [Spot Eco GCP API](https://apis.io/apis/flexera/flexera-eco-gcp-api/) — Manage Eco commitment optimization for GCP committed use discounts.
+- [Spot Elastigroup AWS API](https://apis.io/apis/flexera/flexera-elastigroup-aws-api/) — Manage Elastigroup compute groups in AWS.
+- [Spot Elastigroup Azure API](https://apis.io/apis/flexera/flexera-elastigroup-azure-api/) — Manage Elastigroup compute groups in Azure.
+- [Spot Elastigroup GCP API](https://apis.io/apis/flexera/flexera-elastigroup-gcp-api/) — Manage Elastigroup compute groups in GCP.
+- [Spot EMR API](https://apis.io/apis/flexera/flexera-emr-api/) — Manage Amazon EMR clusters with Elastigroup.
+- [Spot Families API](https://apis.io/apis/flexera/flexera-families-api/) — Manage account families for grouping and cost allocation.
+- [Spot Health Check API](https://apis.io/apis/flexera/flexera-health-check-api/) — Check the health status of the Spot API.
+- [Spot Ocean AKS API](https://apis.io/apis/flexera/flexera-ocean-aks-api/) — Manage Ocean clusters for Azure Kubernetes Service.
+- [Spot Ocean AWS API](https://apis.io/apis/flexera/flexera-ocean-aws-api/) — Manage Ocean clusters for AWS EKS.
+- [Spot Ocean CD API](https://apis.io/apis/flexera/flexera-ocean-cd-api/) — Manage continuous delivery for Ocean clusters.
+- [Spot Ocean ECS API](https://apis.io/apis/flexera/flexera-ocean-ecs-api/) — Manage Ocean clusters for Amazon ECS.
+- [Spot Ocean GKE API](https://apis.io/apis/flexera/flexera-ocean-gke-api/) — Manage Ocean clusters for Google Kubernetes Engine.
+- [Spot Ocean Spark API](https://apis.io/apis/flexera/flexera-ocean-spark-api/) — Manage Apache Spark clusters on Ocean.
+- [Spot Organizations API](https://apis.io/apis/flexera/flexera-organizations-api/) — Create and manage Spot organizations.
+- [Spot Right Sizing API](https://apis.io/apis/flexera/flexera-right-sizing-api/) — Get right-sizing recommendations for Ocean workloads.
+- [Spot Rolls API](https://apis.io/apis/flexera/flexera-rolls-api/) — Manage rolling updates for Ocean clusters.
+- [Spot Savings Analysis API](https://apis.io/apis/flexera/flexera-savings-analysis-api/) — Analyze potential and realized savings from cloud commitments.
+- [Spot Stateful Instances API](https://apis.io/apis/flexera/flexera-stateful-instances-api/) — Manage stateful instances within Elastigroups.
+- [Spot Subscriptions API](https://apis.io/apis/flexera/flexera-subscriptions-api/) — Manage event notification subscriptions for Spot resources.
+- [Spot Users API](https://apis.io/apis/flexera/flexera-users-api/) — Create, get, update, and delete users. Manage user permissions and account assignments.
+- [Spot Virtual Node Groups API](https://apis.io/apis/flexera/flexera-virtual-node-groups-api/) — Manage virtual node groups (launch specifications) within Ocean clusters.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-01-02
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Spot Administration API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-The Spot Administration API provides endpoints for managing organizations, accounts, users, access policies, cloud credentials, subscriptions, and event notifications within the Spot by Flexera platform. It enables programmatic control over user permissions, account setup, and cloud provider credential linking for AWS, Azure, and GCP.
+- [Flexera Agentic Access](https://apis.io/agentic-access/flexera/flexera-agentic-access/)
 
-- **Human URL:** [https://docs.spot.io/api/](https://docs.spot.io/api/)
-- **Base URL:** `https://api.spotinst.io`
+#### JSON Schema (102)
 
-#### Tags
+The data models the API reads and writes.
 
-- Access Control
-- Accounts
-- Administration
-- Cloud Credentials
-- Organizations
-- Users
+- [Spot Access Policy](https://apis.io/schemas/flexera/access-policy/)
+- [Spot Account](https://apis.io/schemas/flexera/account/)
+- [Spot Elastigroup](https://apis.io/schemas/flexera/elastigroup/)
+- [Spot Ocean Cluster](https://apis.io/schemas/flexera/ocean-cluster/)
+- [Spot Organization](https://apis.io/schemas/flexera/organization/)
+- [AccessPolicyRequest](https://apis.io/schemas/flexera/spot-accesspolicyrequest/)
+- [Account](https://apis.io/schemas/flexera/spot-account/)
+- [AccountFamilyRequest](https://apis.io/schemas/flexera/spot-accountfamilyrequest/)
+- [AccountListResponse](https://apis.io/schemas/flexera/spot-accountlistresponse/)
+- [AccountResponse](https://apis.io/schemas/flexera/spot-accountresponse/)
+- [AccessPolicyRequest](https://apis.io/schemas/flexera/spot-administration-access-policy-request/)
+- [Account](https://apis.io/schemas/flexera/spot-administration-account/)
+- [AccountListResponse](https://apis.io/schemas/flexera/spot-administration-account-list-response/)
+- [AccountResponse](https://apis.io/schemas/flexera/spot-administration-account-response/)
+- [AWSCredentialsRequest](https://apis.io/schemas/flexera/spot-administration-aws-credentials-request/)
+- [AzureCredentialsRequest](https://apis.io/schemas/flexera/spot-administration-azure-credentials-request/)
+- [CreateAccountRequest](https://apis.io/schemas/flexera/spot-administration-create-account-request/)
+- [CreateProgrammaticUserRequest](https://apis.io/schemas/flexera/spot-administration-create-programmatic-user-request/)
+- [CreateUserRequest](https://apis.io/schemas/flexera/spot-administration-create-user-request/)
+- [GCPCredentialsRequest](https://apis.io/schemas/flexera/spot-administration-gcp-credentials-request/)
+- [Organization](https://apis.io/schemas/flexera/spot-administration-organization/)
+- [OrganizationResponse](https://apis.io/schemas/flexera/spot-administration-organization-response/)
+- [SubscriptionRequest](https://apis.io/schemas/flexera/spot-administration-subscription-request/)
+- [UpdateAccountRequest](https://apis.io/schemas/flexera/spot-administration-update-account-request/)
+- [UpdateUserPermissionsRequest](https://apis.io/schemas/flexera/spot-administration-update-user-permissions-request/)
+- …and 77 more published on APIs.io
 
-#### Properties
+#### JSON Structure (48)
 
-- [Documentation](https://docs.spot.io/api/)
-- [OpenAPI](openapi/spot-administration-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/spot-administration-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/spot-administration-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/organization.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/account.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/user.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/access-policy.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/subscription.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/spot-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON-LD](json-ld/spot-administration-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+Data models expressed in JSON Structure.
 
-### Spot Elastigroup API
+- [Spot Administration Access Policy Request Structure](https://apis.io/json-structure/flexera/spot-administration-access-policy-request-structure/)
+- [Spot Administration Account List Response Structure](https://apis.io/json-structure/flexera/spot-administration-account-list-response-structure/)
+- [Spot Administration Account Response Structure](https://apis.io/json-structure/flexera/spot-administration-account-response-structure/)
+- [Spot Administration Account Structure](https://apis.io/json-structure/flexera/spot-administration-account-structure/)
+- [Spot Administration Aws Credentials Request Structure](https://apis.io/json-structure/flexera/spot-administration-aws-credentials-request-structure/)
+- [Spot Administration Azure Credentials Request Structure](https://apis.io/json-structure/flexera/spot-administration-azure-credentials-request-structure/)
+- [Spot Administration Create Account Request Structure](https://apis.io/json-structure/flexera/spot-administration-create-account-request-structure/)
+- [Spot Administration Create Programmatic User Request Structure](https://apis.io/json-structure/flexera/spot-administration-create-programmatic-user-request-structure/)
+- [Spot Administration Create User Request Structure](https://apis.io/json-structure/flexera/spot-administration-create-user-request-structure/)
+- [Spot Administration Gcp Credentials Request Structure](https://apis.io/json-structure/flexera/spot-administration-gcp-credentials-request-structure/)
+- [Spot Administration Organization Response Structure](https://apis.io/json-structure/flexera/spot-administration-organization-response-structure/)
+- [Spot Administration Organization Structure](https://apis.io/json-structure/flexera/spot-administration-organization-structure/)
+- [Spot Administration Subscription Request Structure](https://apis.io/json-structure/flexera/spot-administration-subscription-request-structure/)
+- [Spot Administration Update Account Request Structure](https://apis.io/json-structure/flexera/spot-administration-update-account-request-structure/)
+- [Spot Administration Update User Permissions Request Structure](https://apis.io/json-structure/flexera/spot-administration-update-user-permissions-request-structure/)
+- [Spot Administration User List Response Structure](https://apis.io/json-structure/flexera/spot-administration-user-list-response-structure/)
+- [Spot Administration User Response Structure](https://apis.io/json-structure/flexera/spot-administration-user-response-structure/)
+- [Spot Administration User Structure](https://apis.io/json-structure/flexera/spot-administration-user-structure/)
+- [Spot Billing Engine Account Family Request Structure](https://apis.io/json-structure/flexera/spot-billing-engine-account-family-request-structure/)
+- [Spot Billing Engine Billing Account List Response Structure](https://apis.io/json-structure/flexera/spot-billing-engine-billing-account-list-response-structure/)
+- [Spot Billing Engine Billing Account Structure](https://apis.io/json-structure/flexera/spot-billing-engine-billing-account-structure/)
+- [Spot Billing Engine Billing Engine Setup Request Structure](https://apis.io/json-structure/flexera/spot-billing-engine-billing-engine-setup-request-structure/)
+- [Spot Billing Engine Billing Engine Validation Request Structure](https://apis.io/json-structure/flexera/spot-billing-engine-billing-engine-validation-request-structure/)
+- [Spot Billing Engine Cost Intelligence Setup Request Structure](https://apis.io/json-structure/flexera/spot-billing-engine-cost-intelligence-setup-request-structure/)
+- [Spot Billing Engine Cost Intelligence Validation Request Structure](https://apis.io/json-structure/flexera/spot-billing-engine-cost-intelligence-validation-request-structure/)
+- …and 23 more published on APIs.io
 
-The Spot Elastigroup API enables programmatic management of Elastigroup compute groups across AWS, Azure, and GCP. Elastigroup simplifies and automates cloud infrastructure for scale-out applications, continuously analyzing resource usage and optimizing compute resources to ensure availability while leveraging the lowest-cost compute options including spot instances, reserved instances, and on-demand capacity.
+#### JSON-LD (6)
 
-- **Human URL:** [https://docs.spot.io/api/](https://docs.spot.io/api/)
-- **Base URL:** `https://api.spotinst.io`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Spot Administration Context](https://apis.io/jsonld/flexera/spot-administration-context/)
+- [Spot Billing Engine Context](https://apis.io/jsonld/flexera/spot-billing-engine-context/)
+- [Spot Context](https://apis.io/jsonld/flexera/spot-context/)
+- [Spot Eco Context](https://apis.io/jsonld/flexera/spot-eco-context/)
+- [Spot Elastigroup Context](https://apis.io/jsonld/flexera/spot-elastigroup-context/)
+- [Spot Ocean Context](https://apis.io/jsonld/flexera/spot-ocean-context/)
 
-- Autoscaling
-- AWS
-- Azure
-- Compute
-- Elastigroup
-- EMR
-- GCP
-- Spot Instances
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://docs.spot.io/api/)
-- [OpenAPI](openapi/spot-elastigroup-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/spot-elastigroup-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/spot-elastigroup-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/elastigroup.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/spot-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON-LD](json-ld/spot-elastigroup-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Spot Domain Vocabulary](https://apis.io/vocabularies/flexera/spot-vocabulary/)
 
-### Spot Ocean API
+#### Examples (101)
 
-The Spot Ocean API provides programmatic management of Ocean Kubernetes clusters across AWS EKS, Azure AKS, GCP GKE, and Amazon ECS. Ocean is a serverless Kubernetes infrastructure engine that automatically manages and optimizes cloud infrastructure for containers, handling node provisioning, scaling, and cost optimization with intelligent use of spot instances, reserved capacity, and on-demand resources.
+Example requests and responses.
 
-- **Human URL:** [https://docs.spot.io/api/](https://docs.spot.io/api/)
-- **Base URL:** `https://api.spotinst.io`
+- [Spot Administration Access Policy Request Example](https://apis.io/examples/flexera/spot-administration-access-policy-request-example/)
+- [Spot Administration Account Example](https://apis.io/examples/flexera/spot-administration-account-example/)
+- [Spot Administration Account List Response Example](https://apis.io/examples/flexera/spot-administration-account-list-response-example/)
+- [Spot Administration Account Response Example](https://apis.io/examples/flexera/spot-administration-account-response-example/)
+- [Spot Administration Aws Credentials Request Example](https://apis.io/examples/flexera/spot-administration-aws-credentials-request-example/)
+- [Spot Administration Azure Credentials Request Example](https://apis.io/examples/flexera/spot-administration-azure-credentials-request-example/)
+- [Spot Administration Create Account Request Example](https://apis.io/examples/flexera/spot-administration-create-account-request-example/)
+- [Spot Administration Create Programmatic User Request Example](https://apis.io/examples/flexera/spot-administration-create-programmatic-user-request-example/)
+- [Spot Administration Create User Request Example](https://apis.io/examples/flexera/spot-administration-create-user-request-example/)
+- [Spot Administration Gcp Credentials Request Example](https://apis.io/examples/flexera/spot-administration-gcp-credentials-request-example/)
+- [Spot Administration Organization Example](https://apis.io/examples/flexera/spot-administration-organization-example/)
+- [Spot Administration Organization Response Example](https://apis.io/examples/flexera/spot-administration-organization-response-example/)
+- [Spot Administration Subscription Request Example](https://apis.io/examples/flexera/spot-administration-subscription-request-example/)
+- [Spot Administration Update Account Request Example](https://apis.io/examples/flexera/spot-administration-update-account-request-example/)
+- [Spot Administration Update User Permissions Request Example](https://apis.io/examples/flexera/spot-administration-update-user-permissions-request-example/)
+- [Spot Administration User Example](https://apis.io/examples/flexera/spot-administration-user-example/)
+- [Spot Administration User List Response Example](https://apis.io/examples/flexera/spot-administration-user-list-response-example/)
+- [Spot Administration User Response Example](https://apis.io/examples/flexera/spot-administration-user-response-example/)
+- [Spot Billing Engine Account Family Request Example](https://apis.io/examples/flexera/spot-billing-engine-account-family-request-example/)
+- [Spot Billing Engine Billing Account Example](https://apis.io/examples/flexera/spot-billing-engine-billing-account-example/)
+- [Spot Billing Engine Billing Account List Response Example](https://apis.io/examples/flexera/spot-billing-engine-billing-account-list-response-example/)
+- [Spot Billing Engine Billing Engine Setup Request Example](https://apis.io/examples/flexera/spot-billing-engine-billing-engine-setup-request-example/)
+- [Spot Billing Engine Billing Engine Validation Request Example](https://apis.io/examples/flexera/spot-billing-engine-billing-engine-validation-request-example/)
+- [Spot Billing Engine Cost Intelligence Setup Request Example](https://apis.io/examples/flexera/spot-billing-engine-cost-intelligence-setup-request-example/)
+- [Spot Billing Engine Cost Intelligence Validation Request Example](https://apis.io/examples/flexera/spot-billing-engine-cost-intelligence-validation-request-example/)
+- …and 76 more published on APIs.io
 
-#### Tags
+#### Collections (37)
 
-- AKS
-- Apache Spark
-- Autoscaling
-- Containers
-- ECS
-- EKS
-- GKE
-- Kubernetes
-- Ocean
+Postman and Open Collection request collections.
 
-#### Properties
+- [Spot Administration Access Policies API](https://apis.io/collections/flexera/open-flexera-access-policies-api/)
+- [Spot Administration Access Policies Accounts API](https://apis.io/collections/flexera/open-flexera-accounts-api/)
+- [Spot Administration Access Policies Audit API](https://apis.io/collections/flexera/open-flexera-audit-api/)
+- [Spot Administration Access Policies Billing Accounts API](https://apis.io/collections/flexera/open-flexera-billing-accounts-api/)
+- [Spot Administration Access Policies Billing Engine Setup API](https://apis.io/collections/flexera/open-flexera-billing-engine-setup-api/)
+- [Spot Administration Access Policies Cloud Credentials API](https://apis.io/collections/flexera/open-flexera-cloud-credentials-api/)
+- [Spot Administration Access Policies Cost Analysis API](https://apis.io/collections/flexera/open-flexera-cost-analysis-api/)
+- [Spot Administration Access Policies Cost Intelligence API](https://apis.io/collections/flexera/open-flexera-cost-intelligence-api/)
+- [Spot Administration Access Policies Deployments API](https://apis.io/collections/flexera/open-flexera-deployments-api/)
+- [Spot Administration Access Policies Eco AWS API](https://apis.io/collections/flexera/open-flexera-eco-aws-api/)
+- [Spot Administration Access Policies Eco Azure API](https://apis.io/collections/flexera/open-flexera-eco-azure-api/)
+- [Spot Administration Access Policies Eco GCP API](https://apis.io/collections/flexera/open-flexera-eco-gcp-api/)
+- [Spot Administration Access Policies Elastigroup AWS API](https://apis.io/collections/flexera/open-flexera-elastigroup-aws-api/)
+- [Spot Administration Access Policies Elastigroup Azure API](https://apis.io/collections/flexera/open-flexera-elastigroup-azure-api/)
+- [Spot Administration Access Policies Elastigroup GCP API](https://apis.io/collections/flexera/open-flexera-elastigroup-gcp-api/)
+- [Spot Administration Access Policies EMR API](https://apis.io/collections/flexera/open-flexera-emr-api/)
+- [Spot Administration Access Policies Families API](https://apis.io/collections/flexera/open-flexera-families-api/)
+- [Spot Administration Access Policies Health Check API](https://apis.io/collections/flexera/open-flexera-health-check-api/)
+- [Spot Administration Access Policies Ocean AKS API](https://apis.io/collections/flexera/open-flexera-ocean-aks-api/)
+- [Spot Administration Access Policies Ocean AWS API](https://apis.io/collections/flexera/open-flexera-ocean-aws-api/)
+- [Spot Administration Access Policies Ocean CD API](https://apis.io/collections/flexera/open-flexera-ocean-cd-api/)
+- [Spot Administration Access Policies Ocean ECS API](https://apis.io/collections/flexera/open-flexera-ocean-ecs-api/)
+- [Spot Administration Access Policies Ocean GKE API](https://apis.io/collections/flexera/open-flexera-ocean-gke-api/)
+- [Spot Administration Access Policies Ocean Spark API](https://apis.io/collections/flexera/open-flexera-ocean-spark-api/)
+- [Spot Administration Access Policies Organizations API](https://apis.io/collections/flexera/open-flexera-organizations-api/)
+- …and 12 more published on APIs.io
 
-- [Documentation](https://docs.spot.io/api/)
-- [OpenAPI](openapi/spot-ocean-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/spot-ocean-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/spot-ocean-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/ocean-cluster.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/virtual-node-group.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON-LD](json-ld/spot-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON-LD](json-ld/spot-ocean-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+#### Governance rules (3)
 
-### Spot Eco API
+Spectral rulesets for the provider's contracts.
 
-The Spot Eco API provides programmatic access to cloud commitment management and optimization across AWS, Azure, and GCP. Eco automates the purchase, management, and optimization of reserved instances, savings plans, and committed use discounts to maximize cloud cost savings while maintaining flexibility.
+- [Spot by Flexera — jsonschema rules](https://apis.io/rules/flexera/flexera-jsonschema-spectral-rules/)
+- [Spot by Flexera API Rules](https://apis.io/rules/flexera/flexera-spectral-rules/)
+- [Spot by Flexera — spot rules](https://apis.io/rules/flexera/spot-spectral-rules/)
 
-- **Human URL:** [https://docs.spot.io/api/](https://docs.spot.io/api/)
-- **Base URL:** `https://api.spotinst.io`
+#### Security (3)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- AWS
-- Azure
-- Commitments
-- Cost Optimization
-- FinOps
-- GCP
-- Reserved Instances
-- Savings Plans
+- [Flexera Authentication](https://apis.io/security/flexera/flexera-authentication/)
+- [Flexera Domain Security](https://apis.io/security/flexera/flexera-domain-security/)
+- [Flexera Vulnerability Disclosure](https://apis.io/security/flexera/flexera-vulnerability-disclosure/)
 
-#### Properties
+#### Plans and pricing (2)
 
-- [Documentation](https://docs.spot.io/api/)
-- [OpenAPI](openapi/spot-eco-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/spot-eco-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/spot-eco-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON-LD](json-ld/spot-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON-LD](json-ld/spot-eco-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+Published plans, tiers and prices.
 
-### Spot Billing Engine API
+- [Flexera Plans Pricing](https://apis.io/plans/flexera/flexera-plans-pricing/)
+- [Spot Plans Pricing](https://apis.io/plans/flexera/spot-plans-pricing/)
 
-The Spot Billing Engine API provides programmatic access to cloud billing management, cost allocation, and invoicing capabilities. Billing Engine streamlines multi-cloud invoicing with intelligent cost allocation, chargeback and showback reporting, and comprehensive billing analytics across AWS, Azure, and GCP accounts.
+#### Rate limits (2)
 
-- **Human URL:** [https://docs.spot.io/api/](https://docs.spot.io/api/)
-- **Base URL:** `https://api.spotinst.io`
+Published request limits.
 
-#### Tags
+- [Flexera Rate Limits](https://apis.io/rate-limits/flexera/flexera-rate-limits/)
+- [Spot Rate Limits](https://apis.io/rate-limits/flexera/spot-rate-limits/)
 
-- Billing
-- Chargeback
-- Cost Allocation
-- Cost Intelligence
-- FinOps
-- Invoicing
+#### FinOps (2)
 
-#### Properties
+What the API costs to run, by operation.
 
-- [Documentation](https://docs.spot.io/api/)
-- [OpenAPI](openapi/spot-billing-engine-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/spot-billing-engine-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/spot-billing-engine-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON-LD](json-ld/spot-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON-LD](json-ld/spot-billing-engine-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+- [Flexera Finops](https://apis.io/finops/flexera/flexera-finops/)
+- [Spot Finops](https://apis.io/finops/flexera/spot-finops/)
 
-## Common Properties
+## Where to find this API
 
-- [LinkedIn](https://www.linkedin.com/company/spothq)
-- [GitHub Organization](https://github.com/spotinst)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Documentation](https://docs.spot.io/)
-- [API Reference](https://docs.spot.io/api/)
-- [OpenAPI](https://github.com/spotinst/openapi) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Authentication](https://docs.spot.io/administration/api/create-api-token)
+- [API reference](https://docs.spot.io/api/)
 - [Blog](https://spot.io/blog/)
-- [Terms of Service](https://spot.io/terms-of-use/)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
+- [Terms of service](https://spot.io/terms-of-use/)
+- [GitHub](https://github.com/spotinst)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
+**Unrated** — no public website could be reached for this company, so there was almost nothing to measure and nothing a reader could check.
+
+This is not a score of zero. No rating is published for this company. If that is wrong because something public exists that we missed, say so on this repository or email [info@apievangelist.com](mailto:info@apievangelist.com) and it will be re-run — free, and no justification needed.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Spot by Flexera: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/flexera/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
